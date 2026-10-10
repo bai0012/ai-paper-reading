@@ -27,12 +27,16 @@
 
 1. [Abstract：完整译文与讲解](00-Abstract.md) ✅
 2. [1. Introduction：完整译文、原图 Figure 1 数据与讲解](01-Introduction.md) ✅
-3. 2. Related Work（待读）
-4. 3. Preliminaries（待读）
+3. [2. Related Work：三个小节完整译文与讲解](02-Related-Work.md) ✅
+4. 3. Preliminaries（下一单元）
 5. 4. Method（待读）
 6. 5. Experiments（待读）
 7. 6. Conclusion（待读）
 8. Appendix A（待读）
+
+## Related Work 阅读小结
+
+已阅读 Section 2：2.1 推测解码（Medusa/EAGLE 系列）、2.2 扩散语言模型（LLaDA/Block Diffusion/Fast-dLLM v2/SDAR）、2.3 扩散式推测解码（TiDAR/Samragh 等、DiffuSpec/SpecDiff-2）。这些方法揭示 Draft 串行性、模型大小及验收质量之间的取舍。全文与技术讲解见 [02-Related-Work.md](02-Related-Work.md)。下一节为第 3 节 Preliminaries。
 
 ## 相关论文（仅表示技术关联，不代表已精读）
 
