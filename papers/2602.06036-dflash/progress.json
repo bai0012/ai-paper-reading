@@ -1,0 +1,36 @@
+{
+  "arxiv_id": "2602.06036",
+  "version": "v2",
+  "title": "DFlash: Block Diffusion for Flash Speculative Decoding",
+  "source_pdf": "https://arxiv.org/pdf/2602.06036v2",
+  "started_at": "2026-10-10",
+  "last_updated_at": "2026-10-10",
+  "completed_units": [
+    "Abstract",
+    "1. Introduction"
+  ],
+  "next_unit": "2. Related Work",
+  "read_position": {
+    "section": "1. Introduction",
+    "status": "completed",
+    "next_section": "2. Related Work"
+  },
+  "figures": [
+    {
+      "number": 1,
+      "pdf_page": 2,
+      "description": "Speedup comparison DFlash, EAGLE-3 and AR decoding",
+      "extracted_in_chat": true,
+      "github_binary_saved": false,
+      "source_pdf": "https://arxiv.org/pdf/2602.06036v2#page=2"
+    }
+  ],
+  "saved_files": [
+    "README.md",
+    "00-Abstract.md",
+    "01-Introduction.md",
+    "progress.json",
+    "../../论文知识索引.md"
+  ],
+  "complete": false
+}
