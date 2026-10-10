@@ -8,18 +8,18 @@
   "completed_units": [
     "Abstract",
     "1. Introduction",
-    "2. Related Work"
+    "2. Related Work",
+    "3. Preliminaries"
   ],
-  "next_unit": "3. Preliminaries",
+  "next_unit": "4. Method",
   "read_position": {
-    "section": "2. Related Work",
+    "section": "3. Preliminaries",
     "subsections_completed": [
-      "2.1. Speculative Decoding",
-      "2.2. Diffusion Language Models",
-      "2.3. Diffusion-based Speculative Decoding"
+      "3.1. Speculative Decoding Speedup",
+      "3.2. Autoregressive vs. Diffusion Drafting"
     ],
     "status": "completed",
-    "next_section": "3. Preliminaries"
+    "next_section": "4. Method"
   },
   "figures": [
     {
@@ -29,6 +29,14 @@
       "extracted_in_chat": true,
       "github_binary_saved": false,
       "source_pdf": "https://arxiv.org/pdf/2602.06036v2#page=2"
+    },
+    {
+      "number": 3,
+      "pdf_page": 3,
+      "description": "Draft latency comparison of 1-, 3-, 5-layer DFlash and 1-layer EAGLE-3 versus number of draft tokens",
+      "extracted_in_chat": true,
+      "github_binary_saved": false,
+      "source_pdf": "https://arxiv.org/pdf/2602.06036v2#page=3"
     }
   ],
   "saved_files": [
@@ -37,7 +45,8 @@
     "01-Introduction.md",
     "progress.json",
     "../../论文知识索引.md",
-    "02-Related-Work.md"
+    "02-Related-Work.md",
+    "03-Preliminaries.md"
   ],
   "complete": false
 }
