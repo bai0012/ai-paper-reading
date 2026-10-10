@@ -7,13 +7,19 @@
   "last_updated_at": "2026-10-10",
   "completed_units": [
     "Abstract",
-    "1. Introduction"
+    "1. Introduction",
+    "2. Related Work"
   ],
-  "next_unit": "2. Related Work",
+  "next_unit": "3. Preliminaries",
   "read_position": {
-    "section": "1. Introduction",
+    "section": "2. Related Work",
+    "subsections_completed": [
+      "2.1. Speculative Decoding",
+      "2.2. Diffusion Language Models",
+      "2.3. Diffusion-based Speculative Decoding"
+    ],
     "status": "completed",
-    "next_section": "2. Related Work"
+    "next_section": "3. Preliminaries"
   },
   "figures": [
     {
@@ -30,7 +36,8 @@
     "00-Abstract.md",
     "01-Introduction.md",
     "progress.json",
-    "../../论文知识索引.md"
+    "../../论文知识索引.md",
+    "02-Related-Work.md"
   ],
   "complete": false
 }
