@@ -13,7 +13,7 @@
 
 DFlash 通过在单次前向传播（Single Forward Pass）中生成草稿 Token，实现高效的草稿生成；同时，让 Draft Model 以从目标模型中提取的上下文特征（Context Features）为条件，生成高质量草稿并提高接受率。实验表明，DFlash 在一系列模型和任务中实现超过 6 倍的无损加速，相比先进推测解码方法 EAGLE-3，可提供最高 2.5 倍的额外加速比。
 
-**原文附带链接：** [代码 GitHub](https://github.com/zhijian-liu/dflash) （注意：具体代码仓库地址以论文链接跳转为准）；[模型 Hugging Face](https://huggingface.co/)（项目主页：[dflash.z-lab.ai](https://dflash.z-lab.ai)）。
+**原文附带链接：** [代码 GitHub](https://github.com/z-lab/dflash)；[模型 Hugging Face](https://huggingface.co/collections/z-lab/dflash)（项目主页：[dflash.z-lab.ai](https://dflash.z-lab.ai)）。
 
 ## 技术讲解（独立分析）
 
