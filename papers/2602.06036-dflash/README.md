@@ -28,8 +28,8 @@
 1. [Abstract：完整译文与讲解](00-Abstract.md) ✅
 2. [1. Introduction：完整译文、原图 Figure 1 数据与讲解](01-Introduction.md) ✅
 3. [2. Related Work：三个小节完整译文与讲解](02-Related-Work.md) ✅
-4. 3. Preliminaries（下一单元）
-5. 4. Method（待读）
+4. [3. Preliminaries：完整译文、式 (1)–(3)、Figure 3 分析与推导](03-Preliminaries.md) ✅
+5. 4. Method（下一单元）
 6. 5. Experiments（待读）
 7. 6. Conclusion（待读）
 8. Appendix A（待读）
@@ -37,6 +37,10 @@
 ## Related Work 阅读小结
 
 已阅读 Section 2：2.1 推测解码（Medusa/EAGLE 系列）、2.2 扩散语言模型（LLaDA/Block Diffusion/Fast-dLLM v2/SDAR）、2.3 扩散式推测解码（TiDAR/Samragh 等、DiffuSpec/SpecDiff-2）。这些方法揭示 Draft 串行性、模型大小及验收质量之间的取舍。全文与技术讲解见 [02-Related-Work.md](02-Related-Work.md)。下一节为第 3 节 Preliminaries。
+
+## Preliminaries 阅读小结
+
+已阅读 Section 3 的 3.1、3.2，形式化给出平均 Token 延迟 \(L=(T_{\mathrm{draft}}+T_{\mathrm{verify}})/\tau\)，比较顺序 Draft 的 \(T_{\mathrm{draft}}=\gamma t_{\mathrm{step}}\) 与扩散式 Draft 的 \(T_{\mathrm{draft}}=t_{\mathrm{parallel}}\)，并对原始 Figure 3 进行读图和推导。见 [03-Preliminaries.md](03-Preliminaries.md)，原图在论文 PDF 第 3 页，当前仓库未上传二进制裁图。下一节为 4. Method。
 
 ## 相关论文（仅表示技术关联，不代表已精读）
 
