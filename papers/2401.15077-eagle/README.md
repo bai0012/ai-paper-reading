@@ -1,0 +1,49 @@
+# EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty
+
+**中文标题：** EAGLE：推测采样需要重新思考特征的不确定性
+
+- arXiv：[2401.15077v3](https://arxiv.org/html/2401.15077v3)（2025-03-04）
+- 作者：Yuhui Li、Fangyun Wei、Chao Zhang、Hongyang Zhang
+- 机构：北京大学、微软研究院、滑铁卢大学、Vector Institute
+- PDF：<https://arxiv.org/pdf/2401.15077v3>（13 页，含附录）
+- 官方代码：<https://github.com/SafeAILab/EAGLE>
+- 本仓库：[阅读进度](progress.json)
+
+## 研究问题
+
+推测采样中的 Draft Model 既需要足够快，又要与目标 LLM 的候选分布接近。依赖独立小模型的传统方法存在合适模型难找、Draft 计算开销高的问题。
+
+## 核心贡献（摘要和引言导读，后续逐节核对）
+
+1. 观察：目标模型倒数第二层隐藏特征序列具有比直接 Token 序列更易外推的结构。
+2. 观察：若只用历史特征预测未来特征，Token 采样引入的分支不确定性会阻碍预测。
+3. 方法：用**上一阶段已采样、相对 Feature 提前一时间步的 Token**为特征预测提供条件；低成本预测下一个 Feature，再借用目标 LM Head 形成 Token 分布。
+4. 目标模型采用精确推测采样验证，不需要微调主干参数，以维持目标模型生成分布。
+
+## 摘要重要结果
+
+LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实验更具体的任务、温度、批大小以及可比较基线须在 Section 4 逐表核对。
+
+## 章节导航与状态
+
+1. [Abstract：完整译文、Figure 1 原图图注与技术导读](00-Abstract.md) ✅
+2. 1. Introduction — ⏳ 下一阅读单元（含 Figure 2、3、4）
+3. 2. Preliminaries — 未读
+4. 3. EAGLE（3.1 Drafting、3.2 Training、3.3 Verification）— 未读
+5. 4. Experiments（4.1–4.4）— 未读
+6. 5. Related Work — 未读
+7. 6. Conclusion — 未读
+8. Appendix A（A.1 Tree Structure、A.2 Multi-Round Speculative Sampling）— 未读
+9. Appendix B（详细实验结果）— 未读
+
+## 原图存储状况
+
+- [Figure 1 原图：PDF 第 1 页](https://arxiv.org/pdf/2401.15077v3#page=1)：已在本次聊天中直接从 PDF 裁图展示。
+- 目前 GitHub 未存储 Figure 1 的 PNG 二进制。不得使用不存在的 figures/ 相对地址冒充原图。
+
+## 跨论文关联
+
+- [DFlash（仓库已精读）](../2602.06036-dflash/README.md)：EAGLE 的特征级自回归 Draft 与 DFlash 的 Block Diffusion 并行 Draft；复用 Target 隐藏状态与减少 Draft 串行成本。
+- [EAGLE-3](https://arxiv.org/abs/2503.01840)：后续版本，独立论文，不混同于本篇 EAGLE。
+
+**最近阅读：** 2026-10-13，Abstract 已完成，下一步 1. Introduction。
