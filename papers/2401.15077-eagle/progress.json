@@ -1,0 +1,33 @@
+{
+  "arxiv_id": "2401.15077",
+  "version": "v3",
+  "title": "EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty",
+  "source_pdf": "https://arxiv.org/pdf/2401.15077v3",
+  "started_at": "2026-10-13",
+  "last_updated_at": "2026-10-13",
+  "completed_units": [
+    "Abstract"
+  ],
+  "next_unit": "1. Introduction",
+  "read_position": {
+    "section": "Abstract",
+    "status": "completed",
+    "next_section": "1. Introduction",
+    "pdf_page": 1
+  },
+  "figures": [
+    {
+      "number": 1,
+      "pdf_page": 1,
+      "caption_translated": true,
+      "extracted_in_chat": true,
+      "github_binary_saved": false,
+      "source_pdf": "https://arxiv.org/pdf/2401.15077v3#page=1"
+    }
+  ],
+  "saved_files": [
+    "README.md",
+    "00-Abstract.md"
+  ],
+  "complete": false
+}
