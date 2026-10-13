@@ -32,7 +32,8 @@
 5. [4. Method：完整译文、原图 Figure 2/4、KV 注入与训练讲解](04-Method.md) ✅
 6. [5. Experiments：完整译文、Table 1–9、Serving 与消融实验](05-Experiments.md) ✅
 7. [6. Conclusion：完整译文、研究贡献、局限及研究方向](06-Conclusion.md) ✅
-8. Appendix A（下一单元）
+8. [Appendix A.1–A.5.2：完整译文、原公式、Table 10–13、Figure 5](Appendix-A.md) ✅
+9. [summary.md：全文总结、实验结果、复现路线、跨论文关联](summary.md) ✅
 
 ## Related Work 阅读小结
 
@@ -65,13 +66,21 @@
 - KV Injection 在块扩散和自回归 Drafting 中均优于 Input Fusion（Table 9）。
 - 大 Block Size 训练向较小推理 Block Size 的泛化较好，为未来动态 Block 调度提供依据（Table 8）。
 
-Section 6 Conclusion 已完成，下一单元为 Appendix A。
+Section 6 Conclusion 已完成，Appendix A 亦已完成。
 
 ## Conclusion 阅读小结
 
 已完成 [Section 6 Conclusion 两段完整中文翻译和研究评述](06-Conclusion.md)，PDF 第 9 页。本节无新的公式或原图。作者主要强调扩散模型从独立生成器转为并行草稿适配器，借助目标模型特征得到高接受长度，由正确的目标验证维持输出分布。章节笔记分别记录研究贡献、性能与对比边界、附加显存/缓存开销、长上下文测评不足，并明确区分唯一被作者点名的后续工作（动态 Block Size 调度）和独立提出的工程研究方向。原文之后的 Acknowledgements/Impact Statement 为独立栏目，不属于 Section 6。
 
-**阅读位置：** [Appendix A](https://arxiv.org/html/2602.06036v2) A.1–A.5；附录尚未按原顺序完整翻译。
+**阅读位置：** Appendix A.1–A.5.2 已按原顺序全部翻译完成，详见 [Appendix-A.md](Appendix-A.md)。
+
+## 全文阅读完成
+
+- 阅读范围：Abstract、Sections 1–6、Appendix A.1–A.5.2。
+- [完整总结](summary.md) 重点总结创新、公式、精确实验条件、局限、复现建议和跨论文知识体系。
+- [附录完整译文](Appendix-A.md) 涵盖：AdamW 6 Epoch、学习率 6e-4、Gradient Clip 1、Warmup 0.04、512 Anchors / Sequence、在线与离线训练；5 层无 Target Context Features 的 Table 10；逐层 KV Injection 方程及约 42 MB 投影参数量；SGLang/MTP 对比 Table 11、vLLM Table 12；Loss Decay 的 Figure 5；Random Anchors 的 Table 13。
+- **图表溯源**：正文 Figure 1–4、Table 1–9 及附录 Figure 5、Table 10–13 均在各章节标注原始 PDF 页码；对话中已提取原图或原表。受当前接口限制，尚未将 PNG 二进制提交到 GitHub，因此不使用虚假的 figures/ 相对链接。
+- **阅读完成状态**：2026-10-13。下一步为用户指定的新论文，或针对 DFlash 复现/拓展研究的专项讨论。
 
 ## 相关论文（仅表示技术关联，不代表已精读）
 
