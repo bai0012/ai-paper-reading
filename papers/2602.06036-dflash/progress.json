@@ -11,25 +11,18 @@
     "2. Related Work",
     "3. Preliminaries",
     "4. Method",
-    "5. Experiments"
+    "5. Experiments",
+    "6. Conclusion"
   ],
-  "next_unit": "6. Conclusion",
+  "next_unit": "Appendix A.1 Training Implementation",
   "read_position": {
-    "section": "5. Experiments",
-    "subsections_completed": [
-      "5.1. Instruct Models",
-      "5.2. Reasoning Models",
-      "5.3. Performance on Serving Frameworks",
-      "5.4. Long Context Adaptation",
-      "5.5. Ablation Study",
-      "5.5.1. Training Data",
-      "5.5.2. Number of Draft Layers",
-      "5.5.3. Number of Target Hidden Features",
-      "5.5.4. Training-Inference Time Block Size",
-      "5.5.5. KV Injection vs. Input Fusion"
-    ],
+    "section": "6. Conclusion",
     "status": "completed",
-    "next_section": "6. Conclusion"
+    "subsections_completed": [
+      "6. Conclusion (two paragraphs)"
+    ],
+    "next_section": "Appendix A",
+    "next_subsection": "A.1 Training Implementation"
   },
   "figures": [
     {
@@ -74,7 +67,8 @@
     "02-Related-Work.md",
     "03-Preliminaries.md",
     "04-Method.md",
-    "05-Experiments.md"
+    "05-Experiments.md",
+    "06-Conclusion.md"
   ],
   "complete": false,
   "tables": [
@@ -150,5 +144,8 @@
       "original_crop_in_chat": true,
       "github_binary_saved": false
     }
-  ]
+  ],
+  "notes": {
+    "conclusion": "Full Section 6 translation plus independent limitations/future analysis saved in 06-Conclusion.md; Appendix A.1-A.5 remains unread sequentially."
+  }
 }
