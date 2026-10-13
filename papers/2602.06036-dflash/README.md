@@ -30,8 +30,8 @@
 3. [2. Related Work：三个小节完整译文与讲解](02-Related-Work.md) ✅
 4. [3. Preliminaries：完整译文、式 (1)–(3)、Figure 3 分析与推导](03-Preliminaries.md) ✅
 5. [4. Method：完整译文、原图 Figure 2/4、KV 注入与训练讲解](04-Method.md) ✅
-6. 5. Experiments（下一单元）
-7. 6. Conclusion（待读）
+6. [5. Experiments：完整译文、Table 1–9、Serving 与消融实验](05-Experiments.md) ✅
+7. 6. Conclusion（下一单元）
 8. Appendix A（待读）
 
 ## Related Work 阅读小结
@@ -52,6 +52,20 @@
 - 使用位置损失权重 \(w_k=\exp(-(k-1)/\gamma)\)，优先提高草稿块前部 Token 的准确性；式 (4) 的 \(\gamma\) 为衰减超参数，和 Block Size 不应混同。
 
 原始 [Figure 2（PDF 第 4 页）](https://arxiv.org/pdf/2602.06036v2#page=4) 与 [Figure 4（PDF 第 5 页）](https://arxiv.org/pdf/2602.06036v2#page=5) 已在聊天中裁图展示，当前 GitHub 使用原 PDF 来源链接，未存储 PNG 二进制。附录 A.3 的 KV 公式已交叉引用，但正式附录精读仍在后续。下一节为 **5. Experiments**。
+
+## Experiments 阅读小结
+
+[05-Experiments.md](05-Experiments.md) 已完成 5.1 Instruct Models、5.2 Reasoning Models、5.3 Serving Frameworks、5.4 Long Context Adaptation、5.5.1–5.5.5 Ablation Study 的逐段译文，以及 Table 1–9 完整数字和原表注。原表定位 PDF 第 6–9 页，已在对话中提取展示原始裁图；仓库尚无二进制 PNG 文件，不提供不存在的相对链接。
+
+主要结论：
+- Qwen3-8B 在 Transformers、Temperature=0 的平均加速 4.86×、平均 τ=6.49，EAGLE-3 (16) 为 1.76×、τ=2.96（Table 1）。
+- B200+SGLang+FA4+Spec-v2 下，Qwen3-8B Math500 在并发 1→32 时的加速为 5.1×→2.8×，DFlash 吞吐 1175→16076 tok/s（Table 3）。
+- Qwen3.5-27B 长上下文少量微调改善 τ，但没有报告完整长上下文 TPS/加速数据（Table 4）。
+- 5 层 Draft 在三项任务上取得最高平均加速，但不代表每项任务均最优（Table 6）。
+- KV Injection 在块扩散和自回归 Drafting 中均优于 Input Fusion（Table 9）。
+- 大 Block Size 训练向较小推理 Block Size 的泛化较好，为未来动态 Block 调度提供依据（Table 8）。
+
+下一阅读单元 **6. Conclusion**，随后按原始顺序阅读 Appendix A。
 
 ## 相关论文（仅表示技术关联，不代表已精读）
 
