@@ -4,22 +4,23 @@
   "title": "DFlash: Block Diffusion for Flash Speculative Decoding",
   "source_pdf": "https://arxiv.org/pdf/2602.06036v2",
   "started_at": "2026-10-10",
-  "last_updated_at": "2026-10-10",
+  "last_updated_at": "2026-10-13",
   "completed_units": [
     "Abstract",
     "1. Introduction",
     "2. Related Work",
-    "3. Preliminaries"
+    "3. Preliminaries",
+    "4. Method"
   ],
-  "next_unit": "4. Method",
+  "next_unit": "5. Experiments",
   "read_position": {
-    "section": "3. Preliminaries",
+    "section": "4. Method",
     "subsections_completed": [
-      "3.1. Speculative Decoding Speedup",
-      "3.2. Autoregressive vs. Diffusion Drafting"
+      "4.1. Inference",
+      "4.2. Training"
     ],
     "status": "completed",
-    "next_section": "4. Method"
+    "next_section": "5. Experiments"
   },
   "figures": [
     {
@@ -31,12 +32,28 @@
       "source_pdf": "https://arxiv.org/pdf/2602.06036v2#page=2"
     },
     {
+      "number": 2,
+      "pdf_page": 4,
+      "description": "DFlash inference design: target context feature fusion, layerwise KV injection, masked parallel drafting",
+      "extracted_in_chat": true,
+      "github_binary_saved": false,
+      "source_pdf": "https://arxiv.org/pdf/2602.06036v2#page=4"
+    },
+    {
       "number": 3,
       "pdf_page": 3,
       "description": "Draft latency comparison of 1-, 3-, 5-layer DFlash and 1-layer EAGLE-3 versus number of draft tokens",
       "extracted_in_chat": true,
       "github_binary_saved": false,
       "source_pdf": "https://arxiv.org/pdf/2602.06036v2#page=3"
+    },
+    {
+      "number": 4,
+      "pdf_page": 5,
+      "description": "DFlash training attention: target context, anchor tokens, mask blocks and inter-block attention isolation",
+      "extracted_in_chat": true,
+      "github_binary_saved": false,
+      "source_pdf": "https://arxiv.org/pdf/2602.06036v2#page=5"
     }
   ],
   "saved_files": [
@@ -46,7 +63,8 @@
     "progress.json",
     "../../论文知识索引.md",
     "02-Related-Work.md",
-    "03-Preliminaries.md"
+    "03-Preliminaries.md",
+    "04-Method.md"
   ],
   "complete": false
 }
