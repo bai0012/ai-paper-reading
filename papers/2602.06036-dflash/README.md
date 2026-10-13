@@ -20,7 +20,7 @@
 ## 关键实验
 
 - Qwen3-8B、Transformers、贪心解码、MATH-500：DFlash 6.08× vs EAGLE-3 2.05×（Figure 1）。
-- 更广泛结果、真实服务吞吐和并发退化见第 5 节，尚待精读。
+- 更广泛结果、真实服务吞吐和并发退化详见已完成的 [Section 5](05-Experiments.md)。
 - 注意：Figure 1 是特定部署条件，不能直接推断其他 GPU/Serving 后端。
 
 ## 章节导航
@@ -31,8 +31,8 @@
 4. [3. Preliminaries：完整译文、式 (1)–(3)、Figure 3 分析与推导](03-Preliminaries.md) ✅
 5. [4. Method：完整译文、原图 Figure 2/4、KV 注入与训练讲解](04-Method.md) ✅
 6. [5. Experiments：完整译文、Table 1–9、Serving 与消融实验](05-Experiments.md) ✅
-7. 6. Conclusion（下一单元）
-8. Appendix A（待读）
+7. [6. Conclusion：完整译文、研究贡献、局限及研究方向](06-Conclusion.md) ✅
+8. Appendix A（下一单元）
 
 ## Related Work 阅读小结
 
@@ -65,7 +65,13 @@
 - KV Injection 在块扩散和自回归 Drafting 中均优于 Input Fusion（Table 9）。
 - 大 Block Size 训练向较小推理 Block Size 的泛化较好，为未来动态 Block 调度提供依据（Table 8）。
 
-下一阅读单元 **6. Conclusion**，随后按原始顺序阅读 Appendix A。
+Section 6 Conclusion 已完成，下一单元为 Appendix A。
+
+## Conclusion 阅读小结
+
+已完成 [Section 6 Conclusion 两段完整中文翻译和研究评述](06-Conclusion.md)，PDF 第 9 页。本节无新的公式或原图。作者主要强调扩散模型从独立生成器转为并行草稿适配器，借助目标模型特征得到高接受长度，由正确的目标验证维持输出分布。章节笔记分别记录研究贡献、性能与对比边界、附加显存/缓存开销、长上下文测评不足，并明确区分唯一被作者点名的后续工作（动态 Block Size 调度）和独立提出的工程研究方向。原文之后的 Acknowledgements/Impact Statement 为独立栏目，不属于 Section 6。
+
+**阅读位置：** [Appendix A](https://arxiv.org/html/2602.06036v2) A.1–A.5；附录尚未按原顺序完整翻译。
 
 ## 相关论文（仅表示技术关联，不代表已精读）
 
