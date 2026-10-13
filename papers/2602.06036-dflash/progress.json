@@ -10,17 +10,26 @@
     "1. Introduction",
     "2. Related Work",
     "3. Preliminaries",
-    "4. Method"
+    "4. Method",
+    "5. Experiments"
   ],
-  "next_unit": "5. Experiments",
+  "next_unit": "6. Conclusion",
   "read_position": {
-    "section": "4. Method",
+    "section": "5. Experiments",
     "subsections_completed": [
-      "4.1. Inference",
-      "4.2. Training"
+      "5.1. Instruct Models",
+      "5.2. Reasoning Models",
+      "5.3. Performance on Serving Frameworks",
+      "5.4. Long Context Adaptation",
+      "5.5. Ablation Study",
+      "5.5.1. Training Data",
+      "5.5.2. Number of Draft Layers",
+      "5.5.3. Number of Target Hidden Features",
+      "5.5.4. Training-Inference Time Block Size",
+      "5.5.5. KV Injection vs. Input Fusion"
     ],
     "status": "completed",
-    "next_section": "5. Experiments"
+    "next_section": "6. Conclusion"
   },
   "figures": [
     {
@@ -64,7 +73,82 @@
     "../../论文知识索引.md",
     "02-Related-Work.md",
     "03-Preliminaries.md",
-    "04-Method.md"
+    "04-Method.md",
+    "05-Experiments.md"
   ],
-  "complete": false
+  "complete": false,
+  "tables": [
+    {
+      "number": 1,
+      "pdf_page": 6,
+      "translated": true,
+      "data_saved_in": "05-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 2,
+      "pdf_page": 7,
+      "translated": true,
+      "data_saved_in": "05-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 3,
+      "pdf_page": 7,
+      "translated": true,
+      "data_saved_in": "05-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 4,
+      "pdf_page": 8,
+      "translated": true,
+      "data_saved_in": "05-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 5,
+      "pdf_page": 8,
+      "translated": true,
+      "data_saved_in": "05-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 6,
+      "pdf_page": 8,
+      "translated": true,
+      "data_saved_in": "05-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 7,
+      "pdf_page": 8,
+      "translated": true,
+      "data_saved_in": "05-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 8,
+      "pdf_page": 8,
+      "translated": true,
+      "data_saved_in": "05-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 9,
+      "pdf_page": 9,
+      "translated": true,
+      "data_saved_in": "05-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    }
+  ]
 }
