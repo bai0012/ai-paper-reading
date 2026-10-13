@@ -12,17 +12,23 @@
     "3. Preliminaries",
     "4. Method",
     "5. Experiments",
-    "6. Conclusion"
+    "6. Conclusion",
+    "Appendix A"
   ],
-  "next_unit": "Appendix A.1 Training Implementation",
+  "next_unit": null,
   "read_position": {
-    "section": "6. Conclusion",
-    "status": "completed",
+    "section": "Appendix A",
     "subsections_completed": [
-      "6. Conclusion (two paragraphs)"
+      "A.1 Training Implementation",
+      "A.2 Diffusion Drafter without Target Feature",
+      "A.3 KV Injection Mechanism and Memory Overhead",
+      "A.4 Results on More Models and vLLM",
+      "A.5 Further Ablations",
+      "A.5.1 Loss Decay",
+      "A.5.2 Random Sampling of Masked Blocks"
     ],
-    "next_section": "Appendix A",
-    "next_subsection": "A.1 Training Implementation"
+    "status": "completed",
+    "next_section": null
   },
   "figures": [
     {
@@ -56,6 +62,14 @@
       "extracted_in_chat": true,
       "github_binary_saved": false,
       "source_pdf": "https://arxiv.org/pdf/2602.06036v2#page=5"
+    },
+    {
+      "number": 5,
+      "pdf_page": 13,
+      "description": "Acceptance Length vs Training Epoch, with and without loss decay",
+      "extracted_in_chat": true,
+      "github_binary_saved": false,
+      "source_pdf": "https://arxiv.org/pdf/2602.06036v2#page=13"
     }
   ],
   "saved_files": [
@@ -68,9 +82,11 @@
     "03-Preliminaries.md",
     "04-Method.md",
     "05-Experiments.md",
-    "06-Conclusion.md"
+    "06-Conclusion.md",
+    "Appendix-A.md",
+    "summary.md"
   ],
-  "complete": false,
+  "complete": true,
   "tables": [
     {
       "number": 1,
@@ -143,9 +159,43 @@
       "data_saved_in": "05-Experiments.md",
       "original_crop_in_chat": true,
       "github_binary_saved": false
+    },
+    {
+      "number": 10,
+      "pdf_page": 12,
+      "translated": true,
+      "data_saved_in": "Appendix-A.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 11,
+      "pdf_page": 12,
+      "translated": true,
+      "data_saved_in": "Appendix-A.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 12,
+      "pdf_page": 12,
+      "translated": true,
+      "data_saved_in": "Appendix-A.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 13,
+      "pdf_page": 13,
+      "translated": true,
+      "data_saved_in": "Appendix-A.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
     }
   ],
   "notes": {
-    "conclusion": "Full Section 6 translation plus independent limitations/future analysis saved in 06-Conclusion.md; Appendix A.1-A.5 remains unread sequentially."
+    "conclusion": "Full Section 6 translation plus independent limitations/future analysis saved in 06-Conclusion.md; Appendix A.1-A.5 remains unread sequentially.",
+    "appendix": "PDF pp.12–13, Table 10–13 and Figure 5 completely translated and analyzed. Original cropped binary PNGs available in conversation, not yet stored on GitHub.",
+    "summary": "Final summary.md covers contributions, key results, limitations, reproduction roadmap and cross-paper links."
   }
 }
