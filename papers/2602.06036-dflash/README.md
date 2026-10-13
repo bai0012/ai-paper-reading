@@ -29,8 +29,8 @@
 2. [1. Introduction：完整译文、原图 Figure 1 数据与讲解](01-Introduction.md) ✅
 3. [2. Related Work：三个小节完整译文与讲解](02-Related-Work.md) ✅
 4. [3. Preliminaries：完整译文、式 (1)–(3)、Figure 3 分析与推导](03-Preliminaries.md) ✅
-5. 4. Method（下一单元）
-6. 5. Experiments（待读）
+5. [4. Method：完整译文、原图 Figure 2/4、KV 注入与训练讲解](04-Method.md) ✅
+6. 5. Experiments（下一单元）
 7. 6. Conclusion（待读）
 8. Appendix A（待读）
 
@@ -41,6 +41,17 @@
 ## Preliminaries 阅读小结
 
 已阅读 Section 3 的 3.1、3.2，形式化给出平均 Token 延迟 \(L=(T_{\mathrm{draft}}+T_{\mathrm{verify}})/\tau\)，比较顺序 Draft 的 \(T_{\mathrm{draft}}=\gamma t_{\mathrm{step}}\) 与扩散式 Draft 的 \(T_{\mathrm{draft}}=t_{\mathrm{parallel}}\)，并对原始 Figure 3 进行读图和推导。见 [03-Preliminaries.md](03-Preliminaries.md)，原图在论文 PDF 第 3 页，当前仓库未上传二进制裁图。下一节为 4. Method。
+
+## Method 阅读小结
+
+已完成 Section 4 的 4.1 Inference 和 4.2 Training：[完整译文及原图说明见章节笔记](04-Method.md)。关键机制包括：
+- Prefill 后提取目标模型多个层的隐藏状态，跨层融合。
+- 通过每层的 Key/Value 注入稳定条件信息，使草稿 Token 从缓存中查询目标上下文。
+- 一次 Forward 并行预测 Mask Block。
+- 随机 Anchor 和 Block-local 稀疏 Attention 使训练更符合推理行为，防止跨块标签泄漏。
+- 使用位置损失权重 \(w_k=\exp(-(k-1)/\gamma)\)，优先提高草稿块前部 Token 的准确性；式 (4) 的 \(\gamma\) 为衰减超参数，和 Block Size 不应混同。
+
+原始 [Figure 2（PDF 第 4 页）](https://arxiv.org/pdf/2602.06036v2#page=4) 与 [Figure 4（PDF 第 5 页）](https://arxiv.org/pdf/2602.06036v2#page=5) 已在聊天中裁图展示，当前 GitHub 使用原 PDF 来源链接，未存储 PNG 二进制。附录 A.3 的 KV 公式已交叉引用，但正式附录精读仍在后续。下一节为 **5. Experiments**。
 
 ## 相关论文（仅表示技术关联，不代表已精读）
 
