@@ -82,6 +82,10 @@ Section 6 Conclusion 已完成，Appendix A 亦已完成。
 - **图表溯源**：正文 Figure 1–4、Table 1–9 及附录 Figure 5、Table 10–13 均在各章节标注原始 PDF 页码；对话中已提取原图或原表。受当前接口限制，尚未将 PNG 二进制提交到 GitHub，因此不使用虚假的 figures/ 相对链接。
 - **阅读完成状态**：2026-10-13。下一步为用户指定的新论文，或针对 DFlash 复现/拓展研究的专项讨论。
 
+## 阅读问答
+
+- [Target Model 如何并行验证 Draft Token：Causal Attention、Logits 对齐、Longest Prefix、精确推测采样及 KV 回滚](questions.md)
+
 ## 相关论文（仅表示技术关联，不代表已精读）
 
 - [EAGLE-3](https://arxiv.org/abs/2503.01840)：基于隐藏特征的自回归草稿、树式验证
