@@ -4,16 +4,17 @@
   "title": "EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty",
   "source_pdf": "https://arxiv.org/pdf/2401.15077v3",
   "started_at": "2026-10-13",
-  "last_updated_at": "2026-10-13",
+  "last_updated_at": "2026-10-14",
   "completed_units": [
-    "Abstract"
+    "Abstract",
+    "1. Introduction"
   ],
-  "next_unit": "1. Introduction",
+  "next_unit": "2. Preliminaries",
   "read_position": {
-    "section": "Abstract",
+    "section": "1. Introduction",
     "status": "completed",
-    "next_section": "1. Introduction",
-    "pdf_page": 1
+    "next_section": "2. Preliminaries",
+    "pdf_page": 3
   },
   "figures": [
     {
@@ -23,11 +24,37 @@
       "extracted_in_chat": true,
       "github_binary_saved": false,
       "source_pdf": "https://arxiv.org/pdf/2401.15077v3#page=1"
+    },
+    {
+      "number": 2,
+      "pdf_page": 2,
+      "caption_translated": true,
+      "extracted_in_chat": true,
+      "github_binary_saved": false,
+      "source_pdf": "https://arxiv.org/pdf/2401.15077v3#page=2"
+    },
+    {
+      "number": 3,
+      "pdf_page": 2,
+      "caption_translated": true,
+      "extracted_in_chat": true,
+      "github_binary_saved": false,
+      "source_pdf": "https://arxiv.org/pdf/2401.15077v3#page=2"
+    },
+    {
+      "number": 4,
+      "pdf_page": 3,
+      "caption_translated": true,
+      "extracted_in_chat": true,
+      "github_binary_saved": false,
+      "source_pdf": "https://arxiv.org/pdf/2401.15077v3#page=3"
     }
   ],
   "saved_files": [
     "README.md",
-    "00-Abstract.md"
+    "00-Abstract.md",
+    "01-Introduction.md",
+    "../../论文知识索引.md"
   ],
   "complete": false
 }
