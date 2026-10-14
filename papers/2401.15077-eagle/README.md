@@ -27,8 +27,8 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 ## 章节导航与状态
 
 1. [Abstract：完整译文、Figure 1 原图图注与技术导读](00-Abstract.md) ✅
-2. 1. Introduction — ⏳ 下一阅读单元（含 Figure 2、3、4）
-3. 2. Preliminaries — 未读
+2. [1. Introduction：完整译文、Figure 2–4 图注与机制分析](01-Introduction.md) ✅
+3. 2. Preliminaries — ⏳ 下一阅读单元
 4. 3. EAGLE（3.1 Drafting、3.2 Training、3.3 Verification）— 未读
 5. 4. Experiments（4.1–4.4）— 未读
 6. 5. Related Work — 未读
@@ -39,11 +39,17 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 ## 原图存储状况
 
 - [Figure 1 原图：PDF 第 1 页](https://arxiv.org/pdf/2401.15077v3#page=1)：已在本次聊天中直接从 PDF 裁图展示。
-- 目前 GitHub 未存储 Figure 1 的 PNG 二进制。不得使用不存在的 figures/ 相对地址冒充原图。
+- [Figure 2 和 Figure 3 原图：PDF 第 2 页](https://arxiv.org/pdf/2401.15077v3#page=2)：已从原 PDF 提取，在对话中展示并完整翻译图注。
+- [Figure 4 原图：PDF 第 3 页](https://arxiv.org/pdf/2401.15077v3#page=3)：已从原 PDF 提取，在对话中展示并完整翻译图注。
+- 当前 GitHub 尚未存储 Figure 1–4 的 PNG 二进制；不使用不存在的 figures/ 相对地址冒充原图。
+
+## Introduction 阅读小结
+
+[Section 1 完整译文与讲解](01-Introduction.md) 包括传统小型 Draft 模型的成本、Lookahead/Medusa 对比、Figure 2 非贪心加速、Figure 3 特征分支的不确定性、Figure 4 Token/Feature/Feature+Shifted-Token 消融，以及条件方差和 Token 时间索引解释。原文报告：Feature 约 1.9× vs Token 约 1.5×；加 Shifted Token 后约 2.8×；单张 RTX 3090 + gpt-fast 的 LLaMA2-Chat 7B 为 160.4 tokens/s（原文实验，非普遍承诺）。
 
 ## 跨论文关联
 
 - [DFlash（仓库已精读）](../2602.06036-dflash/README.md)：EAGLE 的特征级自回归 Draft 与 DFlash 的 Block Diffusion 并行 Draft；复用 Target 隐藏状态与减少 Draft 串行成本。
 - [EAGLE-3](https://arxiv.org/abs/2503.01840)：后续版本，独立论文，不混同于本篇 EAGLE。
 
-**最近阅读：** 2026-10-13，Abstract 已完成，下一步 1. Introduction。
+**最近阅读：** 2026-10-14，Abstract 和 Section 1 Introduction 已完成；下一步 2. Preliminaries。
