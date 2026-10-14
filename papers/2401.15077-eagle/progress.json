@@ -7,13 +7,14 @@
   "last_updated_at": "2026-10-14",
   "completed_units": [
     "Abstract",
-    "1. Introduction"
+    "1. Introduction",
+    "2. Preliminaries"
   ],
-  "next_unit": "2. Preliminaries",
+  "next_unit": "3. EAGLE",
   "read_position": {
-    "section": "1. Introduction",
+    "section": "2. Preliminaries",
     "status": "completed",
-    "next_section": "2. Preliminaries",
+    "next_section": "3. EAGLE",
     "pdf_page": 3
   },
   "figures": [
@@ -54,7 +55,8 @@
     "README.md",
     "00-Abstract.md",
     "01-Introduction.md",
-    "../../论文知识索引.md"
+    "../../论文知识索引.md",
+    "02-Preliminaries.md"
   ],
   "complete": false
 }
