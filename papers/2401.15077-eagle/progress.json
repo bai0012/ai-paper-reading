@@ -8,14 +8,20 @@
   "completed_units": [
     "Abstract",
     "1. Introduction",
-    "2. Preliminaries"
+    "2. Preliminaries",
+    "3. EAGLE"
   ],
-  "next_unit": "3. EAGLE",
+  "next_unit": "4. Experiments",
   "read_position": {
-    "section": "2. Preliminaries",
+    "section": "3. EAGLE",
+    "subsections_completed": [
+      "3.1 Drafting phase",
+      "3.2 Training of the draft models",
+      "3.3 Verification phase"
+    ],
     "status": "completed",
-    "next_section": "3. EAGLE",
-    "pdf_page": 3
+    "next_section": "4. Experiments",
+    "pdf_page": 5
   },
   "figures": [
     {
@@ -49,6 +55,22 @@
       "extracted_in_chat": true,
       "github_binary_saved": false,
       "source_pdf": "https://arxiv.org/pdf/2401.15077v3#page=3"
+    },
+    {
+      "number": 5,
+      "pdf_page": 4,
+      "caption_translated": true,
+      "extracted_in_chat": true,
+      "github_binary_saved": false,
+      "source_pdf": "https://arxiv.org/pdf/2401.15077v3#page=4"
+    },
+    {
+      "number": 6,
+      "pdf_page": 4,
+      "caption_translated": true,
+      "extracted_in_chat": true,
+      "github_binary_saved": false,
+      "source_pdf": "https://arxiv.org/pdf/2401.15077v3#page=4"
     }
   ],
   "saved_files": [
@@ -56,7 +78,8 @@
     "00-Abstract.md",
     "01-Introduction.md",
     "../../论文知识索引.md",
-    "02-Preliminaries.md"
+    "02-Preliminaries.md",
+    "03-EAGLE.md"
   ],
   "complete": false
 }
