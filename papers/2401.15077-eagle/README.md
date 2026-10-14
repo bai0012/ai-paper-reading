@@ -29,8 +29,8 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 1. [Abstract：完整译文、Figure 1 原图图注与技术导读](00-Abstract.md) ✅
 2. [1. Introduction：完整译文、Figure 2–4 图注与机制分析](01-Introduction.md) ✅
 3. [2. Preliminaries：完整译文、接受概率、残差分布与严格证明](02-Preliminaries.md) ✅
-4. 3. EAGLE（3.1 Drafting、3.2 Training、3.3 Verification）— ⏳ 下一阅读单元
-5. 4. Experiments（4.1–4.4）— 未读
+4. [3. EAGLE：完整译文、Figure 5/6、网络结构、双损失与树式验证](03-EAGLE.md) ✅
+5. 4. Experiments（4.1–4.4）— ⏳ 下一阅读单元
 6. 5. Related Work — 未读
 7. 6. Conclusion — 未读
 8. Appendix A（A.1 Tree Structure、A.2 Multi-Round Speculative Sampling）— 未读
@@ -41,7 +41,8 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 - [Figure 1 原图：PDF 第 1 页](https://arxiv.org/pdf/2401.15077v3#page=1)：已在本次聊天中直接从 PDF 裁图展示。
 - [Figure 2 和 Figure 3 原图：PDF 第 2 页](https://arxiv.org/pdf/2401.15077v3#page=2)：已从原 PDF 提取，在对话中展示并完整翻译图注。
 - [Figure 4 原图：PDF 第 3 页](https://arxiv.org/pdf/2401.15077v3#page=3)：已从原 PDF 提取，在对话中展示并完整翻译图注。
-- 当前 GitHub 尚未存储 Figure 1–4 的 PNG 二进制；不使用不存在的 figures/ 相对地址冒充原图。
+- [Figure 5 与 Figure 6 原图：PDF 第 4 页](https://arxiv.org/pdf/2401.15077v3#page=4)：已在本次对话裁图展示，并在 [Section 3](03-EAGLE.md) 完整翻译图注。
+- 当前 GitHub 尚未存储 Figure 1–6 的 PNG 二进制；使用原 PDF 图页链接，不使用不存在的 figures/ 相对地址冒充原图。
 
 ## Introduction 阅读小结
 
@@ -51,9 +52,13 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 
 [Section 2 完整译文与数学推导](02-Preliminaries.md)：明确符号 $t,e,f,p,T_{i:j}$ 和 Target/Draft；标准 Speculative Sampling 在一次目标模型 Causal Forward 中得到候选位置分布，再依次以 $\min(1,p/q)$ 接受草稿，第一次拒绝后依据 $\mathrm{norm}([p-q]_+)$ 补足概率质量，丢弃后续草稿。独立证明 $q(x)a(x)+(1-\alpha)r(x)=p(x)$，推导 $\alpha=1-\mathrm{TV}(p,q)$，提供三 Token 样例、PyTorch 例程及多 Token 条件正确性的解释；注意 Section 3 和 Appendix A.2 的树状验证与本节基础链式算法不同。本节 PDF 第 3 页无新增 Figure/Table。
 
+## EAGLE 方法精读小结
+
+[Section 3 完整译文、原图与技术分析](03-EAGLE.md)：Figure 5 比较 Speculative Sampling、Lookahead、Medusa 与 EAGLE，Figure 6 用 3 次 Draft Forward 构造 10 Token 的示例树；历史 Target Features 与提前一时间步的 Token Embedding 拼接后经 FC+单层 Decoder 预测 Feature，共享冻结的 Target Embedding/LM Head。训练损失为 Smooth L1 回归 + 0.1×软标签分类 Cross Entropy，特征噪声为 U(-0.1,0.1)；Tree Attention 使 Target 用一次 Forward 评估整棵草稿树，再递归应用精确推测采样，接受的 Token 和对应 Target Feature 用于下一轮草稿。详细树结构和多轮推测算法见待读 Appendix A.1/A.2。
+
 ## 跨论文关联
 
 - [DFlash（仓库已精读）](../2602.06036-dflash/README.md)：EAGLE 的特征级自回归 Draft 与 DFlash 的 Block Diffusion 并行 Draft；复用 Target 隐藏状态与减少 Draft 串行成本。
 - [EAGLE-3](https://arxiv.org/abs/2503.01840)：后续版本，独立论文，不混同于本篇 EAGLE。
 
-**最近阅读：** 2026-10-14，Abstract、Section 1 Introduction 和 Section 2 Preliminaries 已完成；下一步 Section 3 EAGLE。
+**最近阅读：** 2026-10-14，Abstract、Section 1、Section 2 与 Section 3 EAGLE 已完成；下一步 Section 4 Experiments。
