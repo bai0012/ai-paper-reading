@@ -4,24 +4,28 @@
   "title": "EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty",
   "source_pdf": "https://arxiv.org/pdf/2401.15077v3",
   "started_at": "2026-10-13",
-  "last_updated_at": "2026-10-14",
+  "last_updated_at": "2026-10-16",
   "completed_units": [
     "Abstract",
     "1. Introduction",
     "2. Preliminaries",
-    "3. EAGLE"
+    "3. EAGLE",
+    "4. Experiments"
   ],
-  "next_unit": "4. Experiments",
+  "next_unit": "5. Related Work",
   "read_position": {
-    "section": "3. EAGLE",
+    "section": "4. Experiments",
     "subsections_completed": [
-      "3.1 Drafting phase",
-      "3.2 Training of the draft models",
-      "3.3 Verification phase"
+      "4.1 Effectiveness",
+      "4.2 Case study: EAGLE + gpt-fast",
+      "4.3.1 Tree Attention",
+      "4.3.2 Inputs of draft models",
+      "4.3.3 Training data",
+      "4.4 Batch size and throughput"
     ],
     "status": "completed",
-    "next_section": "4. Experiments",
-    "pdf_page": 5
+    "next_section": "5. Related Work",
+    "pdf_page": 8
   },
   "figures": [
     {
@@ -71,6 +75,22 @@
       "extracted_in_chat": true,
       "github_binary_saved": false,
       "source_pdf": "https://arxiv.org/pdf/2401.15077v3#page=4"
+    },
+    {
+      "number": 7,
+      "pdf_page": 7,
+      "caption_translated": true,
+      "extracted_in_chat": true,
+      "github_binary_saved": false,
+      "source_pdf": "https://arxiv.org/pdf/2401.15077v3#page=7"
+    },
+    {
+      "number": 8,
+      "pdf_page": 8,
+      "caption_translated": true,
+      "extracted_in_chat": true,
+      "github_binary_saved": false,
+      "source_pdf": "https://arxiv.org/pdf/2401.15077v3#page=8"
     }
   ],
   "saved_files": [
@@ -79,7 +99,66 @@
     "01-Introduction.md",
     "../../论文知识索引.md",
     "02-Preliminaries.md",
-    "03-EAGLE.md"
+    "03-EAGLE.md",
+    "04-Experiments.md"
   ],
-  "complete": false
+  "complete": false,
+  "tables": [
+    {
+      "number": 1,
+      "pdf_page": 6,
+      "caption_translated": true,
+      "all_data_saved_in": "04-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 2,
+      "pdf_page": 6,
+      "caption_translated": true,
+      "all_data_saved_in": "04-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 3,
+      "pdf_page": 6,
+      "caption_translated": true,
+      "all_data_saved_in": "04-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 4,
+      "pdf_page": 6,
+      "caption_translated": true,
+      "all_data_saved_in": "04-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 5,
+      "pdf_page": 7,
+      "caption_translated": true,
+      "all_data_saved_in": "04-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 6,
+      "pdf_page": 7,
+      "caption_translated": true,
+      "all_data_saved_in": "04-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    },
+    {
+      "number": 7,
+      "pdf_page": 8,
+      "caption_translated": true,
+      "all_data_saved_in": "04-Experiments.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false
+    }
+  ]
 }
