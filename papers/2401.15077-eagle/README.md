@@ -30,8 +30,8 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 2. [1. Introduction：完整译文、Figure 2–4 图注与机制分析](01-Introduction.md) ✅
 3. [2. Preliminaries：完整译文、接受概率、残差分布与严格证明](02-Preliminaries.md) ✅
 4. [3. EAGLE：完整译文、Figure 5/6、网络结构、双损失与树式验证](03-EAGLE.md) ✅
-5. 4. Experiments（4.1–4.4）— ⏳ 下一阅读单元
-6. 5. Related Work — 未读
+5. [4. Experiments：完整译文、Table 1–7、Figure 7–8、消融与吞吐](04-Experiments.md) ✅
+6. 5. Related Work — ⏳ 下一阅读单元
 7. 6. Conclusion — 未读
 8. Appendix A（A.1 Tree Structure、A.2 Multi-Round Speculative Sampling）— 未读
 9. Appendix B（详细实验结果）— 未读
@@ -42,7 +42,8 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 - [Figure 2 和 Figure 3 原图：PDF 第 2 页](https://arxiv.org/pdf/2401.15077v3#page=2)：已从原 PDF 提取，在对话中展示并完整翻译图注。
 - [Figure 4 原图：PDF 第 3 页](https://arxiv.org/pdf/2401.15077v3#page=3)：已从原 PDF 提取，在对话中展示并完整翻译图注。
 - [Figure 5 与 Figure 6 原图：PDF 第 4 页](https://arxiv.org/pdf/2401.15077v3#page=4)：已在本次对话裁图展示，并在 [Section 3](03-EAGLE.md) 完整翻译图注。
-- 当前 GitHub 尚未存储 Figure 1–6 的 PNG 二进制；使用原 PDF 图页链接，不使用不存在的 figures/ 相对地址冒充原图。
+- [Figure 7 原图：PDF 第 7 页](https://arxiv.org/pdf/2401.15077v3#page=7)、[Figure 8 原图：PDF 第 8 页](https://arxiv.org/pdf/2401.15077v3#page=8)：已在本次对话裁图并完整翻译图注。Table 1–4 位于 PDF 第 6 页、Table 5–6 位于第 7 页、Table 7 位于第 8 页；聊天已提取原表，章节笔记保存完整数字。
+- 当前 GitHub 尚未存储 Figure 1–8 与 Table 1–7 的 PNG 二进制；使用原 PDF 图页链接，不使用不存在的 figures/ 相对地址冒充原图。
 
 ## Introduction 阅读小结
 
@@ -56,9 +57,13 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 
 [Section 3 完整译文、原图与技术分析](03-EAGLE.md)：Figure 5 比较 Speculative Sampling、Lookahead、Medusa 与 EAGLE，Figure 6 用 3 次 Draft Forward 构造 10 Token 的示例树；历史 Target Features 与提前一时间步的 Token Embedding 拼接后经 FC+单层 Decoder 预测 Feature，共享冻结的 Target Embedding/LM Head。训练损失为 Smooth L1 回归 + 0.1×软标签分类 Cross Entropy，特征噪声为 U(-0.1,0.1)；Tree Attention 使 Target 用一次 Forward 评估整棵草稿树，再递归应用精确推测采样，接受的 Token 和对应 Target Feature 用于下一轮草稿。详细树结构和多轮推测算法见待读 Appendix A.1/A.2。
 
+## Experiments 阅读小结
+
+[Section 4 全部译文和 Table 1–7 / Figure 7–8](04-Experiments.md) 已完成：HumanEval、GSM8K、Alpaca 上 T=0/1 加速与平均接受长度；MT-bench 的 $0\text{-}\alpha$ 至 $4\text{-}\alpha$、Mixtral 8x7B 的 1.50× 与 MoE 权重路由开销；RTX 3090 上 EAGLE+gpt-fast int4 达 160.4 tokens/s；Tree Attention 提高平均接受长度约 0.6–0.8、加速比约 0.3–0.5；Feature+Shifted Token 消融优于 Token/Feature/Unshifted Token；Target 生成数据 2.88× vs 固定 ShareGPT 2.78×；不同 Batch Size 与最大吞吐约 1.97×/1.99×。完整测试条件、原始表格和解释边界见章节文件。
+
 ## 跨论文关联
 
 - [DFlash（仓库已精读）](../2602.06036-dflash/README.md)：EAGLE 的特征级自回归 Draft 与 DFlash 的 Block Diffusion 并行 Draft；复用 Target 隐藏状态与减少 Draft 串行成本。
 - [EAGLE-3](https://arxiv.org/abs/2503.01840)：后续版本，独立论文，不混同于本篇 EAGLE。
 
-**最近阅读：** 2026-10-14，Abstract、Section 1、Section 2 与 Section 3 EAGLE 已完成；下一步 Section 4 Experiments。
+**最近阅读：** 2026-10-16，Abstract、Section 1–4 已完成；下一步 Section 5 Related Work。
