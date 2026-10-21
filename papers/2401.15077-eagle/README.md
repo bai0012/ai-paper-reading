@@ -32,8 +32,8 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 4. [3. EAGLE：完整译文、Figure 5/6、网络结构、双损失与树式验证](03-EAGLE.md) ✅
 5. [4. Experiments：完整译文、Table 1–7、Figure 7–8、消融与吞吐](04-Experiments.md) ✅
 6. [5. Related Work：完整译文及 Medusa、Lookahead、SpecInfer、Self-Speculative 与传统推测采样对比](05-Related-Work.md) ✅
-7. 6. Conclusion — ⏳ 下一阅读单元
-8. Appendix A（A.1 Tree Structure、A.2 Multi-Round Speculative Sampling）— 未读
+7. [6. Conclusion：完整译文、方法贡献、实验边界与 DFlash 关联](06-Conclusion.md) ✅
+8. Appendix A（A.1 Tree Structure、A.2 Multi-Round Speculative Sampling）— ⏳ 下一阅读单元
 9. Appendix B（详细实验结果）— 未读
 
 ## 原图存储状况
@@ -65,9 +65,13 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 
 [Section 5 全文译文与技术谱系](05-Related-Work.md)：按原文顺序完成三个段落（PDF 第 8–9 页），归纳知识蒸馏/量化/剪枝与 Speculative Decoding 的不同优化层级，区分严格分布保持的标准推测采样和 DistillSpec/BiLD/Medusa 某些放宽接受规则；系统比较标准 Speculative Sampling、小模型草稿、Self-Speculative 跳层、SpecInfer 树验证、Medusa 多头预测、Lookahead 的 Jacobi+n-gram、Cascade/Staged/Online、REST 与 LLMA。**EAGLE 的独特重点是 Feature-level autoregressive Draft + Shifted Token，而非首次提出 Tree Attention。** 本节没有新 Figure/Table。论文原句“do not employ a separate target LLM”已照字面翻译，同时标注与这些方法实际使用 Target 主模型的术语不一致。
 
+## Conclusion 阅读小结
+
+[Section 6 全文译文与独立综合评述](06-Conclusion.md) 已完成（原始 PDF 第 9 页，Section 6 仅一个自然段）。作者总结 EAGLE 在倒数第二层 Feature 空间的自回归 Draft 和提前一个时间步的 Shifted Token 如何缓解采样不确定性，并强调正确推测采样的分布保持。Conclusion 声称 MT-bench 相比 Vanilla 2.1–3.8×、Lookahead 1.7–2.1×、Medusa 1.5–1.6×；需注意 MT-bench Figure 1/2 的标注没有直接展示 3.8×，而 HumanEval Table 1 有 3.76×，所以在章节中特别记录了**作者结论的范围与图表归属未完全一致**。本节无新图表和公式；局限性、Serving/长上下文缺口、MoE 1.5×、Draft 串行深度、Tree 额外开销、EAGLE 与 DFlash 的区别均属于**独立分析**，不是作者在 Conclusion 中明确列出的 Limitations/未来计划。
+
 ## 跨论文关联
 
 - [DFlash（仓库已精读）](../2602.06036-dflash/README.md)：EAGLE 的特征级自回归 Draft 与 DFlash 的 Block Diffusion 并行 Draft；复用 Target 隐藏状态与减少 Draft 串行成本。
 - [EAGLE-3](https://arxiv.org/abs/2503.01840)：后续版本，独立论文，不混同于本篇 EAGLE。
 
-**最近阅读：** 2026-10-21，Abstract、Section 1–5 已完成；下一步 Section 6 Conclusion。
+**最近阅读：** 2026-10-21，Abstract、Sections 1–6 正文全部完成；下一步 Appendix A.1 Tree Structure 与 A.2 Multi-Round Speculative Sampling。
