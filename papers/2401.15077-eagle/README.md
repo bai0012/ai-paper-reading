@@ -31,8 +31,8 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 3. [2. Preliminaries：完整译文、接受概率、残差分布与严格证明](02-Preliminaries.md) ✅
 4. [3. EAGLE：完整译文、Figure 5/6、网络结构、双损失与树式验证](03-EAGLE.md) ✅
 5. [4. Experiments：完整译文、Table 1–7、Figure 7–8、消融与吞吐](04-Experiments.md) ✅
-6. 5. Related Work — ⏳ 下一阅读单元
-7. 6. Conclusion — 未读
+6. [5. Related Work：完整译文及 Medusa、Lookahead、SpecInfer、Self-Speculative 与传统推测采样对比](05-Related-Work.md) ✅
+7. 6. Conclusion — ⏳ 下一阅读单元
 8. Appendix A（A.1 Tree Structure、A.2 Multi-Round Speculative Sampling）— 未读
 9. Appendix B（详细实验结果）— 未读
 
@@ -61,9 +61,13 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 
 [Section 4 全部译文和 Table 1–7 / Figure 7–8](04-Experiments.md) 已完成：HumanEval、GSM8K、Alpaca 上 T=0/1 加速与平均接受长度；MT-bench 的 $0\text{-}\alpha$ 至 $4\text{-}\alpha$、Mixtral 8x7B 的 1.50× 与 MoE 权重路由开销；RTX 3090 上 EAGLE+gpt-fast int4 达 160.4 tokens/s；Tree Attention 提高平均接受长度约 0.6–0.8、加速比约 0.3–0.5；Feature+Shifted Token 消融优于 Token/Feature/Unshifted Token；Target 生成数据 2.88× vs 固定 ShareGPT 2.78×；不同 Batch Size 与最大吞吐约 1.97×/1.99×。完整测试条件、原始表格和解释边界见章节文件。
 
+## Related Work 阅读小结
+
+[Section 5 全文译文与技术谱系](05-Related-Work.md)：按原文顺序完成三个段落（PDF 第 8–9 页），归纳知识蒸馏/量化/剪枝与 Speculative Decoding 的不同优化层级，区分严格分布保持的标准推测采样和 DistillSpec/BiLD/Medusa 某些放宽接受规则；系统比较标准 Speculative Sampling、小模型草稿、Self-Speculative 跳层、SpecInfer 树验证、Medusa 多头预测、Lookahead 的 Jacobi+n-gram、Cascade/Staged/Online、REST 与 LLMA。**EAGLE 的独特重点是 Feature-level autoregressive Draft + Shifted Token，而非首次提出 Tree Attention。** 本节没有新 Figure/Table。论文原句“do not employ a separate target LLM”已照字面翻译，同时标注与这些方法实际使用 Target 主模型的术语不一致。
+
 ## 跨论文关联
 
 - [DFlash（仓库已精读）](../2602.06036-dflash/README.md)：EAGLE 的特征级自回归 Draft 与 DFlash 的 Block Diffusion 并行 Draft；复用 Target 隐藏状态与减少 Draft 串行成本。
 - [EAGLE-3](https://arxiv.org/abs/2503.01840)：后续版本，独立论文，不混同于本篇 EAGLE。
 
-**最近阅读：** 2026-10-16，Abstract、Section 1–4 已完成；下一步 Section 5 Related Work。
+**最近阅读：** 2026-10-21，Abstract、Section 1–5 已完成；下一步 Section 6 Conclusion。
