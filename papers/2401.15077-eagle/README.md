@@ -34,7 +34,11 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 6. [5. Related Work：完整译文及 Medusa、Lookahead、SpecInfer、Self-Speculative 与传统推测采样对比](05-Related-Work.md) ✅
 7. [6. Conclusion：完整译文、方法贡献、实验边界与 DFlash 关联](06-Conclusion.md) ✅
 8. [Appendix A：A.1 Tree Structure、Figure 9、A.2 Multi-Round Speculative Sampling 与 Algorithm 1](Appendix-A.md) ✅
-9. Appendix B（详细实验结果、Table 8）— ⏳ 下一阅读单元
+9. [Appendix B：详细实验结果与 Table 8 全部 18 行数据](Appendix-B.md) ✅
+
+**全文综合总结：** [summary.md](summary.md)（全部章节核心贡献、数学机制、实验与证据边界、复现路线、与 DFlash 的跨论文关联）。
+
+**阅读状态：** ✅ 全文精读完成（2026-10-23），包括 Abstract、Sections 1–6、Appendix A.1/A.2、Appendix B，Figure 1–9、Table 1–8 和 Algorithm 1。
 
 ## 原图存储状况
 
@@ -44,7 +48,8 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 - [Figure 5 与 Figure 6 原图：PDF 第 4 页](https://arxiv.org/pdf/2401.15077v3#page=4)：已在本次对话裁图展示，并在 [Section 3](03-EAGLE.md) 完整翻译图注。
 - [Figure 7 原图：PDF 第 7 页](https://arxiv.org/pdf/2401.15077v3#page=7)、[Figure 8 原图：PDF 第 8 页](https://arxiv.org/pdf/2401.15077v3#page=8)：已在本次对话裁图并完整翻译图注。Table 1–4 位于 PDF 第 6 页、Table 5–6 位于第 7 页、Table 7 位于第 8 页；聊天已提取原表，章节笔记保存完整数字。
 - [Figure 9（PDF 第 12 页）](https://arxiv.org/pdf/2401.15077v3#page=12) 与 [Algorithm 1（PDF 第 13 页）](https://arxiv.org/pdf/2401.15077v3#page=13)：均已在当前对话从原版 PDF 裁图展示，完整翻译；Algorithm 1 的残差更新公式印刷为标量差，笔记中保留原式并解释数学上的向量式修正。
-- 当前 GitHub 尚未存储 Figure 1–9、Algorithm 1 和 Table 1–7 的 PNG 二进制；使用原 PDF 页码链接，不使用不存在的 figures/ 相对地址冒充原图。
+- [Table 8 原表：PDF 第 13 页](https://arxiv.org/pdf/2401.15077v3#page=13)：本次已直接从用户原始 PDF 提取完整裁图，在对话中显示，完整 18 行数字收录于 [Appendix B](Appendix-B.md)。
+- 当前 GitHub 尚未存储 Figure 1–9、Algorithm 1 和 Table 1–8 的 PNG 二进制；完整译文及表格数值已保存，图像均给出原 PDF 精确页码链接，不使用不存在的 figures/ 路径。
 
 ## Introduction 阅读小结
 
@@ -74,9 +79,13 @@ LLaMA2-Chat 70B 报告约 2.7–3.5× 延迟加速和约 2× 吞吐增益。实�
 
 [Appendix A 完整译文、Figure 9、Algorithm 1 与严格采样推导](Appendix-A.md) 已完成：作者在 Figure 9 采用非均匀分叉树，高概率分支更深更宽，根节点 k=4；无论 Tree/Chain，正式实验草稿阶段各执行 5 次 Draft Forward，Target 验证 1 次 Forward。树结构凭经验选择、未严格优化，Batch 较大时小树可能更佳。A.2 对同一位置多个候选进行多轮验收，每次拒绝后进一步尝试候选，全部拒绝后再抽残差。**重要核对：v3 Algorithm 1 印刷的残差更新为 `norm(max(0,p(t_i)−p_hat_i(t_i)))`，这是标量而非词表分布**；章节严格保留原式，并在额外分析中推导合法条件提议分布前提下的向量修正规则 `norm([p−q_i]_+)` 与分布守恒证明。Figure 9/Algorithm 1 原 PNG 在对话展示，未上传 GitHub 的图像二进制不能标记已存。下一节 Appendix B。
 
+## Appendix B 阅读小结
+
+[Appendix B 完整翻译和 Table 8 全部数据](Appendix-B.md) 与 PDF 第 12–13 页对应：原文仅一自然段和一张表，列出 HumanEval/GSM8K/Alpaca、6 个 Target 模型、T=0 的 Speedup、平均接受长度及 0-α 至 4-α。原始 18 行均已保留。对每项任务的 6 模型做不加权算术平均：HumanEval 3.505× / τ 4.3567，GSM8K 3.080× / τ 3.9483，Alpaca 2.925× / τ 3.7883（为独立后处理，不是论文另报的聚合指标）。0-α→1-α 通常降幅较大，而后续 α 并非严格单调；原表没有置信区间与显著性检验。Table 8 重列正文 Table 1 中 T=0 的速度与 τ，并补充详细接受率。完整理论、实验、局限、复现建议见 [summary.md](summary.md)。
+
 ## 跨论文关联
 
 - [DFlash（仓库已精读）](../2602.06036-dflash/README.md)：EAGLE 的特征级自回归 Draft 与 DFlash 的 Block Diffusion 并行 Draft；复用 Target 隐藏状态与减少 Draft 串行成本。
 - [EAGLE-3](https://arxiv.org/abs/2503.01840)：后续版本，独立论文，不混同于本篇 EAGLE。
 
-**最近阅读：** 2026-10-23，Abstract、Sections 1–6 及 Appendix A 已完成；下一步 Appendix B Detailed experimental results。
+**最近阅读：** 2026-10-23，Abstract、Sections 1–6、Appendix A/B 均已完成；[全文总结](summary.md) 已生成。
