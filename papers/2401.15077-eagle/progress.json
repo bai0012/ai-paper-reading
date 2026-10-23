@@ -13,25 +13,17 @@
     "4. Experiments",
     "5. Related Work",
     "6. Conclusion",
-    "Appendix A"
+    "Appendix A",
+    "Appendix B"
   ],
-  "next_unit": "Appendix B",
+  "next_unit": null,
   "read_position": {
-    "section": "Appendix A",
-    "subsections_completed": [
-      "A.1 Tree Structure",
-      "A.2 Multi-Round Speculative Sampling"
-    ],
-    "algorithm_completed": [
-      "Algorithm 1 Multi-round speculative sampling"
-    ],
-    "figures_completed": [
-      9
-    ],
+    "section": "Appendix B Detailed experimental results",
     "status": "completed",
-    "next_section": "Appendix B Detailed experimental results",
-    "next_pdf_page": 12,
-    "pdf_page": 13
+    "pdf_page": 13,
+    "end_of_paper": true,
+    "table_completed": 8,
+    "all_sections_and_appendices_complete": true
   },
   "figures": [
     {
@@ -117,9 +109,11 @@
     "04-Experiments.md",
     "05-Related-Work.md",
     "06-Conclusion.md",
-    "Appendix-A.md"
+    "Appendix-A.md",
+    "Appendix-B.md",
+    "summary.md"
   ],
-  "complete": false,
+  "complete": true,
   "tables": [
     {
       "number": 1,
@@ -176,11 +170,28 @@
       "all_data_saved_in": "04-Experiments.md",
       "original_crop_in_chat": true,
       "github_binary_saved": false
+    },
+    {
+      "number": 8,
+      "pdf_page": 13,
+      "caption_translated": true,
+      "all_data_saved_in": "Appendix-B.md",
+      "original_crop_in_chat": true,
+      "github_binary_saved": false,
+      "rows": 18,
+      "datasets": [
+        "HumanEval",
+        "GSM8K",
+        "Alpaca"
+      ],
+      "temperature": 0
     }
   ],
   "notes": {
     "conclusion": "Section 6 one paragraph translated and analyzed; speedup range 2.1–3.8x attributed to MT-bench in Conclusion is not explicitly matched by Figure 1/2 labels; 3.76x is shown in HumanEval Table 1. Limitations and DFlash links are independent analysis, not verbatim Section 6.",
-    "appendix_a": "A.1/A.2 complete. Figure 9 and Algorithm 1 originals cropped from attached PDF into chat, not uploaded to GitHub. Algorithm 1 scalar residual type inconsistency preserved and explained; exact multi-round proof requires valid conditional proposal law. Final summary deferred until Appendix B."
+    "appendix_a": "A.1/A.2 complete. Figure 9 and Algorithm 1 originals cropped from attached PDF into chat, not uploaded to GitHub. Algorithm 1 scalar residual type inconsistency preserved and explained; exact multi-round proof requires valid conditional proposal law. Final summary deferred until Appendix B.",
+    "appendix_b": "Section B and Table 8 (18 rows, all speedup/tau/0-alpha..4-alpha fields) complete; full table original crop displayed in chat, PNG binary not in GitHub.",
+    "completion": "Abstract, Sections 1-6, Appendix A.1/A.2 and Appendix B all completed, all 9 figures, 8 tables and Algorithm 1 documented with original PDF sources; summary.md, README.md and root knowledge index updated. Remaining asset gap: binary figure/table PNGs have not been committed; do not claim they are hosted in the repo."
   },
   "algorithms": [
     {
@@ -192,5 +203,8 @@
       "github_binary_saved": false,
       "notes": "Original pseudocode uses scalar p(t_i)-p_hat_i(t_i) in residual update, which cannot represent a token distribution. See Appendix-A.md for mathematically well-typed vector residual and conditional-proposal proof."
     }
-  ]
+  ],
+  "completion_date": "2026-10-23",
+  "summary_saved": true,
+  "knowledge_index_updated": true
 }
