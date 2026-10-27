@@ -8,15 +8,18 @@
   "last_updated_at": "2026-10-27",
   "completed_units": [
     "Abstract",
-    "1. Introduction"
+    "1. Introduction",
+    "2.1 Key Components",
+    "2.1.1 Medusa Heads",
+    "2.1.2 Tree Attention"
   ],
-  "next_unit": "2.1 Key Components (2.1.1 Medusa Heads; 2.1.2 Tree Attention)",
+  "next_unit": "2.2 Training Strategies (2.2.1 Medusa-1; 2.2.2 Medusa-2; 2.2.3 How to Select the Number of Heads)",
   "read_position": {
-    "section": "1. Introduction",
+    "section": "2.1.2 Tree Attention",
     "status": "completed",
-    "pdf_page": 2,
+    "pdf_page": 4,
     "end_of_paper": false,
-    "figure_completed": 1
+    "figure_completed": 2
   },
   "figures": [
     {
@@ -26,6 +29,14 @@
       "github_binary_saved": false,
       "caption_translated": true,
       "caption_saved_in": "01-Introduction.md"
+    },
+    {
+      "number": 2,
+      "pdf_page": 4,
+      "original_crop_in_chat": true,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "02-Key-Components.md"
     }
   ],
   "saved_files": [
@@ -33,12 +44,14 @@
     "00-Abstract.md",
     "progress.json",
     "../../论文知识索引.md",
-    "01-Introduction.md"
+    "01-Introduction.md",
+    "02-Key-Components.md"
   ],
   "complete": false,
   "notes": {
     "abstract": "Full v3 abstract translated; distinctions between typical acceptance and exact distribution explained. Intro and Figure 1 full caption now completed in 01-Introduction.md.",
     "version_discrepancy": "arXiv abstract metadata elsewhere reports a different upper speedup figure; v3 PDF reports Medusa-2 2.3–2.8x.",
-    "introduction": "Completed six original paragraphs + footnote and full Figure 1 caption. Explained memory-bandwidth roofline, logits conditioning, tree attention, acceptance distribution guarantees, Medusa-1/2, and comparisons to EAGLE/DFlash. Original PDF figure cropped into chat only, not committed as PNG."
+    "introduction": "Completed six original paragraphs + footnote and full Figure 1 caption. Explained memory-bandwidth roofline, logits conditioning, tree attention, acceptance distribution guarantees, Medusa-1/2, and comparisons to EAGLE/DFlash. Original PDF figure cropped into chat only, not committed as PNG.",
+    "section_2_1": "Full translated 2.1.1/2.1.2 and Section 2 opening; PDF p.3-4, Figure 2 original cropped in chat only; 6 candidates, 8 nodes, 14 allowed query-key pairs; W2 printed d×V inconsistent with left multiplication, original preserved and mathematically corrected analysis added. Next 2.2."
   }
 }
