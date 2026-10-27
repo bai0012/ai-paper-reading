@@ -28,7 +28,7 @@
 2. [1. Introduction：六段完整译文、Figure 1 全图注、带宽与多头推理分析](01-Introduction.md) ✅
 3. 2. Methodology（部分完成）
    - [2.1 Key Components：Medusa Heads / Tree Attention 与 Figure 2 完整解析](02-Key-Components.md) ✅
-   - 2.2 Training Strategies：Medusa-1 / Medusa-2 / Head 数量选择
+   - [2.2 Training Strategies：完整译文、公式 (1)(2)、Heads Warmup、PyTorch 示例](03-Training-Strategies.md) ✅
    - 2.3 Extensions：Typical Acceptance / Self-Distillation / Optimized Tree
 4. 3. Experiments（待阅读；Figure 3–5，Table 1–3）
    - 3.1 Vicuna-7B/13B；3.2 Vicuna-33B/Zephyr-7B；3.3 Ablation
@@ -53,10 +53,14 @@
 
 [2.1.1 与 2.1.2 完整译文、原 Figure 2 和全部技术推导](02-Key-Components.md) 已完成（PDF 第 3–4 页）。重点分析 Medusa Head 的 $K$ 个时间索引、$W_1/W_2$ 权重初始化与残差；**v3 PDF 原公式声明 $W_2\in\mathbb R^{d\times V}$，与 $W_2(\cdots)$ 的左乘记法不一致**，章节完整保留原式并给出列向量/行向量两种自洽实现。Figure 2 六条候选路径、八个新增 Token 树节点、14 个 Tree Mask 可见关系，推导 $N=\sum_{k=1}^K\prod_{i=1}^ks_i$、祖先 Attention Mask、重复 Token 的分支区别及 Position IDs。**Figure 2 原图已在对话中由用户 PDF 裁取展示，GitHub 仍未保存 PNG 二进制。** 下一单元是 Section 2.2。
 
+## Section 2.2 Training Strategies 精读小结
+
+[Section 2.2 全部译文及公式 (1)(2) 推导](03-Training-Strategies.md) 已完成：2.2.1 Medusa-1 冻结 Backbone，用偏移 $k+1$ 的交叉熵监督未来 Token，采用 $\lambda_k=0.8^k$；2.2.2 Medusa-2 在原 LM Loss 基础上增加 $\lambda_0\mathcal L_{\mathrm{MEDUSA-1}}$，采用差异化学习率、Heads Warmup 与两阶段训练；2.2.3 建议训练 5 个 Heads，推理可只使用其中 3–4 个。**原文 Warmup 中将 $\lambda_0$ 称为 Backbone Loss 的权重，但式 (2) 将其乘在 Medusa Loss 上；章节忠实保留原句并指出不一致。** Appendix B 佐证 Vicuna-7B/13B 参数设置为 5 Heads、QLoRA、4 倍 Head LR、$\lambda_0=0.2$。提供[已测试 PyTorch 教学代码](examples/medusa_training_example.py)，验证 Backbone 冻结/联合训练时梯度行为（代码不是官方实现）。本节无新 Figure/Table。下一单元 Section 2.3 Extensions。
+
 ## 已读论文关联
 
 - [EAGLE](../2401.15077-eagle/README.md)：用 Feature-level autoregression + Shifted Token 提高 Draft 准确率，Target 树状验证。
 - [DFlash](../2602.06036-dflash/README.md)：使用目标多层隐藏特征条件化的 Block Diffusion，一次前向并行预测一整个草稿块。
 - Medusa 与二者共通之处是通过一次目标验证评估多个候选；主要不同在于 Medusa 直接利用多个 Token Heads 预测不同未来位置，且 Typical Acceptance 可不严格保持原采样分布。
 
-**当前阅读状态：** Abstract + Section 1 Introduction + Section 2.1 Key Components 完成（2026-10-27），下一单元 Section 2.2 Training Strategies（2.2.1、2.2.2、2.2.3）。
+**当前阅读状态：** Abstract、Introduction、Section 2.1 与 Section 2.2 Training Strategies 已完成（2026-10-27），下一单元 Section 2.3 Extensions（2.3.1 Typical Acceptance、2.3.2 Self-Distillation、2.3.3 Optimized Tree Construction）。
