@@ -1,0 +1,39 @@
+{
+  "arxiv_id": "2401.10774",
+  "version": "v3",
+  "title": "Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads",
+  "source_pdf": "https://arxiv.org/pdf/2401.10774v3",
+  "source_html": "https://arxiv.org/html/2401.10774v3",
+  "started_at": "2026-10-27",
+  "last_updated_at": "2026-10-27",
+  "completed_units": [
+    "Abstract"
+  ],
+  "next_unit": "1. Introduction",
+  "read_position": {
+    "section": "Abstract",
+    "status": "completed",
+    "pdf_page": 1,
+    "end_of_paper": false
+  },
+  "figures": [
+    {
+      "number": 1,
+      "pdf_page": 2,
+      "original_crop_in_chat": true,
+      "github_binary_saved": false,
+      "caption_translated": false
+    }
+  ],
+  "saved_files": [
+    "README.md",
+    "00-Abstract.md",
+    "progress.json",
+    "../../论文知识索引.md"
+  ],
+  "complete": false,
+  "notes": {
+    "abstract": "Full v3 abstract translated; distinctions between typical acceptance and exact distribution explained. Intro and Figure 1 full caption pending.",
+    "version_discrepancy": "arXiv abstract metadata elsewhere reports a different upper speedup figure; v3 PDF reports Medusa-2 2.3–2.8x."
+  }
+}
