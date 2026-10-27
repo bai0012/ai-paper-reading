@@ -7,14 +7,16 @@
   "started_at": "2026-10-27",
   "last_updated_at": "2026-10-27",
   "completed_units": [
-    "Abstract"
+    "Abstract",
+    "1. Introduction"
   ],
-  "next_unit": "1. Introduction",
+  "next_unit": "2.1 Key Components (2.1.1 Medusa Heads; 2.1.2 Tree Attention)",
   "read_position": {
-    "section": "Abstract",
+    "section": "1. Introduction",
     "status": "completed",
-    "pdf_page": 1,
-    "end_of_paper": false
+    "pdf_page": 2,
+    "end_of_paper": false,
+    "figure_completed": 1
   },
   "figures": [
     {
@@ -22,18 +24,21 @@
       "pdf_page": 2,
       "original_crop_in_chat": true,
       "github_binary_saved": false,
-      "caption_translated": false
+      "caption_translated": true,
+      "caption_saved_in": "01-Introduction.md"
     }
   ],
   "saved_files": [
     "README.md",
     "00-Abstract.md",
     "progress.json",
-    "../../论文知识索引.md"
+    "../../论文知识索引.md",
+    "01-Introduction.md"
   ],
   "complete": false,
   "notes": {
-    "abstract": "Full v3 abstract translated; distinctions between typical acceptance and exact distribution explained. Intro and Figure 1 full caption pending.",
-    "version_discrepancy": "arXiv abstract metadata elsewhere reports a different upper speedup figure; v3 PDF reports Medusa-2 2.3–2.8x."
+    "abstract": "Full v3 abstract translated; distinctions between typical acceptance and exact distribution explained. Intro and Figure 1 full caption now completed in 01-Introduction.md.",
+    "version_discrepancy": "arXiv abstract metadata elsewhere reports a different upper speedup figure; v3 PDF reports Medusa-2 2.3–2.8x.",
+    "introduction": "Completed six original paragraphs + footnote and full Figure 1 caption. Explained memory-bandwidth roofline, logits conditioning, tree attention, acceptance distribution guarantees, Medusa-1/2, and comparisons to EAGLE/DFlash. Original PDF figure cropped into chat only, not committed as PNG."
   }
 }
