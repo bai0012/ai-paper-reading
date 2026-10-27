@@ -29,7 +29,7 @@ Batch=1 的自回归解码通常是内存带宽受限，而不是算力耗尽。
 
 正文 Section 2.1.1 给出头结构：
 $$
-p_t^{(k)}=\operatorname{softmax}\left(W_2^{(k)}\operatorname{SiLU}(W_1^{(k)}h_t)+h_t\right).
+p_t^{(k)}=\operatorname{softmax}\left(W_2^{(k)}\left(\operatorname{SiLU}(W_1^{(k)}h_t)+h_t\right)\right).
 $$
 更严格地说，论文印刷式对 W_2/W_1 的维度标记存在需要结合括号顺序理解的情况；正式方法节会逐项核对。此处只预告这一结构，不把公式冒充摘要原文。
 
