@@ -26,8 +26,8 @@
 
 1. [Abstract：完整译文、机制解析和 EAGLE/DFlash 对比](00-Abstract.md) ✅
 2. [1. Introduction：六段完整译文、Figure 1 全图注、带宽与多头推理分析](01-Introduction.md) ✅
-3. 2. Methodology（待阅读）
-   - 2.1 Key Components：Medusa Heads / Tree Attention（Figure 2）
+3. 2. Methodology（部分完成）
+   - [2.1 Key Components：Medusa Heads / Tree Attention 与 Figure 2 完整解析](02-Key-Components.md) ✅
    - 2.2 Training Strategies：Medusa-1 / Medusa-2 / Head 数量选择
    - 2.3 Extensions：Typical Acceptance / Self-Distillation / Optimized Tree
 4. 3. Experiments（待阅读；Figure 3–5，Table 1–3）
@@ -49,10 +49,14 @@
 
 [完整译文与 Figure 1 解析](01-Introduction.md) 已覆盖原文六段和 Vicuna-33B 原始脚注 1（PDF 第 1–2 页）。从系统层面解释 Batch=1 解码的 HBM 带宽瓶颈、为何提高 Arithmetic Intensity；从算法层面比较独立串行 Draft 与基于共享 Target 隐藏状态的多解码头、Tree Attention 共享前缀与分支隔离；讨论 Medusa-1/2、自蒸馏和 Typical Acceptance。原图 Figure 1 在对话裁图展示，**GitHub 未保存 PNG 二进制**；图注完整译文已归档。提醒：Introduction 对温度作为阈值的表述应结合后文 Section 2.3.1 的 ε/δ/Entropy 公式理解；Typical Acceptance 不是精确目标分布保真采样。下节为 Section 2.1。
 
+## Section 2.1 Key Components 精读小结
+
+[2.1.1 与 2.1.2 完整译文、原 Figure 2 和全部技术推导](02-Key-Components.md) 已完成（PDF 第 3–4 页）。重点分析 Medusa Head 的 $K$ 个时间索引、$W_1/W_2$ 权重初始化与残差；**v3 PDF 原公式声明 $W_2\in\mathbb R^{d\times V}$，与 $W_2(\cdots)$ 的左乘记法不一致**，章节完整保留原式并给出列向量/行向量两种自洽实现。Figure 2 六条候选路径、八个新增 Token 树节点、14 个 Tree Mask 可见关系，推导 $N=\sum_{k=1}^K\prod_{i=1}^ks_i$、祖先 Attention Mask、重复 Token 的分支区别及 Position IDs。**Figure 2 原图已在对话中由用户 PDF 裁取展示，GitHub 仍未保存 PNG 二进制。** 下一单元是 Section 2.2。
+
 ## 已读论文关联
 
 - [EAGLE](../2401.15077-eagle/README.md)：用 Feature-level autoregression + Shifted Token 提高 Draft 准确率，Target 树状验证。
 - [DFlash](../2602.06036-dflash/README.md)：使用目标多层隐藏特征条件化的 Block Diffusion，一次前向并行预测一整个草稿块。
 - Medusa 与二者共通之处是通过一次目标验证评估多个候选；主要不同在于 Medusa 直接利用多个 Token Heads 预测不同未来位置，且 Typical Acceptance 可不严格保持原采样分布。
 
-**当前阅读状态：** Abstract + Section 1 Introduction 完成（2026-10-27），下一单元为 Section 2.1 Key Components（2.1.1 Medusa Heads、2.1.2 Tree Attention）。
+**当前阅读状态：** Abstract + Section 1 Introduction + Section 2.1 Key Components 完成（2026-10-27），下一单元 Section 2.2 Training Strategies（2.2.1、2.2.2、2.2.3）。
