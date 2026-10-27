@@ -11,15 +11,18 @@
     "1. Introduction",
     "2.1 Key Components",
     "2.1.1 Medusa Heads",
-    "2.1.2 Tree Attention"
+    "2.1.2 Tree Attention",
+    "2.2 Training Strategies",
+    "2.2.1 Medusa-1 Frozen Backbone",
+    "2.2.2 Medusa-2 Joint Training",
+    "2.2.3 How to Select the Number of Heads"
   ],
-  "next_unit": "2.2 Training Strategies (2.2.1 Medusa-1; 2.2.2 Medusa-2; 2.2.3 How to Select the Number of Heads)",
+  "next_unit": "2.3 Extensions (2.3.1 Typical Acceptance; 2.3.2 Self-Distillation; 2.3.3 Searching for Optimized Tree Construction)",
   "read_position": {
-    "section": "2.1.2 Tree Attention",
+    "section": "2.2.3 How to Select the Number of Heads",
     "status": "completed",
-    "pdf_page": 4,
-    "end_of_paper": false,
-    "figure_completed": 2
+    "pdf_page": 5,
+    "end_of_paper": false
   },
   "figures": [
     {
@@ -45,13 +48,16 @@
     "progress.json",
     "../../论文知识索引.md",
     "01-Introduction.md",
-    "02-Key-Components.md"
+    "02-Key-Components.md",
+    "03-Training-Strategies.md",
+    "examples/medusa_training_example.py"
   ],
   "complete": false,
   "notes": {
     "abstract": "Full v3 abstract translated; distinctions between typical acceptance and exact distribution explained. Intro and Figure 1 full caption now completed in 01-Introduction.md.",
     "version_discrepancy": "arXiv abstract metadata elsewhere reports a different upper speedup figure; v3 PDF reports Medusa-2 2.3–2.8x.",
     "introduction": "Completed six original paragraphs + footnote and full Figure 1 caption. Explained memory-bandwidth roofline, logits conditioning, tree attention, acceptance distribution guarantees, Medusa-1/2, and comparisons to EAGLE/DFlash. Original PDF figure cropped into chat only, not committed as PNG.",
-    "section_2_1": "Full translated 2.1.1/2.1.2 and Section 2 opening; PDF p.3-4, Figure 2 original cropped in chat only; 6 candidates, 8 nodes, 14 allowed query-key pairs; W2 printed d×V inconsistent with left multiplication, original preserved and mathematically corrected analysis added. Next 2.2."
+    "section_2_1": "Full translated 2.1.1/2.1.2 and Section 2 opening; PDF p.3-4, Figure 2 original cropped in chat only; 6 candidates, 8 nodes, 14 allowed query-key pairs; W2 printed d×V inconsistent with left multiplication, original preserved and mathematically corrected analysis added. Next 2.2.",
+    "section_2_2": "Section 2.2.1-2.2.3 fully translated from v3 PDF pp.4-5; Eq(1)/Eq(2), lambda weights, gradient derivatives, learning rate 4x from Appendix B, two-stage warmup, 5 heads; source inconsistency: prose calls lambda0 backbone loss weight while Eq(2) multiplies Medusa loss; tested PyTorch teaching demo committed (not official code). No new figures or tables in section."
   }
 }
