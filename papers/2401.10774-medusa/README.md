@@ -29,7 +29,7 @@
 3. 2. Methodology（部分完成）
    - [2.1 Key Components：Medusa Heads / Tree Attention 与 Figure 2 完整解析](02-Key-Components.md) ✅
    - [2.2 Training Strategies：完整译文、公式 (1)(2)、Heads Warmup、PyTorch 示例](03-Training-Strategies.md) ✅
-   - 2.3 Extensions：Typical Acceptance / Self-Distillation / Optimized Tree
+   - [2.3 Extensions：Typical Acceptance、自蒸馏 KL 与优化树贪心搜索](04-Extensions.md) ✅
 4. 3. Experiments（待阅读；Figure 3–5，Table 1–3）
    - 3.1 Vicuna-7B/13B；3.2 Vicuna-33B/Zephyr-7B；3.3 Ablation
 5. 4. Discussion（待阅读）
@@ -57,10 +57,14 @@
 
 [Section 2.2 全部译文及公式 (1)(2) 推导](03-Training-Strategies.md) 已完成：2.2.1 Medusa-1 冻结 Backbone，用偏移 $k+1$ 的交叉熵监督未来 Token，采用 $\lambda_k=0.8^k$；2.2.2 Medusa-2 在原 LM Loss 基础上增加 $\lambda_0\mathcal L_{\mathrm{MEDUSA-1}}$，采用差异化学习率、Heads Warmup 与两阶段训练；2.2.3 建议训练 5 个 Heads，推理可只使用其中 3–4 个。**原文 Warmup 中将 $\lambda_0$ 称为 Backbone Loss 的权重，但式 (2) 将其乘在 Medusa Loss 上；章节忠实保留原句并指出不一致。** Appendix B 佐证 Vicuna-7B/13B 参数设置为 5 Heads、QLoRA、4 倍 Head LR、$\lambda_0=0.2$。提供[已测试 PyTorch 教学代码](examples/medusa_training_example.py)，验证 Backbone 冻结/联合训练时梯度行为（代码不是官方实现）。本节无新 Figure/Table。下一单元 Section 2.3 Extensions。
 
+## Section 2.3 Extensions 精读小结
+
+[完整译文、公式和数值分析](04-Extensions.md) 已完成（PDF 第 5–6 页）：2.3.1 Typical Acceptance 的原始阈值 $p(x)>\min(\epsilon,\delta e^{-H(p)})$、贪心首 Token 与最长合格前缀；2.3.2 Self-Distillation 的公开 Seed Prompt、自生成对话、Backbone KL($p_{\mathrm{teacher}}\|p_{\mathrm{student}}$) 和关闭 LoRA Adapter 获取原始 Teacher 分布；2.3.3 根据 Top-$i$ Acc 差分计算 $a_k^{(i)}$，使用 $\prod_j a_j^{(i_j)}$ 对树节点排序，贪心扩展固定预算树。**保留两点理论校核**：论文称 $p=q$ 时正确拒绝采样仍可能拒绝，这不适用于标准接受概率 $\min(1,p/q)$；树期望接受长度公式依赖排名准确率独立等近似，不能直接等价于 Typical Acceptance 真实接受长度或 Wall-Time 最优。阈值数值例子和树搜索算法已进行计算检查。本节无新的 Figure/Table；引用 Figure 5（Section 3）和 Figure 6（Appendix C）待后续正式精读。
+
 ## 已读论文关联
 
 - [EAGLE](../2401.15077-eagle/README.md)：用 Feature-level autoregression + Shifted Token 提高 Draft 准确率，Target 树状验证。
 - [DFlash](../2602.06036-dflash/README.md)：使用目标多层隐藏特征条件化的 Block Diffusion，一次前向并行预测一整个草稿块。
 - Medusa 与二者共通之处是通过一次目标验证评估多个候选；主要不同在于 Medusa 直接利用多个 Token Heads 预测不同未来位置，且 Typical Acceptance 可不严格保持原采样分布。
 
-**当前阅读状态：** Abstract、Introduction、Section 2.1 与 Section 2.2 Training Strategies 已完成（2026-10-27），下一单元 Section 2.3 Extensions（2.3.1 Typical Acceptance、2.3.2 Self-Distillation、2.3.3 Optimized Tree Construction）。
+**当前阅读状态：** Abstract、Introduction、Section 2.1–2.3 Methodology 全部完成（2026-10-27）；下一单元 **Section 3 Experiments**（3.1–3.3，Figure 3–5、Table 1–2，具体范围以原 PDF 为准）。
