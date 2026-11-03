@@ -13,7 +13,7 @@
 
 如何在不维护独立 Draft Model 的情况下，让原始大模型基于同一个隐藏状态并行预测后续多个 Token，并通过 Tree Attention 将这些候选序列集中验证，从而减少自回归 Forward 轮次？
 
-## 主要贡献（已完整阅读 Abstract、Introduction、Methodology 和 Experiments；Appendices 尚未正式精读）
+## 主要贡献（Abstract、Introduction、Methodology、Experiments、Discussion 均已完成；Appendices 待精读）
 
 1. 多个轻量化 Medusa Heads 分别预测不同未来位置的 Token。
 2. Tree Attention 将候选续写合并成树，允许共享前缀并行验证。
@@ -32,7 +32,7 @@
    - [2.3 Extensions：Typical Acceptance、自蒸馏 KL 与优化树贪心搜索](04-Extensions.md) ✅
 4. [3. Experiments：全节译文、Figure 3–5、Table 1–2、消融分析](05-Experiments.md) ✅
    - 3.1 Vicuna-7B/13B；3.2 Vicuna-33B/Zephyr-7B；3.3 Tree/Threshold/Two-stage Ablation（均已完成）
-5. 4. Discussion（待阅读；包含 Table 3 技术加速分解）
+5. [4. Discussion：两段完整译文、Table 3 四阶段加速、Batch/Serving 限制](06-Discussion.md) ✅
 6. A. Related Work（待阅读）
 7. B. Experiment Settings（待阅读）
 8. C. Visualization of Optimized Tree Attention（待阅读；Figure 6）
@@ -63,7 +63,11 @@
 
 ## Section 3 Experiments 精读小结
 
-[全文译文、Figure 3–5 / Table 1–2 原图页码与所有原表数值、实验归因分析](05-Experiments.md) 已完成（PDF 第 6–9 页）：Vicuna-7B/13B 对比 Medusa-1/Medusa-2，Figure 3 报告 7B 2.18×/2.83×、13B 2.33×/2.83×，八类 MT-Bench 最高 Extraction 3.62×、Coding 3.29×；Vicuna-33B 与 Zephyr-7B 的自蒸馏，Table 1 四组 Medusa-2 最终 Speedup 分别为 2.83×、2.66×、2.83×、2.35×，Quality 变化分别为 +0.01、−0.07、−0.14、+0.05；Figure 4：优化 64-node Sparse Tree 的 Acceleration Rate 优于 256-node Random Dense Tree，并证明候选增加不一定提高 Tokens/s；Figure 5：$T=0.7$、$\epsilon=0.01\ldots0.25$ 的典型接受阈值扫描，接受加速与 GPT-4 平均分呈整体权衡，原图没有逐阈值精确数据表；Table 2：Baseline 6.17、Direct Finetune 5.925、Medusa-1 6.23/2.18×、Medusa-2 6.18/2.83×。**校核**：用 Table 1 已展示值反算 Acc/Overhead 与论文 Speedup 相差约 0.001–0.024；原文未公开逐条计时统计，不能判定确切成因，也不可修改论文正式数据。Section 3 原图在本对话从原版 PDF 直接裁取，**GitHub 的 UTF-8-only Connector 不支持 PNG 上传**，章节只链接准确原版页码；额外整理五张 PNG 的 ZIP 下载包在当前聊天提供。Table 3 属于下一节 Discussion，待阅读。
+[全文译文、Figure 3–5 / Table 1–2 原图页码与所有原表数值、实验归因分析](05-Experiments.md) 已完成（PDF 第 6–9 页）：Vicuna-7B/13B 对比 Medusa-1/Medusa-2，Figure 3 报告 7B 2.18×/2.83×、13B 2.33×/2.83×，八类 MT-Bench 最高 Extraction 3.62×、Coding 3.29×；Vicuna-33B 与 Zephyr-7B 的自蒸馏，Table 1 四组 Medusa-2 最终 Speedup 分别为 2.83×、2.66×、2.83×、2.35×，Quality 变化分别为 +0.01、−0.07、−0.14、+0.05；Figure 4：优化 64-node Sparse Tree 的 Acceleration Rate 优于 256-node Random Dense Tree，并证明候选增加不一定提高 Tokens/s；Figure 5：$T=0.7$、$\epsilon=0.01\ldots0.25$ 的典型接受阈值扫描，接受加速与 GPT-4 平均分呈整体权衡，原图没有逐阈值精确数据表；Table 2：Baseline 6.17、Direct Finetune 5.925、Medusa-1 6.23/2.18×、Medusa-2 6.18/2.83×。**校核**：用 Table 1 已展示值反算 Acc/Overhead 与论文 Speedup 相差约 0.001–0.024；原文未公开逐条计时统计，不能判定确切成因，也不可修改论文正式数据。Section 3 原图在本对话从原版 PDF 直接裁取，**GitHub 的 UTF-8-only Connector 不支持 PNG 上传**，章节只链接准确原版页码；额外整理五张 PNG 的 ZIP 下载包在当前聊天提供。Table 3 属于 Section 4 Discussion，已在 [本节译文](06-Discussion.md) 完整翻译。
+
+## Section 4 Discussion 精读小结
+
+[原文全部两段译文、Table 3 原表及四阶段加速分解](06-Discussion.md) 已完成（PDF 第 9 页）。Table 3 在论文排版中虽然浮动到 Section 4 标题上方，但正文明确引用；其四个**累计**净加速比为：Medusa-1 Heads 无树约 1.5×、加入 Tree Attention 约 1.9×、优化树配置约 2.2×、Medusa-2 联合训练约 2.8×。依次相对提升约 26.7%、15.8%、27.3%，均由原表约数独立推算，不能相乘或冒充独立因子消融。原文承认主要研究 Batch Size=1；高并发 Continuous Batching 需额外分析 GPU 算力、KV Cache 和调度开销，质量接近不等于分布精确。**2026-11-03 额外现状核实（非原文）**：[vLLM 主线 PR #61701](https://github.com/vllm-project/vllm/pull/61701) 已于 2026-10-15 移除内置 Medusa；vLLM-Ascend 单独仍列有；SGLang 官方文档目前主要支持 EAGLE、MTP、DFlash 等，并未列标准 Medusa 直接启动方式。Table 3 原图已从 v3 PDF 裁取并在聊天展示，GitHub Connector 不支持上传 PNG 二进制，故章节引用[原始 PDF 第 9 页](https://arxiv.org/pdf/2401.10774v3#page=9)。主文已完成，Appendix A–G 尚待正式阅读。
 
 ## 已读论文关联
 
@@ -71,4 +75,4 @@
 - [DFlash](../2602.06036-dflash/README.md)：使用目标多层隐藏特征条件化的 Block Diffusion，一次前向并行预测一整个草稿块。
 - Medusa 与二者共通之处是通过一次目标验证评估多个候选；主要不同在于 Medusa 直接利用多个 Token Heads 预测不同未来位置，且 Typical Acceptance 可不严格保持原采样分布。
 
-**当前阅读状态：** Abstract、Introduction、Section 2.1–2.3 Methodology、Section 3 Experiments 均完成（2026-11-03）；下一单元 **Section 4 Discussion**（PDF 第 9 页，包含 Table 3）。
+**当前阅读状态：** Abstract、Introduction、Section 2.1–2.3 Methodology、Section 3 Experiments、Section 4 Discussion 均已完成（2026-11-03）；下一单元 **Appendix A Related Work**。
