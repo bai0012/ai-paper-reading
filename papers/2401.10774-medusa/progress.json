@@ -26,24 +26,26 @@
     "3.3 Ablation Study",
     "3.3.1 Configuration of Tree Attention",
     "3.3.2 Thresholds of Typical Acceptance",
-    "3.3.3 Effectiveness of Two-stage Fine-tuning"
+    "3.3.3 Effectiveness of Two-stage Fine-tuning",
+    "4. Discussion"
   ],
-  "next_unit": "4. Discussion (includes Table 3 Impact of Techniques on Speedup)",
+  "next_unit": "Appendix A. Related Work",
   "read_position": {
-    "section": "3.3.3 Effectiveness of Two-stage Fine-tuning",
+    "section": "4. Discussion",
     "status": "completed",
     "pdf_page": 9,
     "end_of_paper": false,
+    "tables_completed": [
+      1,
+      2,
+      3
+    ],
     "figures_completed": [
       1,
       2,
       3,
       4,
       5
-    ],
-    "tables_completed": [
-      1,
-      2
     ]
   },
   "figures": [
@@ -98,7 +100,8 @@
     "03-Training-Strategies.md",
     "examples/medusa_training_example.py",
     "04-Extensions.md",
-    "05-Experiments.md"
+    "05-Experiments.md",
+    "06-Discussion.md"
   ],
   "complete": false,
   "notes": {
@@ -108,7 +111,8 @@
     "section_2_1": "Full translated 2.1.1/2.1.2 and Section 2 opening; PDF p.3-4, Figure 2 original cropped in chat only; 6 candidates, 8 nodes, 14 allowed query-key pairs; W2 printed d×V inconsistent with left multiplication, original preserved and mathematically corrected analysis added. Next 2.2.",
     "section_2_2": "Section 2.2.1-2.2.3 fully translated from v3 PDF pp.4-5; Eq(1)/Eq(2), lambda weights, gradient derivatives, learning rate 4x from Appendix B, two-stage warmup, 5 heads; source inconsistency: prose calls lambda0 backbone loss weight while Eq(2) multiplies Medusa loss; tested PyTorch teaching demo committed (not official code). No new figures or tables in section.",
     "section_2_3": "Full 2.3.1-2.3.3 translated from v3 PDF p5-6 including Typical Acceptance min(eps,delta exp(-H)); LoRA teacher adapter disabled, KL soft-label; greedy tree under independent rank accuracy. Verified numerical examples locally. Two theoretical caveats: p=q exact rejection sampling accepts 100%; tree additive expectation needs independence/unique-correct assumptions and is not an exact Typical Acceptance guarantee. No new figures in this section; Figure 5 (experiments) and Figure 6 (Appendix C) pending.",
-    "section_3": "Completed full Section 3 (pp6-9) including 3.1–3.3.3, original Figure 3–5 and Table 1–2 crops shown in chat, complete figure/table captions in Chinese, Figure3 all 8 category values, Table1/2 all numerical values, tree size and typical acceptance ablations and training ablation. Appendix B metrics added explicitly as supplemental. Table1 acceleration/overhead quotient differs from reported speedup by 0.001–0.024; underlying aggregation unknown, do not replace source numbers. Figure5 threshold sweep has no exact numeric point table; not fabricated. Section 4 Table3 still unread. Github connector text-only, original PNGs not uploaded; PDF source pages recorded."
+    "section_3": "Completed full Section 3 (pp6-9) including 3.1–3.3.3, original Figure 3–5 and Table 1–2 crops shown in chat, complete figure/table captions in Chinese, Figure3 all 8 category values, Table1/2 all numerical values, tree size and typical acceptance ablations and training ablation. Appendix B metrics added explicitly as supplemental. Table1 acceleration/overhead quotient differs from reported speedup by 0.001–0.024; underlying aggregation unknown, do not replace source numbers. Figure5 threshold sweep has no exact numeric point table; not fabricated. Section 4 Table3 still unread. Github connector text-only, original PNGs not uploaded; PDF source pages recorded.",
+    "section_4": "Full 2-paragraph Discussion from v3 PDF p9 and original Table3 crop: cumulative ~1.5/~1.9/~2.2/~2.8, not multiplicative; derived relative stage increases 26.7/15.8/27.3%. Batch1 limitation, quality vs strict sampling distribution, modern Serving. External primary-source check: vLLM PR61701 merged 2026-10-15 removed mainline Medusa; vLLM Ascend separate still lists medusa; SGLang current guide EAGLE/MTP/DFlash without standard Medusa direct launch. Table3 PNG shown in chat; GitHub connector text-only. All main numbered sections completed; appendices A-G pending."
   },
   "tables": [
     {
@@ -128,6 +132,15 @@
       "all_values_translated": true,
       "caption_translated": true,
       "caption_saved_in": "05-Experiments.md"
+    },
+    {
+      "number": 3,
+      "pdf_page": 9,
+      "original_crop_in_chat": true,
+      "github_binary_saved": false,
+      "all_values_translated": true,
+      "caption_translated": true,
+      "caption_saved_in": "06-Discussion.md"
     }
   ]
 }
