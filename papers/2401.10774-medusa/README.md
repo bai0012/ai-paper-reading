@@ -13,7 +13,7 @@
 
 如何在不维护独立 Draft Model 的情况下，让原始大模型基于同一个隐藏状态并行预测后续多个 Token，并通过 Tree Attention 将这些候选序列集中验证，从而减少自回归 Forward 轮次？
 
-## 主要贡献（基于已精读 Abstract 与 Introduction；公式和实施细节仍须核对 Section 2）
+## 主要贡献（已完整阅读 Abstract、Introduction、Methodology 和 Experiments；Appendices 尚未正式精读）
 
 1. 多个轻量化 Medusa Heads 分别预测不同未来位置的 Token。
 2. Tree Attention 将候选续写合并成树，允许共享前缀并行验证。
@@ -26,13 +26,13 @@
 
 1. [Abstract：完整译文、机制解析和 EAGLE/DFlash 对比](00-Abstract.md) ✅
 2. [1. Introduction：六段完整译文、Figure 1 全图注、带宽与多头推理分析](01-Introduction.md) ✅
-3. 2. Methodology（部分完成）
+3. 2. Methodology（已完成）
    - [2.1 Key Components：Medusa Heads / Tree Attention 与 Figure 2 完整解析](02-Key-Components.md) ✅
    - [2.2 Training Strategies：完整译文、公式 (1)(2)、Heads Warmup、PyTorch 示例](03-Training-Strategies.md) ✅
    - [2.3 Extensions：Typical Acceptance、自蒸馏 KL 与优化树贪心搜索](04-Extensions.md) ✅
-4. 3. Experiments（待阅读；Figure 3–5，Table 1–3）
-   - 3.1 Vicuna-7B/13B；3.2 Vicuna-33B/Zephyr-7B；3.3 Ablation
-5. 4. Discussion（待阅读）
+4. [3. Experiments：全节译文、Figure 3–5、Table 1–2、消融分析](05-Experiments.md) ✅
+   - 3.1 Vicuna-7B/13B；3.2 Vicuna-33B/Zephyr-7B；3.3 Tree/Threshold/Two-stage Ablation（均已完成）
+5. 4. Discussion（待阅读；包含 Table 3 技术加速分解）
 6. A. Related Work（待阅读）
 7. B. Experiment Settings（待阅读）
 8. C. Visualization of Optimized Tree Attention（待阅读；Figure 6）
@@ -61,10 +61,14 @@
 
 [完整译文、公式和数值分析](04-Extensions.md) 已完成（PDF 第 5–6 页）：2.3.1 Typical Acceptance 的原始阈值 $p(x)>\min(\epsilon,\delta e^{-H(p)})$、贪心首 Token 与最长合格前缀；2.3.2 Self-Distillation 的公开 Seed Prompt、自生成对话、Backbone KL($p_{\mathrm{teacher}}\|p_{\mathrm{student}}$) 和关闭 LoRA Adapter 获取原始 Teacher 分布；2.3.3 根据 Top-$i$ Acc 差分计算 $a_k^{(i)}$，使用 $\prod_j a_j^{(i_j)}$ 对树节点排序，贪心扩展固定预算树。**保留两点理论校核**：论文称 $p=q$ 时正确拒绝采样仍可能拒绝，这不适用于标准接受概率 $\min(1,p/q)$；树期望接受长度公式依赖排名准确率独立等近似，不能直接等价于 Typical Acceptance 真实接受长度或 Wall-Time 最优。阈值数值例子和树搜索算法已进行计算检查。本节无新的 Figure/Table；引用 Figure 5（Section 3）和 Figure 6（Appendix C）待后续正式精读。
 
+## Section 3 Experiments 精读小结
+
+[全文译文、Figure 3–5 / Table 1–2 原图页码与所有原表数值、实验归因分析](05-Experiments.md) 已完成（PDF 第 6–9 页）：Vicuna-7B/13B 对比 Medusa-1/Medusa-2，Figure 3 报告 7B 2.18×/2.83×、13B 2.33×/2.83×，八类 MT-Bench 最高 Extraction 3.62×、Coding 3.29×；Vicuna-33B 与 Zephyr-7B 的自蒸馏，Table 1 四组 Medusa-2 最终 Speedup 分别为 2.83×、2.66×、2.83×、2.35×，Quality 变化分别为 +0.01、−0.07、−0.14、+0.05；Figure 4：优化 64-node Sparse Tree 的 Acceleration Rate 优于 256-node Random Dense Tree，并证明候选增加不一定提高 Tokens/s；Figure 5：$T=0.7$、$\epsilon=0.01\ldots0.25$ 的典型接受阈值扫描，接受加速与 GPT-4 平均分呈整体权衡，原图没有逐阈值精确数据表；Table 2：Baseline 6.17、Direct Finetune 5.925、Medusa-1 6.23/2.18×、Medusa-2 6.18/2.83×。**校核**：用 Table 1 已展示值反算 Acc/Overhead 与论文 Speedup 相差约 0.001–0.024；原文未公开逐条计时统计，不能判定确切成因，也不可修改论文正式数据。Section 3 原图在本对话从原版 PDF 直接裁取，**GitHub 的 UTF-8-only Connector 不支持 PNG 上传**，章节只链接准确原版页码；额外整理五张 PNG 的 ZIP 下载包在当前聊天提供。Table 3 属于下一节 Discussion，待阅读。
+
 ## 已读论文关联
 
 - [EAGLE](../2401.15077-eagle/README.md)：用 Feature-level autoregression + Shifted Token 提高 Draft 准确率，Target 树状验证。
 - [DFlash](../2602.06036-dflash/README.md)：使用目标多层隐藏特征条件化的 Block Diffusion，一次前向并行预测一整个草稿块。
 - Medusa 与二者共通之处是通过一次目标验证评估多个候选；主要不同在于 Medusa 直接利用多个 Token Heads 预测不同未来位置，且 Typical Acceptance 可不严格保持原采样分布。
 
-**当前阅读状态：** Abstract、Introduction、Section 2.1–2.3 Methodology 全部完成（2026-10-27）；下一单元 **Section 3 Experiments**（3.1–3.3，Figure 3–5、Table 1–2，具体范围以原 PDF 为准）。
+**当前阅读状态：** Abstract、Introduction、Section 2.1–2.3 Methodology、Section 3 Experiments 均完成（2026-11-03）；下一单元 **Section 4 Discussion**（PDF 第 9 页，包含 Table 3）。
