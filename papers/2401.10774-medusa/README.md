@@ -13,7 +13,7 @@
 
 如何在不维护独立 Draft Model 的情况下，让原始大模型基于同一个隐藏状态并行预测后续多个 Token，并通过 Tree Attention 将这些候选序列集中验证，从而减少自回归 Forward 轮次？
 
-## 主要贡献（主文及 Appendix A 均已完成；Appendices B–G 待精读）
+## 主要贡献（主文和 Appendices A–B 均已完成；Appendices C–G 待精读）
 
 1. 多个轻量化 Medusa Heads 分别预测不同未来位置的 Token。
 2. Tree Attention 将候选续写合并成树，允许共享前缀并行验证。
@@ -34,7 +34,7 @@
    - 3.1 Vicuna-7B/13B；3.2 Vicuna-33B/Zephyr-7B；3.3 Tree/Threshold/Two-stage Ablation（均已完成）
 5. [4. Discussion：两段完整译文、Table 3 四阶段加速、Batch/Serving 限制](06-Discussion.md) ✅
 6. [A. Related Work：A.1 推理加速、A.2 采样策略、EAGLE/DFlash 比较](07-Appendix-A-Related-Work.md) ✅
-7. B. Experiment Settings（待阅读）
+7. [B. Experiment Settings：完整译文、原训练参数、Sine Schedule 与 PyTorch/Axolotl 复现](08-Appendix-B-Experiment-Settings.md) ✅
 8. C. Visualization of Optimized Tree Attention（待阅读；Figure 6）
 9. D. Results of Speculative Decoding（待阅读；Figure 7）
 10. E. Additional Results for All Models（待阅读；Figure 8）
@@ -73,10 +73,14 @@
 
 [Appendix A.1/A.2 全部七个自然段完整译文与技术推导](07-Appendix-A-Related-Work.md) 已完成（PDF 第 13–14 页；A.2 中的 Top-p 段落跨页）。A.1 梳理从 Memory-Bandwidth-Bound 出发的两类优化：减少权重/KV 开销（MQA/GQA/H2O/PagedAttention，SmoothQuant/LLM.int8/GPTQ/AWQ/SqueezeLLM），与减少自回归解码轮次（标准 Speculative Decoding、SpecInfer、Staged Speculative、Medusa）。A.2 完整翻译 Top-k、Top-p、Typical Decoding、Medusa Typical Acceptance 的引用与比较；工程推导区分截断分布归一化、目标分布保真的 Rejection Correction 与 Medusa 更宽松的合理性筛选。另独立对比 [EAGLE](../2401.15077-eagle/README.md) 的 Feature + Shifted Token 自回归和 [DFlash](../2602.06036-dflash/README.md) 的并行 Block Diffusion/KV Injection，**明确后续论文不是 Medusa 原附录中直接引用的工作**。本附录无新 Figure、Table 和正式编号公式。下一单元 Appendix B.1–B.4；B–G 仍待精读，论文不标记整篇完成。
 
+## Appendix B Experiment Settings 精读小结
+
+[Appendix B.1–B.4 完整逐段译文、参数总表、原始 Axolotl Fork 配置/训练源码核对与 PyTorch 复现建议](08-Appendix-B-Experiment-Settings.md) 已完成（PDF 第 14 页）。B.1 正式定义 Acceleration Rate（每步 Token 数）、Overhead（Medusa/普通解码单步时间比）与 Speedup=Rate/Overhead；B.2 全部实验使用 Axolotl、5 个单层 Heads、$0.8^k$、8-bit AdamW、Cosine LR+Warmup、LoRA Rank=32/Alpha=16/Dropout=.05、Head LR=Backbone 4×；B.3 Vicuna-7B/13B：Global Batch=64、4-bit QLoRA、Backbone/Head LR=5e-4/2e-3、Warmup=40、$\\lambda_0=0.2$，先 M1 后 M2；B.4 Vicuna-33B/Zephyr-7B：直接 M2 自蒸馏、未量化 LoRA、Backbone Peak LR=1e-4、Warmup=20、$\\lambda_0=0.01$，作者 Fork 用 Sine Scheduler 逐步增加 Medusa Heads Loss。**重要源文件校核**：PDF B.4 印刷“对 $\\theta_0$ 使用 Sine Schedule”，没有定义 $\\theta_0$；作者的 [medusa_utils.py](https://github.com/ctlllll/axolotl/blob/main/src/axolotl/monkeypatch/medusa_utils.py) 确认 $g(s)=\\sin(\\pi s/(2S))$ 乘在辅助多头 CE 上，而非 LR/KL。另外官方 Stage 1 配置也设置 medusa_heads_coefficient=0.2，导致实际 Stage1 Loss 比论文式 (1) 多一个整体常数因子，必须区分论文抽象公式和运行配置。补充用户可用的 PyTorch Loss/Optimizer/KL、Global Batch 检查，以及作者 Fork 的 [全部原始 YAML](https://github.com/ctlllll/axolotl/tree/main/examples/medusa)；标准新版 Axolotl 不保证接受 Medusa 专用配置键。本附录没有 Figure/Table。下节 Appendix C 与 Figure 6。
+
 ## 已读论文关联
 
 - [EAGLE](../2401.15077-eagle/README.md)：用 Feature-level autoregression + Shifted Token 提高 Draft 准确率，Target 树状验证。
 - [DFlash](../2602.06036-dflash/README.md)：使用目标多层隐藏特征条件化的 Block Diffusion，一次前向并行预测一整个草稿块。
 - Medusa 与二者共通之处是通过一次目标验证评估多个候选；主要不同在于 Medusa 直接利用多个 Token Heads 预测不同未来位置，且 Typical Acceptance 可不严格保持原采样分布。
 
-**当前阅读状态：** 主文 Abstract、Introduction、Sections 2–4，以及 Appendix A（A.1/A.2）均已完成（2026-11-04）；下一单元 **Appendix B Experiment Settings（B.1–B.4）**，后续 C–G 待读。
+**当前阅读状态：** 主文 Abstract、Introduction、Sections 2–4，以及 Appendices A–B 均已完成（2026-11-04）；下一单元 **Appendix C Visualization of Optimized Tree Attention**（原 Figure 6），后续 D–G 待读。
