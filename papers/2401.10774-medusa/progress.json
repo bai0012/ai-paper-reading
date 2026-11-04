@@ -5,7 +5,7 @@
   "source_pdf": "https://arxiv.org/pdf/2401.10774v3",
   "source_html": "https://arxiv.org/html/2401.10774v3",
   "started_at": "2026-10-27",
-  "last_updated_at": "2026-11-03",
+  "last_updated_at": "2026-11-04",
   "completed_units": [
     "Abstract",
     "1. Introduction",
@@ -27,25 +27,28 @@
     "3.3.1 Configuration of Tree Attention",
     "3.3.2 Thresholds of Typical Acceptance",
     "3.3.3 Effectiveness of Two-stage Fine-tuning",
-    "4. Discussion"
+    "4. Discussion",
+    "Appendix A. Related Work",
+    "Appendix A.1 LLM Inference Acceleration",
+    "Appendix A.2 Sampling Scheme"
   ],
-  "next_unit": "Appendix A. Related Work",
+  "next_unit": "Appendix B. Experiment Settings (B.1 Common Terms; B.2 Shared Settings; B.3 Medusa-1 vs Medusa-2 on Vicuna 7B/13B; B.4 Self-Distillation on Vicuna-33B/Zephyr-7B)",
   "read_position": {
-    "section": "4. Discussion",
+    "section": "Appendix A.2 Sampling Scheme",
     "status": "completed",
-    "pdf_page": 9,
+    "pdf_page": 14,
     "end_of_paper": false,
-    "tables_completed": [
-      1,
-      2,
-      3
-    ],
     "figures_completed": [
       1,
       2,
       3,
       4,
       5
+    ],
+    "tables_completed": [
+      1,
+      2,
+      3
     ]
   },
   "figures": [
@@ -101,7 +104,8 @@
     "examples/medusa_training_example.py",
     "04-Extensions.md",
     "05-Experiments.md",
-    "06-Discussion.md"
+    "06-Discussion.md",
+    "07-Appendix-A-Related-Work.md"
   ],
   "complete": false,
   "notes": {
@@ -112,7 +116,8 @@
     "section_2_2": "Section 2.2.1-2.2.3 fully translated from v3 PDF pp.4-5; Eq(1)/Eq(2), lambda weights, gradient derivatives, learning rate 4x from Appendix B, two-stage warmup, 5 heads; source inconsistency: prose calls lambda0 backbone loss weight while Eq(2) multiplies Medusa loss; tested PyTorch teaching demo committed (not official code). No new figures or tables in section.",
     "section_2_3": "Full 2.3.1-2.3.3 translated from v3 PDF p5-6 including Typical Acceptance min(eps,delta exp(-H)); LoRA teacher adapter disabled, KL soft-label; greedy tree under independent rank accuracy. Verified numerical examples locally. Two theoretical caveats: p=q exact rejection sampling accepts 100%; tree additive expectation needs independence/unique-correct assumptions and is not an exact Typical Acceptance guarantee. No new figures in this section; Figure 5 (experiments) and Figure 6 (Appendix C) pending.",
     "section_3": "Completed full Section 3 (pp6-9) including 3.1–3.3.3, original Figure 3–5 and Table 1–2 crops shown in chat, complete figure/table captions in Chinese, Figure3 all 8 category values, Table1/2 all numerical values, tree size and typical acceptance ablations and training ablation. Appendix B metrics added explicitly as supplemental. Table1 acceleration/overhead quotient differs from reported speedup by 0.001–0.024; underlying aggregation unknown, do not replace source numbers. Figure5 threshold sweep has no exact numeric point table; not fabricated. Section 4 Table3 still unread. Github connector text-only, original PNGs not uploaded; PDF source pages recorded.",
-    "section_4": "Full 2-paragraph Discussion from v3 PDF p9 and original Table3 crop: cumulative ~1.5/~1.9/~2.2/~2.8, not multiplicative; derived relative stage increases 26.7/15.8/27.3%. Batch1 limitation, quality vs strict sampling distribution, modern Serving. External primary-source check: vLLM PR61701 merged 2026-10-15 removed mainline Medusa; vLLM Ascend separate still lists medusa; SGLang current guide EAGLE/MTP/DFlash without standard Medusa direct launch. Table3 PNG shown in chat; GitHub connector text-only. All main numbered sections completed; appendices A-G pending."
+    "section_4": "Full 2-paragraph Discussion from v3 PDF p9 and original Table3 crop: cumulative ~1.5/~1.9/~2.2/~2.8, not multiplicative; derived relative stage increases 26.7/15.8/27.3%. Batch1 limitation, quality vs strict sampling distribution, modern Serving. External primary-source check: vLLM PR61701 merged 2026-10-15 removed mainline Medusa; vLLM Ascend separate still lists medusa; SGLang current guide EAGLE/MTP/DFlash without standard Medusa direct launch. Table3 PNG shown in chat; GitHub connector text-only. All main numbered sections completed; appendices A-G pending.",
+    "appendix_A": "Complete v3 Appendix A from PDF pages 13–14: A.1 four paragraphs (memory-bandwidth bottleneck, KV cache MQA/GQA/H2O/PagedAttention, quantization, speculative decoding & SpecInfer/Staged/Medusa) and A.2 three paragraphs (top-k/top-p/typical decoding, Medusa typical acceptance; middle paragraph spans pages). All original citations preserved; no figures/tables/equations in source appendix. Mathematical derivation of cache, speculative acceptance and truncation marked as independent analysis. Cross-paper EAGLE/DFlash marked external and not attributed to Medusa. Saved 07-Appendix-A-Related-Work.md. Next Appendix B B1–B4."
   },
   "tables": [
     {
