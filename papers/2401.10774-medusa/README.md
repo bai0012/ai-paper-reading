@@ -13,7 +13,7 @@
 
 如何在不维护独立 Draft Model 的情况下，让原始大模型基于同一个隐藏状态并行预测后续多个 Token，并通过 Tree Attention 将这些候选序列集中验证，从而减少自回归 Forward 轮次？
 
-## 主要贡献（Abstract、Introduction、Methodology、Experiments、Discussion 均已完成；Appendices 待精读）
+## 主要贡献（主文及 Appendix A 均已完成；Appendices B–G 待精读）
 
 1. 多个轻量化 Medusa Heads 分别预测不同未来位置的 Token。
 2. Tree Attention 将候选续写合并成树，允许共享前缀并行验证。
@@ -33,7 +33,7 @@
 4. [3. Experiments：全节译文、Figure 3–5、Table 1–2、消融分析](05-Experiments.md) ✅
    - 3.1 Vicuna-7B/13B；3.2 Vicuna-33B/Zephyr-7B；3.3 Tree/Threshold/Two-stage Ablation（均已完成）
 5. [4. Discussion：两段完整译文、Table 3 四阶段加速、Batch/Serving 限制](06-Discussion.md) ✅
-6. A. Related Work（待阅读）
+6. [A. Related Work：A.1 推理加速、A.2 采样策略、EAGLE/DFlash 比较](07-Appendix-A-Related-Work.md) ✅
 7. B. Experiment Settings（待阅读）
 8. C. Visualization of Optimized Tree Attention（待阅读；Figure 6）
 9. D. Results of Speculative Decoding（待阅读；Figure 7）
@@ -69,10 +69,14 @@
 
 [原文全部两段译文、Table 3 原表及四阶段加速分解](06-Discussion.md) 已完成（PDF 第 9 页）。Table 3 在论文排版中虽然浮动到 Section 4 标题上方，但正文明确引用；其四个**累计**净加速比为：Medusa-1 Heads 无树约 1.5×、加入 Tree Attention 约 1.9×、优化树配置约 2.2×、Medusa-2 联合训练约 2.8×。依次相对提升约 26.7%、15.8%、27.3%，均由原表约数独立推算，不能相乘或冒充独立因子消融。原文承认主要研究 Batch Size=1；高并发 Continuous Batching 需额外分析 GPU 算力、KV Cache 和调度开销，质量接近不等于分布精确。**2026-11-03 额外现状核实（非原文）**：[vLLM 主线 PR #61701](https://github.com/vllm-project/vllm/pull/61701) 已于 2026-10-15 移除内置 Medusa；vLLM-Ascend 单独仍列有；SGLang 官方文档目前主要支持 EAGLE、MTP、DFlash 等，并未列标准 Medusa 直接启动方式。Table 3 原图已从 v3 PDF 裁取并在聊天展示，GitHub Connector 不支持上传 PNG 二进制，故章节引用[原始 PDF 第 9 页](https://arxiv.org/pdf/2401.10774v3#page=9)。主文已完成，Appendix A–G 尚待正式阅读。
 
+## Appendix A Related Work 精读小结
+
+[Appendix A.1/A.2 全部七个自然段完整译文与技术推导](07-Appendix-A-Related-Work.md) 已完成（PDF 第 13–14 页；A.2 中的 Top-p 段落跨页）。A.1 梳理从 Memory-Bandwidth-Bound 出发的两类优化：减少权重/KV 开销（MQA/GQA/H2O/PagedAttention，SmoothQuant/LLM.int8/GPTQ/AWQ/SqueezeLLM），与减少自回归解码轮次（标准 Speculative Decoding、SpecInfer、Staged Speculative、Medusa）。A.2 完整翻译 Top-k、Top-p、Typical Decoding、Medusa Typical Acceptance 的引用与比较；工程推导区分截断分布归一化、目标分布保真的 Rejection Correction 与 Medusa 更宽松的合理性筛选。另独立对比 [EAGLE](../2401.15077-eagle/README.md) 的 Feature + Shifted Token 自回归和 [DFlash](../2602.06036-dflash/README.md) 的并行 Block Diffusion/KV Injection，**明确后续论文不是 Medusa 原附录中直接引用的工作**。本附录无新 Figure、Table 和正式编号公式。下一单元 Appendix B.1–B.4；B–G 仍待精读，论文不标记整篇完成。
+
 ## 已读论文关联
 
 - [EAGLE](../2401.15077-eagle/README.md)：用 Feature-level autoregression + Shifted Token 提高 Draft 准确率，Target 树状验证。
 - [DFlash](../2602.06036-dflash/README.md)：使用目标多层隐藏特征条件化的 Block Diffusion，一次前向并行预测一整个草稿块。
 - Medusa 与二者共通之处是通过一次目标验证评估多个候选；主要不同在于 Medusa 直接利用多个 Token Heads 预测不同未来位置，且 Typical Acceptance 可不严格保持原采样分布。
 
-**当前阅读状态：** Abstract、Introduction、Section 2.1–2.3 Methodology、Section 3 Experiments、Section 4 Discussion 均已完成（2026-11-03）；下一单元 **Appendix A Related Work**。
+**当前阅读状态：** 主文 Abstract、Introduction、Sections 2–4，以及 Appendix A（A.1/A.2）均已完成（2026-11-04）；下一单元 **Appendix B Experiment Settings（B.1–B.4）**，后续 C–G 待读。
