@@ -109,4 +109,4 @@ Figure 9–23 的原始 PDF 页已核对，来源页码见 [figures/figure9-23-s
 - [DFlash](../2602.06036-dflash/README.md)：使用目标多层隐藏特征条件化的 Block Diffusion，一次前向并行预测一整个草稿块。
 - Medusa 与二者共通之处是通过一次目标验证评估多个候选；主要不同在于 Medusa 直接利用多个 Token Heads 预测不同未来位置，且 Typical Acceptance 可不严格保持原采样分布。
 
-**当前阅读状态：** 主文 Abstract、Introduction、Sections 2–4，以及 Appendices A–F 均已完成（2026-11-05）；下一单元 **Appendix G Exploration and Modeling of Hardware Constraints and Medusa**，整篇论文尚未完成。
+**当前阅读状态：** 主文 Abstract、Introduction、Sections 2–4，以及 Appendices A–G 全部完成（2026-11-05）；[summary.md](summary.md) 已生成。**Medusa 全文精读完成。**
