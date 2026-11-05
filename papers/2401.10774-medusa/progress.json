@@ -45,11 +45,15 @@
     "Appendix E. Additional Results for All Models",
     "Appendix E.1 Full translation and Figure 8 caption",
     "Appendix E.2 Four-model speed, acceleration, quality and self-distillation comparison",
-    "Appendix E.3 Cross-check with Appendix D speculative decoding"
+    "Appendix E.3 Cross-check with Appendix D speculative decoding",
+    "Appendix F. Additional Results on AlpacaEval Dataset",
+    "Appendix F.1 Full translation and Table 4 transcription",
+    "Appendix F.2 Throughput, Acceleration Rate, Speedup and inferred Overhead verification",
+    "Appendix F.3 Comparison with MT-Bench and Appendix D Speculative Decoding"
   ],
-  "next_unit": "Appendix F. Additional Results on AlpacaEval Dataset",
+  "next_unit": "Appendix G. Exploration and Modeling of Hardware Constraints and Medusa",
   "read_position": {
-    "section": "Appendix E. Additional Results for All Models",
+    "section": "Appendix F. Additional Results on AlpacaEval Dataset",
     "status": "completed",
     "pdf_page": 16,
     "end_of_paper": false,
@@ -66,7 +70,8 @@
     "tables_completed": [
       1,
       2,
-      3
+      3,
+      4
     ]
   },
   "figures": [
@@ -165,7 +170,9 @@
     "10-Appendix-D-Results-of-Speculative-Decoding.md",
     "figures/figure7-source.md",
     "11-Appendix-E-Additional-Results-for-All-Models.md",
-    "figures/figure8-source.md"
+    "figures/figure8-source.md",
+    "12-Appendix-F-Additional-Results-on-AlpacaEval-Dataset.md",
+    "tables/table4-source.md"
   ],
   "complete": false,
   "notes": {
@@ -181,7 +188,8 @@
     "appendix_B": "Full v3 PDF p14 Appendix B.1-B.4 translated, all hyperparameters faithfully preserved. B1 speedup=acceleration rate/overhead; B2 5 single-layer heads, lambda_k=.8^k, Axolotl AdamW8bit Cosine warmup, LoRA r32/alpha16/dropout.05 Head LR=4x. B3 global batch64, backbone5e-4 heads2e-3 warmup40 4-bit QLoRA, two-stage M1->M2, lambda0=.2. B4 single-stage self-distill, sine schedule printed theta0 (undefined), backbone LR1e-4 warmup20 lambda0=.01; actual fork scheduler multiplies Medusa CE by sin(pi/2 * step/max_steps), separate cosine LR. Checked 4 author fork YAML configs and medusa_utils.py; stage1 heads-only config also multiplies head losses by .2 unlike paper M1 Eq1. Section3 data supplements seq lengths / batch 128; no figures or tables this appendix. Next C Figure6.",
     "appendix_C": "Complete v3 PDF Appendix C p15: one full paragraph and Figure 6 caption translated. Figure shows sparse Medusa-2 Vicuna-7B tree, depth 4 / four Medusa heads, Cartesian Product pruned by rank-top-k statistical expectations calibrated on Alpaca-eval, left-biased. Official repo code cross-check: mc_sim_7b_63 has 63 Medusa path nodes + one LM-head root = 64 total; depth counts 10/28/23/2; 42 root-to-leaf candidate paths. Explained Section 2.3.3 rank-specific accuracy (top-i minus top-(i-1)), product path score under independence, expected accepted length sum over all node prefixes, connected-frontier greedy construction, tree attention ancestor mask/depth Position IDs/one target forward, red example path Once→upon→a→time→comma. Cross-paper EAGLE: same tree-attention verification but feature-level autoregressive Draft + shifted token, 5 draft forwards in original EAGLE vs Medusa parallel token heads and offline calibrated static tree. Figure6 PNG binary not committed; source/page recorded in figures/figure6-source.md. Next Appendix D.",
     "appendix_D": "Complete arXiv v3 Appendix D p15: translated both paragraphs and full Figure 7 caption. Target Vicuna-7B/13B/33B; drafts Llama-68M, Llama-160M, Tiny-Llama (figure legend Llama-1B), Tiny-Vicuna (figure legend Vicuna-1B). Uses open-source speculative decoding alternative and torch.compile() for draft inference. Explicit best settings: Vicuna-7B + Llama-68M + gamma=4; Vicuna-13B + Llama-68M + gamma=3; Vicuna-33B + Tiny-Vicuna (Vicuna-1B) + gamma=3. Figure7 shows MT-Bench tokens/s vs gamma, grey dotted vanilla baseline. No pointwise numerical table; chart peaks in chapter are approximate visual readings and clearly marked; exact checkpoint IDs, hardware, precision, acceptance rates, and gamma point data not specified in Appendix D. Main Table1 cross-check: speculative decoding speedup 1.47x/1.56x/1.60x vs Medusa-2 2.83x/2.83x/2.35x. Analysis of Draft autoregressive cost, Target verification cost, acceptance rate and gamma; compare Medusa parallel token heads, original EAGLE feature AR, DFlash one-shot block diffusion. Figure7 PNG binary not saved; source/page documented. Next Appendix E.",
-    "appendix_E": "Appendix E has exactly one sentence: 'We show speedup on various models in Fig. 8.' Full translation and complete Figure 8 caption saved. Figure8 original PDF page 16 (printed page 15) screenshot checked: Vicuna-7B, Zephyr-7B, Vicuna-13B, Vicuna-33B; speedup labels 2.83x, 2.66x, 2.83x, 2.35x. Figure has no exact per-bar tokens/s values, only y-axis; chapter labels absolute speed ranges as approximate estimates. Main Table1 cross-check: Acceleration Rate 3.47/3.14/3.51/3.01; Overhead 1.22/1.18/1.23/1.27; Quality 6.18(+.01)/7.25(-.07)/6.43(-.14)/7.18(+.05); SpecDec 1.47/-/1.56/1.60; Medusa 2.83/2.66/2.83/2.35. Appendix D best draft/gamma 7B Llama68M/gamma4; 13B Llama68M/gamma3; 33B Tiny-Vicuna 1B/gamma3. Self-distill: Section3.2/B.4 only explicitly describes Vicuna-33B and Zephyr-7B, ~100k generated samples, seq_len2048, batch128, LoRA, sine schedule, lr1e-4, warmup20, lambda0=.01. Figure8 caption also calls Vicuna-13B self-distilled, but Section3.1/B.3 says 7B/13B use ShareGPT and M1->M2 two-stage training; preserve source inconsistency rather than reconcile. Author hypothesis for 33B: hidden original training dataset vs self-distill dataset mismatch may shift Head distribution, reducing acceleration while quality remains comparable. Figure8 PNG binary not saved; source/page note recorded. Next Appendix F."
+    "appendix_E": "Appendix E has exactly one sentence: 'We show speedup on various models in Fig. 8.' Full translation and complete Figure 8 caption saved. Figure8 original PDF page 16 (printed page 15) screenshot checked: Vicuna-7B, Zephyr-7B, Vicuna-13B, Vicuna-33B; speedup labels 2.83x, 2.66x, 2.83x, 2.35x. Figure has no exact per-bar tokens/s values, only y-axis; chapter labels absolute speed ranges as approximate estimates. Main Table1 cross-check: Acceleration Rate 3.47/3.14/3.51/3.01; Overhead 1.22/1.18/1.23/1.27; Quality 6.18(+.01)/7.25(-.07)/6.43(-.14)/7.18(+.05); SpecDec 1.47/-/1.56/1.60; Medusa 2.83/2.66/2.83/2.35. Appendix D best draft/gamma 7B Llama68M/gamma4; 13B Llama68M/gamma3; 33B Tiny-Vicuna 1B/gamma3. Self-distill: Section3.2/B.4 only explicitly describes Vicuna-33B and Zephyr-7B, ~100k generated samples, seq_len2048, batch128, LoRA, sine schedule, lr1e-4, warmup20, lambda0=.01. Figure8 caption also calls Vicuna-13B self-distilled, but Section3.1/B.3 says 7B/13B use ShareGPT and M1->M2 two-stage training; preserve source inconsistency rather than reconcile. Author hypothesis for 33B: hidden original training dataset vs self-distill dataset mismatch may shift Head distribution, reducing acceleration while quality remains comparable. Figure8 PNG binary not saved; source/page note recorded. Next Appendix F.",
+    "appendix_F": "Appendix F complete from arXiv v3. Exact body: 'We conduct further experiments on the AlpacaEval (Li et al., 2023) dataset. MEDUSA-2 achieves consistent speedup similar to the results on MT-Bench.' Table4 PDF page16, original table headers Model/Base speed(tokens/s)/MEDUSA speed(tokens/s)/Acc.rate/Speedup; rows Vicuna-7b 37.07/106.76/3.23/2.88; Vicuna-13b 29.01/91.54/3.28/3.16; Vicuna-33b 17.87/40.43/2.85/2.26; Zephyr-7b 34.21/99.50/3.08/2.91. Caption translated. Verified all speedups via Medusa throughput/Base throughput. Appendix B.1 definitions used: Speedup=Acceleration Rate/Overhead. Table4 does not report Overhead; inferred approx 1.122/1.038/1.261/1.058, explicitly marked derived. Cross-check MT-Bench Table1: Vicuna7B 3.47/1.22/2.83; Vicuna13B 3.51/1.23/2.83; Vicuna33B 3.01/1.27/2.35; Zephyr7B 3.14/1.18/2.66. All AlpacaEval Acc rates are slightly lower but speedups are similar; inferred overhead changes account for ranking. Appendix D SpecDec speedup is MT-Bench only; no AlpacaEval SD row, so no same-dataset comparison. Table4 original PDF screenshot checked, PNG binary not saved; source note tables/table4-source.md. Next Appendix G."
   },
   "tables": [
     {
@@ -210,6 +218,20 @@
       "all_values_translated": true,
       "caption_translated": true,
       "caption_saved_in": "06-Discussion.md"
+    },
+    {
+      "number": 4,
+      "pdf_page": 16,
+      "printed_page": 16,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "all_values_translated": true,
+      "caption_translated": true,
+      "caption_saved_in": "12-Appendix-F-Additional-Results-on-AlpacaEval-Dataset.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=16",
+      "source_note": "tables/table4-source.md",
+      "data_note": "All four rows transcribed. Speedup independently cross-checked as MEDUSA speed / Base speed. Overhead not reported in Table 4; inferred in chapter as Acceleration Rate / Speedup."
     }
   ]
 }
