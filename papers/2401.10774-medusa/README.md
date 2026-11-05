@@ -13,7 +13,7 @@
 
 如何在不维护独立 Draft Model 的情况下，让原始大模型基于同一个隐藏状态并行预测后续多个 Token，并通过 Tree Attention 将这些候选序列集中验证，从而减少自回归 Forward 轮次？
 
-## 主要贡献（主文和 Appendices A–B 均已完成；Appendices C–G 待精读）
+## 主要贡献（主文和 Appendices A–C 均已完成；Appendices D–G 待精读）
 
 1. 多个轻量化 Medusa Heads 分别预测不同未来位置的 Token。
 2. Tree Attention 将候选续写合并成树，允许共享前缀并行验证。
@@ -35,7 +35,7 @@
 5. [4. Discussion：两段完整译文、Table 3 四阶段加速、Batch/Serving 限制](06-Discussion.md) ✅
 6. [A. Related Work：A.1 推理加速、A.2 采样策略、EAGLE/DFlash 比较](07-Appendix-A-Related-Work.md) ✅
 7. [B. Experiment Settings：完整译文、原训练参数、Sine Schedule 与 PyTorch/Axolotl 复现](08-Appendix-B-Experiment-Settings.md) ✅
-8. C. Visualization of Optimized Tree Attention（待阅读；Figure 6）
+8. [C. Visualization of Optimized Tree Attention：完整译文、Figure 6、64 节点树重建与 EAGLE 对比](09-Appendix-C-Visualization-of-Optimized-Tree-Attention.md) ✅
 9. D. Results of Speculative Decoding（待阅读；Figure 7）
 10. E. Additional Results for All Models（待阅读；Figure 8）
 11. F. Additional Results on AlpacaEval（待阅读；Table 4）
@@ -43,7 +43,7 @@
 
 ## 原图说明
 
-本篇共 27 页。Figure 1 在 PDF 第 2 页，原图已在当前对话中裁图展示；GitHub 仓库尚未保存原始 PNG 二进制，故只引用[原版 PDF 第 2 页](https://arxiv.org/pdf/2401.10774v3#page=2)，不会生成虚假的相对路径。Figure 1 的完整图注已在 [Introduction](01-Introduction.md) 翻译，详细说明额外 Heads、Top-k 候选和最长可接受前缀。
+本篇共 27 页。Figure 1 在 PDF 第 2 页，原图已在当前对话中裁图展示；GitHub 仓库尚未保存原始 PNG 二进制，故只引用[原版 PDF 第 2 页](https://arxiv.org/pdf/2401.10774v3#page=2)，不会生成虚假的相对路径。Figure 1 的完整图注已在 [Introduction](01-Introduction.md) 翻译；Figure 6 位于 [原版 PDF 第 15 页](https://arxiv.org/pdf/2401.10774v3#page=15)，完整图注和树结构解析见 [Appendix C](09-Appendix-C-Visualization-of-Optimized-Tree-Attention.md)，PNG 保存状态见 [figures/figure6-source.md](figures/figure6-source.md)。
 
 ## Section 1 Introduction 精读小结
 
@@ -67,15 +67,19 @@
 
 ## Section 4 Discussion 精读小结
 
-[原文全部两段译文、Table 3 原表及四阶段加速分解](06-Discussion.md) 已完成（PDF 第 9 页）。Table 3 在论文排版中虽然浮动到 Section 4 标题上方，但正文明确引用；其四个**累计**净加速比为：Medusa-1 Heads 无树约 1.5×、加入 Tree Attention 约 1.9×、优化树配置约 2.2×、Medusa-2 联合训练约 2.8×。依次相对提升约 26.7%、15.8%、27.3%，均由原表约数独立推算，不能相乘或冒充独立因子消融。原文承认主要研究 Batch Size=1；高并发 Continuous Batching 需额外分析 GPU 算力、KV Cache 和调度开销，质量接近不等于分布精确。**2026-11-03 额外现状核实（非原文）**：[vLLM 主线 PR #61701](https://github.com/vllm-project/vllm/pull/61701) 已于 2026-10-15 移除内置 Medusa；vLLM-Ascend 单独仍列有；SGLang 官方文档目前主要支持 EAGLE、MTP、DFlash 等，并未列标准 Medusa 直接启动方式。Table 3 原图已从 v3 PDF 裁取并在聊天展示，GitHub Connector 不支持上传 PNG 二进制，故章节引用[原始 PDF 第 9 页](https://arxiv.org/pdf/2401.10774v3#page=9)。主文已完成，Appendix A–G 尚待正式阅读。
+[原文全部两段译文、Table 3 原表及四阶段加速分解](06-Discussion.md) 已完成（PDF 第 9 页）。Table 3 在论文排版中虽然浮动到 Section 4 标题上方，但正文明确引用；其四个**累计**净加速比为：Medusa-1 Heads 无树约 1.5×、加入 Tree Attention 约 1.9×、优化树配置约 2.2×、Medusa-2 联合训练约 2.8×。依次相对提升约 26.7%、15.8%、27.3%，均由原表约数独立推算，不能相乘或冒充独立因子消融。原文承认主要研究 Batch Size=1；高并发 Continuous Batching 需额外分析 GPU 算力、KV Cache 和调度开销，质量接近不等于分布精确。**2026-11-03 额外现状核实（非原文）**：[vLLM 主线 PR #61701](https://github.com/vllm-project/vllm/pull/61701) 已于 2026-10-15 移除内置 Medusa；vLLM-Ascend 单独仍列有；SGLang 官方文档目前主要支持 EAGLE、MTP、DFlash 等，并未列标准 Medusa 直接启动方式。Table 3 原图已从 v3 PDF 裁取并在聊天展示，GitHub Connector 不支持上传 PNG 二进制，故章节引用[原始 PDF 第 9 页](https://arxiv.org/pdf/2401.10774v3#page=9)。主文与 Appendices A–C 已完成；Appendices D–G 尚待正式阅读。
 
 ## Appendix A Related Work 精读小结
 
-[Appendix A.1/A.2 全部七个自然段完整译文与技术推导](07-Appendix-A-Related-Work.md) 已完成（PDF 第 13–14 页；A.2 中的 Top-p 段落跨页）。A.1 梳理从 Memory-Bandwidth-Bound 出发的两类优化：减少权重/KV 开销（MQA/GQA/H2O/PagedAttention，SmoothQuant/LLM.int8/GPTQ/AWQ/SqueezeLLM），与减少自回归解码轮次（标准 Speculative Decoding、SpecInfer、Staged Speculative、Medusa）。A.2 完整翻译 Top-k、Top-p、Typical Decoding、Medusa Typical Acceptance 的引用与比较；工程推导区分截断分布归一化、目标分布保真的 Rejection Correction 与 Medusa 更宽松的合理性筛选。另独立对比 [EAGLE](../2401.15077-eagle/README.md) 的 Feature + Shifted Token 自回归和 [DFlash](../2602.06036-dflash/README.md) 的并行 Block Diffusion/KV Injection，**明确后续论文不是 Medusa 原附录中直接引用的工作**。本附录无新 Figure、Table 和正式编号公式。下一单元 Appendix B.1–B.4；B–G 仍待精读，论文不标记整篇完成。
+[Appendix A.1/A.2 全部七个自然段完整译文与技术推导](07-Appendix-A-Related-Work.md) 已完成（PDF 第 13–14 页；A.2 中的 Top-p 段落跨页）。A.1 梳理从 Memory-Bandwidth-Bound 出发的两类优化：减少权重/KV 开销（MQA/GQA/H2O/PagedAttention，SmoothQuant/LLM.int8/GPTQ/AWQ/SqueezeLLM），与减少自回归解码轮次（标准 Speculative Decoding、SpecInfer、Staged Speculative、Medusa）。A.2 完整翻译 Top-k、Top-p、Typical Decoding、Medusa Typical Acceptance 的引用与比较；工程推导区分截断分布归一化、目标分布保真的 Rejection Correction 与 Medusa 更宽松的合理性筛选。另独立对比 [EAGLE](../2401.15077-eagle/README.md) 的 Feature + Shifted Token 自回归和 [DFlash](../2602.06036-dflash/README.md) 的并行 Block Diffusion/KV Injection，**明确后续论文不是 Medusa 原附录中直接引用的工作**。本附录无新 Figure、Table 和正式编号公式。Appendix A、B、C 均已完成；下一单元 Appendix D，D–G 仍待精读，论文不标记整篇完成。
 
 ## Appendix B Experiment Settings 精读小结
 
-[Appendix B.1–B.4 完整逐段译文、参数总表、原始 Axolotl Fork 配置/训练源码核对与 PyTorch 复现建议](08-Appendix-B-Experiment-Settings.md) 已完成（PDF 第 14 页）。B.1 正式定义 Acceleration Rate（每步 Token 数）、Overhead（Medusa/普通解码单步时间比）与 Speedup=Rate/Overhead；B.2 全部实验使用 Axolotl、5 个单层 Heads、$0.8^k$、8-bit AdamW、Cosine LR+Warmup、LoRA Rank=32/Alpha=16/Dropout=.05、Head LR=Backbone 4×；B.3 Vicuna-7B/13B：Global Batch=64、4-bit QLoRA、Backbone/Head LR=5e-4/2e-3、Warmup=40、$\\lambda_0=0.2$，先 M1 后 M2；B.4 Vicuna-33B/Zephyr-7B：直接 M2 自蒸馏、未量化 LoRA、Backbone Peak LR=1e-4、Warmup=20、$\\lambda_0=0.01$，作者 Fork 用 Sine Scheduler 逐步增加 Medusa Heads Loss。**重要源文件校核**：PDF B.4 印刷“对 $\\theta_0$ 使用 Sine Schedule”，没有定义 $\\theta_0$；作者的 [medusa_utils.py](https://github.com/ctlllll/axolotl/blob/main/src/axolotl/monkeypatch/medusa_utils.py) 确认 $g(s)=\\sin(\\pi s/(2S))$ 乘在辅助多头 CE 上，而非 LR/KL。另外官方 Stage 1 配置也设置 medusa_heads_coefficient=0.2，导致实际 Stage1 Loss 比论文式 (1) 多一个整体常数因子，必须区分论文抽象公式和运行配置。补充用户可用的 PyTorch Loss/Optimizer/KL、Global Batch 检查，以及作者 Fork 的 [全部原始 YAML](https://github.com/ctlllll/axolotl/tree/main/examples/medusa)；标准新版 Axolotl 不保证接受 Medusa 专用配置键。本附录没有 Figure/Table。下节 Appendix C 与 Figure 6。
+[Appendix B.1–B.4 完整逐段译文、参数总表、原始 Axolotl Fork 配置/训练源码核对与 PyTorch 复现建议](08-Appendix-B-Experiment-Settings.md) 已完成（PDF 第 14 页）。B.1 正式定义 Acceleration Rate（每步 Token 数）、Overhead（Medusa/普通解码单步时间比）与 Speedup=Rate/Overhead；B.2 全部实验使用 Axolotl、5 个单层 Heads、$0.8^k$、8-bit AdamW、Cosine LR+Warmup、LoRA Rank=32/Alpha=16/Dropout=.05、Head LR=Backbone 4×；B.3 Vicuna-7B/13B：Global Batch=64、4-bit QLoRA、Backbone/Head LR=5e-4/2e-3、Warmup=40、$\\lambda_0=0.2$，先 M1 后 M2；B.4 Vicuna-33B/Zephyr-7B：直接 M2 自蒸馏、未量化 LoRA、Backbone Peak LR=1e-4、Warmup=20、$\\lambda_0=0.01$，作者 Fork 用 Sine Scheduler 逐步增加 Medusa Heads Loss。**重要源文件校核**：PDF B.4 印刷“对 $\\theta_0$ 使用 Sine Schedule”，没有定义 $\\theta_0$；作者的 [medusa_utils.py](https://github.com/ctlllll/axolotl/blob/main/src/axolotl/monkeypatch/medusa_utils.py) 确认 $g(s)=\\sin(\\pi s/(2S))$ 乘在辅助多头 CE 上，而非 LR/KL。另外官方 Stage 1 配置也设置 medusa_heads_coefficient=0.2，导致实际 Stage1 Loss 比论文式 (1) 多一个整体常数因子，必须区分论文抽象公式和运行配置。补充用户可用的 PyTorch Loss/Optimizer/KL、Global Batch 检查，以及作者 Fork 的 [全部原始 YAML](https://github.com/ctlllll/axolotl/tree/main/examples/medusa)；标准新版 Axolotl 不保证接受 Medusa 专用配置键。本附录没有 Figure/Table。下节 Appendix D Results of Speculative Decoding。
+
+## Appendix C Visualization of Optimized Tree Attention 精读小结
+
+[Appendix C 全部正文、Figure 6 图注、64 节点官方实现核对及 EAGLE 对比](09-Appendix-C-Visualization-of-Optimized-Tree-Attention.md) 已完成（PDF 第 15 页）。论文正文说明 Medusa-2 Vicuna-7B 的树深度为 4，使用 4 个 Medusa Heads；从 Cartesian Product 候选树出发，根据 Alpaca-eval 校准集测得的各 Head Top-k 统计期望剪枝，最终形成左偏的 64 节点稀疏树。**官方代码交叉核对**：[medusa_choices.py](https://github.com/FasterDecoding/Medusa/blob/main/medusa/model/medusa_choices.py) 的 mc_sim_7b_63 包含 63 个 Medusa rank-path 节点；[utils.py](https://github.com/FasterDecoding/Medusa/blob/main/medusa/model/utils.py) 额外加 1 个 LM Head 根节点，因此 64=63+1；四个 Medusa 深度的节点数为 10/28/23/2，官方 Notebook 统计 42 条根到叶路径。独立推导 Section 2.3.3 的 rank-specific accuracy、路径乘积、期望接受长度和连通约束下的贪心扩展；解释祖先 Attention Mask、树深度 Position ID、Target 单次树验证及红色正确路径。跨论文比较：Medusa 是并行 Token Heads + 静态校准树；原始 EAGLE 是 Feature + Shifted Token 自回归 Draft + 树状 Target 验证。**Figure 6 PNG 二进制未保存**，准确 PDF 页码及原因记录于 [figures/figure6-source.md](figures/figure6-source.md)，不伪造仓库图片链接。下一单元 Appendix D。
 
 ## 已读论文关联
 
@@ -83,4 +87,4 @@
 - [DFlash](../2602.06036-dflash/README.md)：使用目标多层隐藏特征条件化的 Block Diffusion，一次前向并行预测一整个草稿块。
 - Medusa 与二者共通之处是通过一次目标验证评估多个候选；主要不同在于 Medusa 直接利用多个 Token Heads 预测不同未来位置，且 Typical Acceptance 可不严格保持原采样分布。
 
-**当前阅读状态：** 主文 Abstract、Introduction、Sections 2–4，以及 Appendices A–B 均已完成（2026-11-04）；下一单元 **Appendix C Visualization of Optimized Tree Attention**（原 Figure 6），后续 D–G 待读。
+**当前阅读状态：** 主文 Abstract、Introduction、Sections 2–4，以及 Appendices A–C 均已完成（2026-11-05）；下一单元 **Appendix D Results of Speculative Decoding**，后续 E–G 待读。
