@@ -13,7 +13,7 @@
 
 如何在不维护独立 Draft Model 的情况下，让原始大模型基于同一个隐藏状态并行预测后续多个 Token，并通过 Tree Attention 将这些候选序列集中验证，从而减少自回归 Forward 轮次？
 
-## 主要贡献（主文和 Appendices A–F 均已完成；Appendix G 待精读）
+## 主要贡献（主文和 Appendices A–G 均已完成；全文精读完成）
 
 1. 多个轻量化 Medusa Heads 分别预测不同未来位置的 Token。
 2. Tree Attention 将候选续写合并成树，允许共享前缀并行验证。
@@ -39,7 +39,7 @@
 9. [D. Results of Speculative Decoding：完整译文、Figure 7、Draft/Target 规模匹配分析](10-Appendix-D-Results-of-Speculative-Decoding.md) ✅
 10. [E. Additional Results for All Models：完整译文、Figure 8、四模型速度和自蒸馏分析](11-Appendix-E-Additional-Results-for-All-Models.md) ✅
 11. [F. Additional Results on AlpacaEval Dataset：完整译文、Table 4 全数据、Speedup 验证和跨数据集对比](12-Appendix-F-Additional-Results-on-AlpacaEval-Dataset.md) ✅
-12. G. Exploration and Modeling of Hardware Constraints and Medusa（待阅读；Figure 9–23，Table 5–8）
+12. [G. Exploration and Modeling of Hardware Constraints and Medusa：完整译文、Figure 9–23、Table 5–8、Roofline 与性能预测](13-Appendix-G-Hardware-Constraints-and-Medusa.md) ✅
 
 ## 原图说明
 
@@ -92,6 +92,16 @@
 ## Appendix F Additional Results on AlpacaEval Dataset 精读小结
 
 [Appendix F 两句正文完整翻译、Table 4 原表全部数值与表注、指标推导和跨数据集对照](12-Appendix-F-Additional-Results-on-AlpacaEval-Dataset.md) 已完成。Table 4 的四组 Base/Medusa tokens/s、Acceleration Rate、Speedup 分别为：Vicuna-7B 37.07/106.76/3.23/2.88×；Vicuna-13B 29.01/91.54/3.28/3.16×；Vicuna-33B 17.87/40.43/2.85/2.26×；Zephyr-7B 34.21/99.50/3.08/2.91×。通过 MEDUSA speed / Base speed 复算，四个 Speedup 均吻合。Table 4 未报告 Overhead，章节用 Acceleration Rate / Speedup 反推近似值 1.122/1.038/1.261/1.058，并明确标记为推算值。与 MT-Bench Table 1 对比，AlpacaEval 的四模型 Acceleration Rate 均略低，但 Speedup 并非全部降低，说明每轮开销同样重要；对数据集间 Overhead 差异的原因，论文没有给出足够计时细节，故仅列待验证假设。Appendix D 的传统 Speculative Decoding 对照来自 MT-Bench；Table 4 没有 AlpacaEval 的传统 SD 行，不能做同数据集的直接优劣比较。**Table 4 原始 PDF 第 16 页已核对；GitHub 未保存 PNG 二进制**，表格转录和来源记录分别见 [Appendix F](12-Appendix-F-Additional-Results-on-AlpacaEval-Dataset.md) 与 [tables/table4-source.md](tables/table4-source.md)。下一单元 Appendix G。
+
+## Appendix G 精读小结与全文完成状态
+
+[Appendix G 完整译文、Figure 9–23 图注与分析、Table 5–8 全量转录](13-Appendix-G-Hardware-Constraints-and-Medusa.md) 已完成。G.1 建立 A100/A40/A6000 的 Roofline 基线并分析 Prefill/Decode 算子；G.2 通过 Table 6–8 说明 Attention 与 Linear 的 OI 变化差异；G.3 研究候选数、Batch Size 和 Sequence Length 对 Speedup 的影响。
+
+[summary.md](summary.md) 已生成，覆盖研究问题、核心方法、实验结果、局限、复现建议和 EAGLE/DFlash 跨论文关联。
+
+Figure 9–23 的原始 PDF 页已核对，来源页码见 [figures/figure9-23-source.md](figures/figure9-23-source.md)；Table 5–8 来源见 [tables/table5-8-source.md](tables/table5-8-source.md)。PNG 二进制未保存，未使用近似重绘图冒充原图。
+
+**当前阅读状态：** 主文 Abstract、Introduction、Sections 2–4，以及 Appendices A–G 全部完成（2026-11-05）。**Medusa 全文精读完成。**
 
 ## 已读论文关联
 
