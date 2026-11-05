@@ -49,14 +49,20 @@
     "Appendix F. Additional Results on AlpacaEval Dataset",
     "Appendix F.1 Full translation and Table 4 transcription",
     "Appendix F.2 Throughput, Acceleration Rate, Speedup and inferred Overhead verification",
-    "Appendix F.3 Comparison with MT-Bench and Appendix D Speculative Decoding"
+    "Appendix F.3 Comparison with MT-Bench and Appendix D Speculative Decoding",
+    "Appendix G. Exploration and Modeling of Hardware Constraints and Medusa",
+    "Appendix G.1 Roofline Model of Operators",
+    "Appendix G.2 FLOP/s vs. Operational Intensity Variations in Medusa",
+    "Appendix G.3 Predicting Medusa Performance",
+    "Appendix G. Figures 9–23 and Tables 5–8 full captions, transcription and analysis",
+    "Full paper summary and cross-paper index"
   ],
-  "next_unit": "Appendix G. Exploration and Modeling of Hardware Constraints and Medusa",
+  "next_unit": "Completed - full paper",
   "read_position": {
-    "section": "Appendix F. Additional Results on AlpacaEval Dataset",
+    "section": "Appendix G. Exploration and Modeling of Hardware Constraints and Medusa",
     "status": "completed",
-    "pdf_page": 16,
-    "end_of_paper": false,
+    "pdf_page": 27,
+    "end_of_paper": true,
     "figures_completed": [
       1,
       2,
@@ -65,13 +71,32 @@
       5,
       6,
       7,
-      8
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
     ],
     "tables_completed": [
       1,
       2,
       3,
-      4
+      4,
+      5,
+      6,
+      7,
+      8
     ]
   },
   "figures": [
@@ -149,6 +174,186 @@
       "source_url": "https://arxiv.org/pdf/2401.10774v3#page=16",
       "source_note": "figures/figure8-source.md",
       "data_note": "No exact per-bar tokens/s labels; absolute speeds are graph-estimated ranges, while speedup labels are exact and cross-checked against main-text Table 1."
+    },
+    {
+      "number": 9,
+      "pdf_page": 18,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=18",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Llama-7B on A100-80GB-PCIe"
+    },
+    {
+      "number": 10,
+      "pdf_page": 18,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=18",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Llama-13B on A100-80GB-PCIe"
+    },
+    {
+      "number": 11,
+      "pdf_page": 19,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=19",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Llama-33B on A100-80GB-PCIe"
+    },
+    {
+      "number": 12,
+      "pdf_page": 19,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=19",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Llama-7B on A40"
+    },
+    {
+      "number": 13,
+      "pdf_page": 20,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=20",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Llama-13B on A40"
+    },
+    {
+      "number": 14,
+      "pdf_page": 20,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=20",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Llama-33B on A40"
+    },
+    {
+      "number": 15,
+      "pdf_page": 21,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=21",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Llama-7B on A6000"
+    },
+    {
+      "number": 16,
+      "pdf_page": 21,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=21",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Llama-13B on A6000"
+    },
+    {
+      "number": 17,
+      "pdf_page": 22,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=22",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Llama-33B on A6000"
+    },
+    {
+      "number": 18,
+      "pdf_page": 23,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=23",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Attention FLOP/s vs OI, batch=16"
+    },
+    {
+      "number": 19,
+      "pdf_page": 24,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=24",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Attention FLOP/s vs OI, sequence length=1024"
+    },
+    {
+      "number": 20,
+      "pdf_page": 24,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=24",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Linear layers FLOP/s vs OI"
+    },
+    {
+      "number": 21,
+      "pdf_page": 26,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=26",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Simulated acceleration rate, speedup and normalized latency"
+    },
+    {
+      "number": 22,
+      "pdf_page": 27,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=27",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Simulated speedup, sequence length=1024"
+    },
+    {
+      "number": 23,
+      "pdf_page": 27,
+      "original_pdf_page_verified": true,
+      "original_crop_in_chat": false,
+      "github_binary_saved": false,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=27",
+      "source_note": "figures/figure9-23-source.md",
+      "description": "Simulated speedup, batch=4"
     }
   ],
   "saved_files": [
@@ -172,9 +377,13 @@
     "11-Appendix-E-Additional-Results-for-All-Models.md",
     "figures/figure8-source.md",
     "12-Appendix-F-Additional-Results-on-AlpacaEval-Dataset.md",
-    "tables/table4-source.md"
+    "tables/table4-source.md",
+    "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+    "figures/figure9-23-source.md",
+    "tables/table5-8-source.md",
+    "summary.md"
   ],
-  "complete": false,
+  "complete": true,
   "notes": {
     "abstract": "Full v3 abstract translated; distinctions between typical acceptance and exact distribution explained. Intro and Figure 1 full caption now completed in 01-Introduction.md.",
     "version_discrepancy": "arXiv abstract metadata elsewhere reports a different upper speedup figure; v3 PDF reports Medusa-2 2.3–2.8x.",
@@ -189,7 +398,8 @@
     "appendix_C": "Complete v3 PDF Appendix C p15: one full paragraph and Figure 6 caption translated. Figure shows sparse Medusa-2 Vicuna-7B tree, depth 4 / four Medusa heads, Cartesian Product pruned by rank-top-k statistical expectations calibrated on Alpaca-eval, left-biased. Official repo code cross-check: mc_sim_7b_63 has 63 Medusa path nodes + one LM-head root = 64 total; depth counts 10/28/23/2; 42 root-to-leaf candidate paths. Explained Section 2.3.3 rank-specific accuracy (top-i minus top-(i-1)), product path score under independence, expected accepted length sum over all node prefixes, connected-frontier greedy construction, tree attention ancestor mask/depth Position IDs/one target forward, red example path Once→upon→a→time→comma. Cross-paper EAGLE: same tree-attention verification but feature-level autoregressive Draft + shifted token, 5 draft forwards in original EAGLE vs Medusa parallel token heads and offline calibrated static tree. Figure6 PNG binary not committed; source/page recorded in figures/figure6-source.md. Next Appendix D.",
     "appendix_D": "Complete arXiv v3 Appendix D p15: translated both paragraphs and full Figure 7 caption. Target Vicuna-7B/13B/33B; drafts Llama-68M, Llama-160M, Tiny-Llama (figure legend Llama-1B), Tiny-Vicuna (figure legend Vicuna-1B). Uses open-source speculative decoding alternative and torch.compile() for draft inference. Explicit best settings: Vicuna-7B + Llama-68M + gamma=4; Vicuna-13B + Llama-68M + gamma=3; Vicuna-33B + Tiny-Vicuna (Vicuna-1B) + gamma=3. Figure7 shows MT-Bench tokens/s vs gamma, grey dotted vanilla baseline. No pointwise numerical table; chart peaks in chapter are approximate visual readings and clearly marked; exact checkpoint IDs, hardware, precision, acceptance rates, and gamma point data not specified in Appendix D. Main Table1 cross-check: speculative decoding speedup 1.47x/1.56x/1.60x vs Medusa-2 2.83x/2.83x/2.35x. Analysis of Draft autoregressive cost, Target verification cost, acceptance rate and gamma; compare Medusa parallel token heads, original EAGLE feature AR, DFlash one-shot block diffusion. Figure7 PNG binary not saved; source/page documented. Next Appendix E.",
     "appendix_E": "Appendix E has exactly one sentence: 'We show speedup on various models in Fig. 8.' Full translation and complete Figure 8 caption saved. Figure8 original PDF page 16 (printed page 15) screenshot checked: Vicuna-7B, Zephyr-7B, Vicuna-13B, Vicuna-33B; speedup labels 2.83x, 2.66x, 2.83x, 2.35x. Figure has no exact per-bar tokens/s values, only y-axis; chapter labels absolute speed ranges as approximate estimates. Main Table1 cross-check: Acceleration Rate 3.47/3.14/3.51/3.01; Overhead 1.22/1.18/1.23/1.27; Quality 6.18(+.01)/7.25(-.07)/6.43(-.14)/7.18(+.05); SpecDec 1.47/-/1.56/1.60; Medusa 2.83/2.66/2.83/2.35. Appendix D best draft/gamma 7B Llama68M/gamma4; 13B Llama68M/gamma3; 33B Tiny-Vicuna 1B/gamma3. Self-distill: Section3.2/B.4 only explicitly describes Vicuna-33B and Zephyr-7B, ~100k generated samples, seq_len2048, batch128, LoRA, sine schedule, lr1e-4, warmup20, lambda0=.01. Figure8 caption also calls Vicuna-13B self-distilled, but Section3.1/B.3 says 7B/13B use ShareGPT and M1->M2 two-stage training; preserve source inconsistency rather than reconcile. Author hypothesis for 33B: hidden original training dataset vs self-distill dataset mismatch may shift Head distribution, reducing acceleration while quality remains comparable. Figure8 PNG binary not saved; source/page note recorded. Next Appendix F.",
-    "appendix_F": "Appendix F complete from arXiv v3. Exact body: 'We conduct further experiments on the AlpacaEval (Li et al., 2023) dataset. MEDUSA-2 achieves consistent speedup similar to the results on MT-Bench.' Table4 PDF page16, original table headers Model/Base speed(tokens/s)/MEDUSA speed(tokens/s)/Acc.rate/Speedup; rows Vicuna-7b 37.07/106.76/3.23/2.88; Vicuna-13b 29.01/91.54/3.28/3.16; Vicuna-33b 17.87/40.43/2.85/2.26; Zephyr-7b 34.21/99.50/3.08/2.91. Caption translated. Verified all speedups via Medusa throughput/Base throughput. Appendix B.1 definitions used: Speedup=Acceleration Rate/Overhead. Table4 does not report Overhead; inferred approx 1.122/1.038/1.261/1.058, explicitly marked derived. Cross-check MT-Bench Table1: Vicuna7B 3.47/1.22/2.83; Vicuna13B 3.51/1.23/2.83; Vicuna33B 3.01/1.27/2.35; Zephyr7B 3.14/1.18/2.66. All AlpacaEval Acc rates are slightly lower but speedups are similar; inferred overhead changes account for ranking. Appendix D SpecDec speedup is MT-Bench only; no AlpacaEval SD row, so no same-dataset comparison. Table4 original PDF screenshot checked, PNG binary not saved; source note tables/table4-source.md. Next Appendix G."
+    "appendix_F": "Appendix F complete from arXiv v3. Exact body: 'We conduct further experiments on the AlpacaEval (Li et al., 2023) dataset. MEDUSA-2 achieves consistent speedup similar to the results on MT-Bench.' Table4 PDF page16, original table headers Model/Base speed(tokens/s)/MEDUSA speed(tokens/s)/Acc.rate/Speedup; rows Vicuna-7b 37.07/106.76/3.23/2.88; Vicuna-13b 29.01/91.54/3.28/3.16; Vicuna-33b 17.87/40.43/2.85/2.26; Zephyr-7b 34.21/99.50/3.08/2.91. Caption translated. Verified all speedups via Medusa throughput/Base throughput. Appendix B.1 definitions used: Speedup=Acceleration Rate/Overhead. Table4 does not report Overhead; inferred approx 1.122/1.038/1.261/1.058, explicitly marked derived. Cross-check MT-Bench Table1: Vicuna7B 3.47/1.22/2.83; Vicuna13B 3.51/1.23/2.83; Vicuna33B 3.01/1.27/2.35; Zephyr7B 3.14/1.18/2.66. All AlpacaEval Acc rates are slightly lower but speedups are similar; inferred overhead changes account for ranking. Appendix D SpecDec speedup is MT-Bench only; no AlpacaEval SD row, so no same-dataset comparison. Table4 original PDF screenshot checked, PNG binary not saved; source note tables/table4-source.md. Next Appendix G.",
+    "appendix_G": "Appendix G complete from arXiv v3. Translated introduction, G.1, G.2, G.3 in original order; fully transcribed Table5–8 and all captions Figures9–23. G.1 benchmarks Llama7B/13B/33B on A100-80GB-PCIe, A40, A6000; Table5 operator shapes and O(bsh²)/O(bh²)/O(bqh²), attention O(bs²nd)/O(bsnd)/O(bsqnd), FFN O(bshi)/O(bhi)/O(bqhi). Roofline Pmax=min(Ppeak,BW*OI); A100 1935GB/s/312TFLOPS ridge≈161.2 FLOP/Byte; A40 696/149.7 ridge≈215.1; A6000 768/181 ridge≈235.7. G.2 Llama33B/A100: Table6 batch16 attention, Table7 seq_len1024 attention, Table8 up/gate/down linear. At batch16 seq1024 64 candidates attention 54.8 TFLOP/s/OI40.96 vs baseline1.24/0.99, giving ~44x FLOP/s and ~41x OI. Attention OI remains below A100 ridge; linear OI reaches 2893.91 and ~246.14TFLOP/s, compute-bound. G.3 simplified Llama7B block, b1 s1024, omits verification/acceptance latency; speedup declines beyond ~64 candidates; batch>32 harms speedup, b64 can fall below1; longer seq reduces speedup due attention KV cost while linear layers independent of seq. Preserve source ambiguities: printed acc_rate=0.477 log(num_candidate) has no intercept/base stated yet Figure21 baseline candidate1 acc_rate=1; Figure22 axis prints Speedup (%) despite ratio-style plot. Figures9–23 PDF pages verified and captions saved; PNG binary not uploaded, source list in figures/figure9-23-source.md. Tables5–8 full transcription saved; source list tables/table5-8-source.md. Created summary.md; full paper complete."
   },
   "tables": [
     {
@@ -232,6 +442,54 @@
       "source_url": "https://arxiv.org/pdf/2401.10774v3#page=16",
       "source_note": "tables/table4-source.md",
       "data_note": "All four rows transcribed. Speedup independently cross-checked as MEDUSA speed / Base speed. Overhead not reported in Table 4; inferred in chapter as Acceleration Rate / Speedup."
+    },
+    {
+      "number": 5,
+      "pdf_page": 17,
+      "original_pdf_page_verified": true,
+      "github_binary_saved": false,
+      "all_values_translated": true,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=17",
+      "source_note": "tables/table5-8-source.md",
+      "description": "Prefill/Decoding/Parallel Decoding operator shapes and complexities"
+    },
+    {
+      "number": 6,
+      "pdf_page": 25,
+      "original_pdf_page_verified": true,
+      "github_binary_saved": false,
+      "all_values_translated": true,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=25",
+      "source_note": "tables/table5-8-source.md",
+      "description": "Attention TFLOP/s and OI, batch=16"
+    },
+    {
+      "number": 7,
+      "pdf_page": 25,
+      "original_pdf_page_verified": true,
+      "github_binary_saved": false,
+      "all_values_translated": true,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=25",
+      "source_note": "tables/table5-8-source.md",
+      "description": "Attention TFLOP/s and OI, sequence length=1024"
+    },
+    {
+      "number": 8,
+      "pdf_page": 25,
+      "original_pdf_page_verified": true,
+      "github_binary_saved": false,
+      "all_values_translated": true,
+      "caption_translated": true,
+      "caption_saved_in": "13-Appendix-G-Hardware-Constraints-and-Medusa.md",
+      "source_url": "https://arxiv.org/pdf/2401.10774v3#page=25",
+      "source_note": "tables/table5-8-source.md",
+      "description": "Up/Gate/Down Linear TFLOP/s and OI"
     }
   ]
 }
