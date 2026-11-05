@@ -13,7 +13,7 @@
 
 如何在不维护独立 Draft Model 的情况下，让原始大模型基于同一个隐藏状态并行预测后续多个 Token，并通过 Tree Attention 将这些候选序列集中验证，从而减少自回归 Forward 轮次？
 
-## 主要贡献（主文和 Appendices A–E 均已完成；Appendices F–G 待精读）
+## 主要贡献（主文和 Appendices A–F 均已完成；Appendix G 待精读）
 
 1. 多个轻量化 Medusa Heads 分别预测不同未来位置的 Token。
 2. Tree Attention 将候选续写合并成树，允许共享前缀并行验证。
@@ -38,12 +38,12 @@
 8. [C. Visualization of Optimized Tree Attention：完整译文、Figure 6、64 节点树重建与 EAGLE 对比](09-Appendix-C-Visualization-of-Optimized-Tree-Attention.md) ✅
 9. [D. Results of Speculative Decoding：完整译文、Figure 7、Draft/Target 规模匹配分析](10-Appendix-D-Results-of-Speculative-Decoding.md) ✅
 10. [E. Additional Results for All Models：完整译文、Figure 8、四模型速度和自蒸馏分析](11-Appendix-E-Additional-Results-for-All-Models.md) ✅
-11. F. Additional Results on AlpacaEval（待阅读；Table 4）
+11. [F. Additional Results on AlpacaEval Dataset：完整译文、Table 4 全数据、Speedup 验证和跨数据集对比](12-Appendix-F-Additional-Results-on-AlpacaEval-Dataset.md) ✅
 12. G. Exploration and Modeling of Hardware Constraints and Medusa（待阅读；Figure 9–23，Table 5–8）
 
 ## 原图说明
 
-本篇共 27 页。Figure 1 在 PDF 第 2 页，原图已在当前对话中裁图展示；GitHub 仓库尚未保存原始 PNG 二进制，故只引用[原版 PDF 第 2 页](https://arxiv.org/pdf/2401.10774v3#page=2)，不会生成虚假的相对路径。Figure 1 的完整图注已在 [Introduction](01-Introduction.md) 翻译；Figure 6 位于 [原版 PDF 第 15 页](https://arxiv.org/pdf/2401.10774v3#page=15)，完整图注和树结构解析见 [Appendix C](09-Appendix-C-Visualization-of-Optimized-Tree-Attention.md)；Figure 7 位于 PDF 第 15 页，完整图注和实验分析见 [Appendix D](10-Appendix-D-Results-of-Speculative-Decoding.md)；Figure 8 位于 PDF 第 16 页（印刷页码 15），完整图注和实验分析见 [Appendix E](11-Appendix-E-Additional-Results-for-All-Models.md)。PNG 保存状态分别记录在 figures/figure6-source.md、figures/figure7-source.md、figures/figure8-source.md。
+本篇共 27 页。Figure 1 在 PDF 第 2 页，原图已在当前对话中裁图展示；GitHub 仓库尚未保存原始 PNG 二进制，故只引用[原版 PDF 第 2 页](https://arxiv.org/pdf/2401.10774v3#page=2)，不会生成虚假的相对路径。Figure 1 的完整图注已在 [Introduction](01-Introduction.md) 翻译；Figure 6 位于 [原版 PDF 第 15 页](https://arxiv.org/pdf/2401.10774v3#page=15)，完整图注和树结构解析见 [Appendix C](09-Appendix-C-Visualization-of-Optimized-Tree-Attention.md)；Figure 7 位于 PDF 第 15 页，完整图注和实验分析见 [Appendix D](10-Appendix-D-Results-of-Speculative-Decoding.md)；Figure 8 位于 PDF 第 16 页（印刷页码 15），完整图注和实验分析见 [Appendix E](11-Appendix-E-Additional-Results-for-All-Models.md)。PNG 保存状态分别记录在 figures/figure6-source.md、figures/figure7-source.md、figures/figure8-source.md。Table 4 位于 PDF 第 16 页，完整转录和分析见 [Appendix F](12-Appendix-F-Additional-Results-on-AlpacaEval-Dataset.md)，来源记录在 [tables/table4-source.md](tables/table4-source.md)。
 
 ## Section 1 Introduction 精读小结
 
@@ -87,7 +87,11 @@
 
 ## Appendix E Additional Results for All Models 精读小结
 
-[Appendix E 唯一正文句子、Figure 8 完整图注、四模型速度/加速/质量分析及与 Appendix D 对照](11-Appendix-E-Additional-Results-for-All-Models.md) 已完成。Figure 8 对比 Vicuna-7B、Zephyr-7B、Vicuna-13B、Vicuna-33B，Medusa-2 Speedup 分别为 2.83×、2.66×、2.83×、2.35×；主文 Table 1 的 Acceleration Rate 为 3.47/3.14/3.51/3.01，Overhead 为 1.22/1.18/1.23/1.27，GPT-4 MT-Bench Quality 及变化为 6.18(+0.01)/7.25(−0.07)/6.43(−0.14)/7.18(+0.05)。图中绝对 Tokens/s 未逐柱标注，章节只给出纵轴估读范围。与 Appendix D 对照：Vicuna-7B/13B/33B 的传统 Speculative Decoding Speedup 为 1.47×/1.56×/1.60×，Medusa-2 为 2.83×/2.83×/2.35×；Zephyr 无传统 SD 对照。自蒸馏方面，Section 3.2/B.4 说明 Vicuna-33B、Zephyr-7B 使用约 100k 自生成样本、seq_len=2048、batch=128，并采用 KL Teacher、LoRA/Sine Schedule；作者将 Vicuna-33B 较低 Acceleration Rate 归因于原始隐藏训练数据与自蒸馏数据分布错配的可能性。**保留 v3 内部矛盾**：Figure 8 图注将 Vicuna-13B 归入 self-distillation，Section 3.1 与 Appendix B.3 却说明其使用 ShareGPT 两阶段训练，Section 3.2/B.4 只描述 33B 和 Zephyr 自蒸馏；不擅自消解。Figure 8 原始 PDF 第 16 页已截图核对；PNG 二进制未保存，来源记录于 [figures/figure8-source.md](figures/figure8-source.md)。下一单元 Appendix F。
+[Appendix E 唯一正文句子、Figure 8 完整图注、四模型速度/加速/质量分析及与 Appendix D 对照](11-Appendix-E-Additional-Results-for-All-Models.md) 已完成。Figure 8 对比 Vicuna-7B、Zephyr-7B、Vicuna-13B、Vicuna-33B，Medusa-2 Speedup 分别为 2.83×、2.66×、2.83×、2.35×；主文 Table 1 的 Acceleration Rate 为 3.47/3.14/3.51/3.01，Overhead 为 1.22/1.18/1.23/1.27，GPT-4 MT-Bench Quality 及变化为 6.18(+0.01)/7.25(−0.07)/6.43(−0.14)/7.18(+0.05)。图中绝对 Tokens/s 未逐柱标注，章节只给出纵轴估读范围。与 Appendix D 对照：Vicuna-7B/13B/33B 的传统 Speculative Decoding Speedup 为 1.47×/1.56×/1.60×，Medusa-2 为 2.83×/2.83×/2.35×；Zephyr 无传统 SD 对照。自蒸馏方面，Section 3.2/B.4 说明 Vicuna-33B、Zephyr-7B 使用约 100k 自生成样本、seq_len=2048、batch=128，并采用 KL Teacher、LoRA/Sine Schedule；作者将 Vicuna-33B 较低 Acceleration Rate 归因于原始隐藏训练数据与自蒸馏数据分布错配的可能性。**保留 v3 内部矛盾**：Figure 8 图注将 Vicuna-13B 归入 self-distillation，Section 3.1 与 Appendix B.3 却说明其使用 ShareGPT 两阶段训练，Section 3.2/B.4 只描述 33B 和 Zephyr 自蒸馏；不擅自消解。Figure 8 原始 PDF 第 16 页已截图核对；PNG 二进制未保存，来源记录于 [figures/figure8-source.md](figures/figure8-source.md)。Table 4 原始 PDF 第 16 页已核对并完整转录；原表二进制截图未保存，来源记录于 [tables/table4-source.md](tables/table4-source.md)。Appendix F 已完成，下一单元 Appendix G。
+
+## Appendix F Additional Results on AlpacaEval Dataset 精读小结
+
+[Appendix F 两句正文完整翻译、Table 4 原表全部数值与表注、指标推导和跨数据集对照](12-Appendix-F-Additional-Results-on-AlpacaEval-Dataset.md) 已完成。Table 4 的四组 Base/Medusa tokens/s、Acceleration Rate、Speedup 分别为：Vicuna-7B 37.07/106.76/3.23/2.88×；Vicuna-13B 29.01/91.54/3.28/3.16×；Vicuna-33B 17.87/40.43/2.85/2.26×；Zephyr-7B 34.21/99.50/3.08/2.91×。通过 MEDUSA speed / Base speed 复算，四个 Speedup 均吻合。Table 4 未报告 Overhead，章节用 Acceleration Rate / Speedup 反推近似值 1.122/1.038/1.261/1.058，并明确标记为推算值。与 MT-Bench Table 1 对比，AlpacaEval 的四模型 Acceleration Rate 均略低，但 Speedup 并非全部降低，说明每轮开销同样重要；对数据集间 Overhead 差异的原因，论文没有给出足够计时细节，故仅列待验证假设。Appendix D 的传统 Speculative Decoding 对照来自 MT-Bench；Table 4 没有 AlpacaEval 的传统 SD 行，不能做同数据集的直接优劣比较。**Table 4 原始 PDF 第 16 页已核对；GitHub 未保存 PNG 二进制**，表格转录和来源记录分别见 [Appendix F](12-Appendix-F-Additional-Results-on-AlpacaEval-Dataset.md) 与 [tables/table4-source.md](tables/table4-source.md)。下一单元 Appendix G。
 
 ## 已读论文关联
 
@@ -95,4 +99,4 @@
 - [DFlash](../2602.06036-dflash/README.md)：使用目标多层隐藏特征条件化的 Block Diffusion，一次前向并行预测一整个草稿块。
 - Medusa 与二者共通之处是通过一次目标验证评估多个候选；主要不同在于 Medusa 直接利用多个 Token Heads 预测不同未来位置，且 Typical Acceptance 可不严格保持原采样分布。
 
-**当前阅读状态：** 主文 Abstract、Introduction、Sections 2–4，以及 Appendices A–E 均已完成（2026-11-05）；下一单元 **Appendix F Additional Results on AlpacaEval Dataset**，后续 F–G 待读。
+**当前阅读状态：** 主文 Abstract、Introduction、Sections 2–4，以及 Appendices A–F 均已完成（2026-11-05）；下一单元 **Appendix G Exploration and Modeling of Hardware Constraints and Medusa**，整篇论文尚未完成。
