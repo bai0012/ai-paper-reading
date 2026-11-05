@@ -79,7 +79,7 @@ Figure 7 展示的实验结果表明，Draft Model 的最优配置会随着 Vicu
 
 | Target Model | Draft Model（正文名 / 图例名） | 图上峰值附近的 \(\gamma\)（约） | 峰值速度（约 tokens/s） | 证据等级 |
 | --- | --- | ---: | ---: | --- |
-| Vicuna-7B | Llama-68M | **4** | 约 60 | 正文明确最优模型和 \(\gamma\)；速度为读图估计 |
+| Vicuna-7B | Llama-68M | **4** | 约 66–67 | 正文明确最优模型和 \(\gamma\)；速度为读图估计 |
 | Vicuna-7B | Llama-160M | 2–3 | 约 53–54 | 读图估计 |
 | Vicuna-7B | Tiny-Llama / Llama-1B | 1–2 | 约 49–51 | 读图估计 |
 | Vicuna-7B | Tiny-Vicuna / Vicuna-1B | 2–3 | 约 51–53 | 读图估计 |
@@ -92,7 +92,7 @@ Figure 7 展示的实验结果表明，Draft Model 的最优配置会随着 Vicu
 | Vicuna-33B | Tiny-Llama / Llama-1B | 2–3 | 约 24–25 | 读图估计 |
 | Vicuna-33B | Tiny-Vicuna / Vicuna-1B | **3** | 约 27–28 | 正文明确最优模型和 \(\gamma\)；速度为读图估计 |
 
-**灰色虚线基线**也只能从图中近似读取：Vicuna-7B 约 42–45 tokens/s，Vicuna-13B 约 34–35 tokens/s，Vicuna-33B 约 17–18 tokens/s。论文没有在 Appendix D 单独列出这三个基线的精确数值。
+**灰色虚线基线**也只能从图中近似读取：Vicuna-7B 约 44–45 tokens/s，Vicuna-13B 约 34–35 tokens/s，Vicuna-33B 约 17–18 tokens/s。论文没有在 Appendix D 单独列出这三个基线的精确数值。
 
 需要特别区分：
 - **正文明确给出的三个最优组合**：7B / Llama-68M / \(\gamma=4\)；13B / Llama-68M / \(\gamma=3\)；33B / Tiny-Vicuna / \(\gamma=3\)。
