@@ -13,7 +13,7 @@
 
 如何在不维护独立 Draft Model 的情况下，让原始大模型基于同一个隐藏状态并行预测后续多个 Token，并通过 Tree Attention 将这些候选序列集中验证，从而减少自回归 Forward 轮次？
 
-## 主要贡献（主文和 Appendices A–D 均已完成；Appendices E–G 待精读）
+## 主要贡献（主文和 Appendices A–E 均已完成；Appendices F–G 待精读）
 
 1. 多个轻量化 Medusa Heads 分别预测不同未来位置的 Token。
 2. Tree Attention 将候选续写合并成树，允许共享前缀并行验证。
@@ -37,13 +37,13 @@
 7. [B. Experiment Settings：完整译文、原训练参数、Sine Schedule 与 PyTorch/Axolotl 复现](08-Appendix-B-Experiment-Settings.md) ✅
 8. [C. Visualization of Optimized Tree Attention：完整译文、Figure 6、64 节点树重建与 EAGLE 对比](09-Appendix-C-Visualization-of-Optimized-Tree-Attention.md) ✅
 9. [D. Results of Speculative Decoding：完整译文、Figure 7、Draft/Target 规模匹配分析](10-Appendix-D-Results-of-Speculative-Decoding.md) ✅
-10. E. Additional Results for All Models（待阅读；Figure 8）
+10. [E. Additional Results for All Models：完整译文、Figure 8、四模型速度和自蒸馏分析](11-Appendix-E-Additional-Results-for-All-Models.md) ✅
 11. F. Additional Results on AlpacaEval（待阅读；Table 4）
 12. G. Exploration and Modeling of Hardware Constraints and Medusa（待阅读；Figure 9–23，Table 5–8）
 
 ## 原图说明
 
-本篇共 27 页。Figure 1 在 PDF 第 2 页，原图已在当前对话中裁图展示；GitHub 仓库尚未保存原始 PNG 二进制，故只引用[原版 PDF 第 2 页](https://arxiv.org/pdf/2401.10774v3#page=2)，不会生成虚假的相对路径。Figure 1 的完整图注已在 [Introduction](01-Introduction.md) 翻译；Figure 6 位于 [原版 PDF 第 15 页](https://arxiv.org/pdf/2401.10774v3#page=15)，完整图注和树结构解析见 [Appendix C](09-Appendix-C-Visualization-of-Optimized-Tree-Attention.md)；Figure 7 同在 PDF 第 15 页，完整图注和实验分析见 [Appendix D](10-Appendix-D-Results-of-Speculative-Decoding.md)。两图的 PNG 保存状态分别记录在 figures/figure6-source.md 与 figures/figure7-source.md。
+本篇共 27 页。Figure 1 在 PDF 第 2 页，原图已在当前对话中裁图展示；GitHub 仓库尚未保存原始 PNG 二进制，故只引用[原版 PDF 第 2 页](https://arxiv.org/pdf/2401.10774v3#page=2)，不会生成虚假的相对路径。Figure 1 的完整图注已在 [Introduction](01-Introduction.md) 翻译；Figure 6 位于 [原版 PDF 第 15 页](https://arxiv.org/pdf/2401.10774v3#page=15)，完整图注和树结构解析见 [Appendix C](09-Appendix-C-Visualization-of-Optimized-Tree-Attention.md)；Figure 7 位于 PDF 第 15 页，完整图注和实验分析见 [Appendix D](10-Appendix-D-Results-of-Speculative-Decoding.md)；Figure 8 位于 PDF 第 16 页（印刷页码 15），完整图注和实验分析见 [Appendix E](11-Appendix-E-Additional-Results-for-All-Models.md)。PNG 保存状态分别记录在 figures/figure6-source.md、figures/figure7-source.md、figures/figure8-source.md。
 
 ## Section 1 Introduction 精读小结
 
@@ -79,11 +79,15 @@
 
 ## Appendix C Visualization of Optimized Tree Attention 精读小结
 
-[Appendix C 全部正文、Figure 6 图注、64 节点官方实现核对及 EAGLE 对比](09-Appendix-C-Visualization-of-Optimized-Tree-Attention.md) 已完成（PDF 第 15 页）。论文正文说明 Medusa-2 Vicuna-7B 的树深度为 4，使用 4 个 Medusa Heads；从 Cartesian Product 候选树出发，根据 Alpaca-eval 校准集测得的各 Head Top-k 统计期望剪枝，最终形成左偏的 64 节点稀疏树。**官方代码交叉核对**：[medusa_choices.py](https://github.com/FasterDecoding/Medusa/blob/main/medusa/model/medusa_choices.py) 的 mc_sim_7b_63 包含 63 个 Medusa rank-path 节点；[utils.py](https://github.com/FasterDecoding/Medusa/blob/main/medusa/model/utils.py) 额外加 1 个 LM Head 根节点，因此 64=63+1；四个 Medusa 深度的节点数为 10/28/23/2，官方 Notebook 统计 42 条根到叶路径。独立推导 Section 2.3.3 的 rank-specific accuracy、路径乘积、期望接受长度和连通约束下的贪心扩展；解释祖先 Attention Mask、树深度 Position ID、Target 单次树验证及红色正确路径。跨论文比较：Medusa 是并行 Token Heads + 静态校准树；原始 EAGLE 是 Feature + Shifted Token 自回归 Draft + 树状 Target 验证。**Figure 6 PNG 二进制未保存**，准确 PDF 页码及原因记录于 [figures/figure6-source.md](figures/figure6-source.md)，不伪造仓库图片链接。下一单元 Appendix E。
+[Appendix C 全部正文、Figure 6 图注、64 节点官方实现核对及 EAGLE 对比](09-Appendix-C-Visualization-of-Optimized-Tree-Attention.md) 已完成（PDF 第 15 页）。论文正文说明 Medusa-2 Vicuna-7B 的树深度为 4，使用 4 个 Medusa Heads；从 Cartesian Product 候选树出发，根据 Alpaca-eval 校准集测得的各 Head Top-k 统计期望剪枝，最终形成左偏的 64 节点稀疏树。**官方代码交叉核对**：[medusa_choices.py](https://github.com/FasterDecoding/Medusa/blob/main/medusa/model/medusa_choices.py) 的 mc_sim_7b_63 包含 63 个 Medusa rank-path 节点；[utils.py](https://github.com/FasterDecoding/Medusa/blob/main/medusa/model/utils.py) 额外加 1 个 LM Head 根节点，因此 64=63+1；四个 Medusa 深度的节点数为 10/28/23/2，官方 Notebook 统计 42 条根到叶路径。独立推导 Section 2.3.3 的 rank-specific accuracy、路径乘积、期望接受长度和连通约束下的贪心扩展；解释祖先 Attention Mask、树深度 Position ID、Target 单次树验证及红色正确路径。跨论文比较：Medusa 是并行 Token Heads + 静态校准树；原始 EAGLE 是 Feature + Shifted Token 自回归 Draft + 树状 Target 验证。**Figure 6 PNG 二进制未保存**，准确 PDF 页码及原因记录于 [figures/figure6-source.md](figures/figure6-source.md)，不伪造仓库图片链接。下一单元 Appendix F。
 
 ## Appendix D Results of Speculative Decoding 精读小结
 
 [Appendix D 全部两段正文、Figure 7 图注、Draft/Target 配对分析及与 Medusa/EAGLE/DFlash 的比较](10-Appendix-D-Results-of-Speculative-Decoding.md) 已完成（PDF 第 15 页）。原文评估 Vicuna-7B/13B/33B，Draft 包括 Llama-68M、Llama-160M、Tiny-Llama（图例 Llama-1B）和 Tiny-Vicuna（图例 Vicuna-1B）；使用开源 Speculative Decoding 替代实现，并以 torch.compile() 加速 Draft。正文明确的最优配置为：7B + Llama-68M + gamma=4；13B + Llama-68M + gamma=3；33B + Tiny-Vicuna + gamma=3。Figure 7 是 MT-Bench 上的三个 Tokens/s 曲线图，灰虚线为 vanilla baseline。**数据边界**：论文未提供逐点数值表；章节仅对曲线峰值作近似读图估计，并将正文明确报告的最优组合单独标识；硬件、精度、完整 checkpoint、接受率和各 gamma 的精确吞吐未在 Appendix D 给出。主文 Table 1 的 Speculative Decoding Speedup 为 1.47×/1.56×/1.60×，Medusa-2 为 2.83×/2.83×/2.35×。分析了 Draft 自回归开销、Target 验证成本、接受率与 gamma 的权衡；结论不是 Draft 越大越快，而是 Draft size、指令分布匹配和 gamma 需按 Target 联合调优。与 Medusa 的并行 Token Heads、EAGLE 的 Feature-level Autoregression、DFlash 的单次 Block Diffusion Draft 作了区分。**Figure 7 PNG 二进制未保存**，原始 PDF 页码及状态见 [figures/figure7-source.md](figures/figure7-source.md)。下一单元 Appendix E。
+
+## Appendix E Additional Results for All Models 精读小结
+
+[Appendix E 唯一正文句子、Figure 8 完整图注、四模型速度/加速/质量分析及与 Appendix D 对照](11-Appendix-E-Additional-Results-for-All-Models.md) 已完成。Figure 8 对比 Vicuna-7B、Zephyr-7B、Vicuna-13B、Vicuna-33B，Medusa-2 Speedup 分别为 2.83×、2.66×、2.83×、2.35×；主文 Table 1 的 Acceleration Rate 为 3.47/3.14/3.51/3.01，Overhead 为 1.22/1.18/1.23/1.27，GPT-4 MT-Bench Quality 及变化为 6.18(+0.01)/7.25(−0.07)/6.43(−0.14)/7.18(+0.05)。图中绝对 Tokens/s 未逐柱标注，章节只给出纵轴估读范围。与 Appendix D 对照：Vicuna-7B/13B/33B 的传统 Speculative Decoding Speedup 为 1.47×/1.56×/1.60×，Medusa-2 为 2.83×/2.83×/2.35×；Zephyr 无传统 SD 对照。自蒸馏方面，Section 3.2/B.4 说明 Vicuna-33B、Zephyr-7B 使用约 100k 自生成样本、seq_len=2048、batch=128，并采用 KL Teacher、LoRA/Sine Schedule；作者将 Vicuna-33B 较低 Acceleration Rate 归因于原始隐藏训练数据与自蒸馏数据分布错配的可能性。**保留 v3 内部矛盾**：Figure 8 图注将 Vicuna-13B 归入 self-distillation，Section 3.1 与 Appendix B.3 却说明其使用 ShareGPT 两阶段训练，Section 3.2/B.4 只描述 33B 和 Zephyr 自蒸馏；不擅自消解。Figure 8 原始 PDF 第 16 页已截图核对；PNG 二进制未保存，来源记录于 [figures/figure8-source.md](figures/figure8-source.md)。下一单元 Appendix F。
 
 ## 已读论文关联
 
@@ -91,4 +95,4 @@
 - [DFlash](../2602.06036-dflash/README.md)：使用目标多层隐藏特征条件化的 Block Diffusion，一次前向并行预测一整个草稿块。
 - Medusa 与二者共通之处是通过一次目标验证评估多个候选；主要不同在于 Medusa 直接利用多个 Token Heads 预测不同未来位置，且 Typical Acceptance 可不严格保持原采样分布。
 
-**当前阅读状态：** 主文 Abstract、Introduction、Sections 2–4，以及 Appendices A–D 均已完成（2026-11-05）；下一单元 **Appendix E Additional Results for All Models**，后续 F–G 待读。
+**当前阅读状态：** 主文 Abstract、Introduction、Sections 2–4，以及 Appendices A–E 均已完成（2026-11-05）；下一单元 **Appendix F Additional Results on AlpacaEval Dataset**，后续 F–G 待读。
