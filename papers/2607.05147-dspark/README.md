@@ -38,6 +38,10 @@
 9. Appendix A：Counterexample: Selection Bias Without Early-Stopping
 10. summary.md（待读完全文后生成）
 
+## 阅读问答
+
+- [帕累托前沿：总吞吐量与单用户 TPS 权衡、Figure 7 解读](questions.md)
+
 ## 跨论文关联
 
 - [DFlash](../2602.06036-dflash/README.md)：DSpark 的并行 Backbone 基于其 Target 特征条件下的并行 Draft；DSpark 进一步通过轻量自回归头补充块内依赖并以调度减少多余 Target 验证。
