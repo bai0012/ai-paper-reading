@@ -29,8 +29,8 @@
 
 1. [Abstract：完整翻译与技术讲解](00-Abstract.md) ✅
 2. [1. Introduction：完整译文、推测解码架构取舍与服务调度分析](01-Introduction.md) ✅
-3. 2. Background（下一单元）：2.1 Speculative Decoding；2.2 Drafter Architectures
-4. 3. Architecture：3.1 Semi-Autoregressive Generation；3.2 Confidence-Scheduled Verification；3.3 Training
+3. [2. Background：2.1–2.2 全文翻译、公式 (1)–(3) 与 KV Injection 分析](02-Background.md) ✅
+4. 3. Architecture（下一单元）：3.1 Semi-Autoregressive Generation；3.2 Confidence-Scheduled Verification；3.3 Training
 5. 4. Experiments：4.1 Experimental Setup；4.2 Results；4.3 Analysis
 6. 5. Real-World Deployment of DSpark：5.1 Scalable Training；5.2 Scheduler in Practice；5.3 Inference；5.4 Live Traffic
 7. 6. Related Work
@@ -45,6 +45,13 @@
 - 离线接受长度（Qwen3 4B/8B/14B vs Eagle3 与 DFlash）与线上用户 TPS（V4-Flash/Pro vs MTP-1）分别解释，不能直接横向视作同一加速率。
 - **图表状态：** Section 1 无原图原表；下一节 Background 需要解释 Equation (1)–(3)，Figure 1 在 Section 3 / PDF 第 5 页。
 
+## Background 精读结论
+
+- [Section 2 完整译文、原始公式 (1)–(3)、DFlash KV Injection 维度与数据流分析](02-Background.md)。Section 2.1 给出 $L=(T_{draft}+T_{verify})/\tau$ 三个优化方向；2.2 区分自回归 Draft 的串行成本和并行 Draft 的一次前向。
+- DFlash 使用 Target 多层隐藏状态特征拼接、共享线性映射和 RMSNorm 得到 $H_{ctx}$，并将其作为每个 Draft Layer 的 Key/Value 上下文；Mask Block 在 Backbone 内可双向 Attention，但**缺少已采样 Token 条件化**，为 DSpark 的顺序头留下空间。
+- 严格区分第 (2) 式**特征维拼接**与第 (3) 式**序列维拼接**；$	au$ 通常包含 Bonus Token（参见论文 Section 4 注脚）；本文讨论了拒绝采样的残差修正但明确标注为独立理论扩展。
+- Section 2 **没有 Figure/Table**，无图片待提交；下一节 Section 3 开始 Figure 1 及 Markov/RNN Head。
+
 ## 阅读问答
 
 - [帕累托前沿：总吞吐量与单用户 TPS 权衡、Figure 7 解读](questions.md)
@@ -55,6 +62,6 @@
 - [EAGLE](../2401.15077-eagle/README.md)：原版 EAGLE 强调特征级自回归和采样不确定性；论文实验比较的 **Eagle3** 是后续的 EAGLE-3，须注意版本差异。
 - [Medusa](../2401.10774-medusa/README.md)：多个 Future Token Head 的并行候选与树状验证；与 DSpark 的半自回归块生成/按负载调度有结构性差别。
 
-**当前阅读位置：Abstract 与 Section 1 Introduction 已完成；下一单元为 Section 2 Background（2.1–2.2），PDF 第 3–4 页。**
+**当前阅读位置：Abstract、Section 1、Section 2（2.1–2.2）已完成；下一单元为 Section 3 Architecture，PDF 第 4–5 页起。**
 
-**图表情况：** Abstract 无图表；尚未提取或提交任何 Figure/PNG 文件，后续章节严格标记原 PDF 页码与实际保存状态。
+**图表情况：** Abstract、Section 1、Section 2 均无 Figure/Table；Figure 1 位于 Section 3 PDF 第 5 页。未上传任何 PNG 二进制，不创建虚假的图片链接。
