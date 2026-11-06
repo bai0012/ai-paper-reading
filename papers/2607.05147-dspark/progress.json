@@ -1,0 +1,27 @@
+{
+  "arxiv_id": "2607.05147",
+  "version": "v1",
+  "title": "DSpark: Confidence-Scheduled Speculative Decoding with Semi-Autoregressive Generation",
+  "source_pdf": "https://arxiv.org/pdf/2607.05147v1",
+  "source_abs": "https://arxiv.org/abs/2607.05147",
+  "started_at": "2026-11-06",
+  "last_updated_at": "2026-11-06",
+  "completed_units": [
+    "Abstract"
+  ],
+  "next_unit": "1. Introduction",
+  "read_position": {
+    "section": "Abstract",
+    "status": "completed",
+    "pdf_page": 1,
+    "next_pdf_page": 1,
+    "end_of_paper": false
+  },
+  "figures_completed": [],
+  "tables_completed": [],
+  "saved_units": {
+    "Abstract": "00-Abstract.md"
+  },
+  "summary_generated": false,
+  "full_paper_completed": false
+}
