@@ -28,8 +28,8 @@
 ## 章节导航与精读进度
 
 1. [Abstract：完整翻译与技术讲解](00-Abstract.md) ✅
-2. 1. Introduction（下一单元）
-3. 2. Background：2.1 Speculative Decoding；2.2 Drafter Architectures
+2. [1. Introduction：完整译文、推测解码架构取舍与服务调度分析](01-Introduction.md) ✅
+3. 2. Background（下一单元）：2.1 Speculative Decoding；2.2 Drafter Architectures
 4. 3. Architecture：3.1 Semi-Autoregressive Generation；3.2 Confidence-Scheduled Verification；3.3 Training
 5. 4. Experiments：4.1 Experimental Setup；4.2 Results；4.3 Analysis
 6. 5. Real-World Deployment of DSpark：5.1 Scalable Training；5.2 Scheduler in Practice；5.3 Inference；5.4 Live Traffic
@@ -37,6 +37,13 @@
 8. 7. Conclusion
 9. Appendix A：Counterexample: Selection Bias Without Early-Stopping
 10. summary.md（待读完全文后生成）
+
+## Introduction 精读结论
+
+- [Section 1 完整中文译文、两大瓶颈、半自回归与置信度调度分析](01-Introduction.md)：全部 7 个正文段落和 2 个贡献条目；对 `T_draft / T_verify / τ` 的讨论标注为 Section 2 预读，而非 Intro 原公式。
+- 论文明确区分 **数据侧**（Code vs Chat 的接受率差异）与 **系统侧**（低负载多验证近乎免费，高并发验证占用 Batch 容量），两者共同决定最优验证长度。
+- 离线接受长度（Qwen3 4B/8B/14B vs Eagle3 与 DFlash）与线上用户 TPS（V4-Flash/Pro vs MTP-1）分别解释，不能直接横向视作同一加速率。
+- **图表状态：** Section 1 无原图原表；下一节 Background 需要解释 Equation (1)–(3)，Figure 1 在 Section 3 / PDF 第 5 页。
 
 ## 阅读问答
 
@@ -48,6 +55,6 @@
 - [EAGLE](../2401.15077-eagle/README.md)：原版 EAGLE 强调特征级自回归和采样不确定性；论文实验比较的 **Eagle3** 是后续的 EAGLE-3，须注意版本差异。
 - [Medusa](../2401.10774-medusa/README.md)：多个 Future Token Head 的并行候选与树状验证；与 DSpark 的半自回归块生成/按负载调度有结构性差别。
 
-**当前阅读位置：Abstract 已完成；下一个单元为 Section 1 Introduction。**
+**当前阅读位置：Abstract 与 Section 1 Introduction 已完成；下一单元为 Section 2 Background（2.1–2.2），PDF 第 3–4 页。**
 
 **图表情况：** Abstract 无图表；尚未提取或提交任何 Figure/PNG 文件，后续章节严格标记原 PDF 页码与实际保存状态。
