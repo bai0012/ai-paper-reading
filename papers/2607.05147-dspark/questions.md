@@ -37,3 +37,64 @@ DSpark 在前端使用并行 Backbone 和轻量顺序头改善 Draft 接受长�
 
 - [DSpark v1 PDF：Figure 7 与 Section 5.4（第 18–19 页）](https://arxiv.org/pdf/2607.05147v1#page=18)
 - Section 3.2.2（硬件感知调度）、Section 5.3（吞吐与延迟的权衡）
+
+
+---
+
+## Q2. 拒绝采样（Rejection Sampling）是什么？为什么推测解码不改变目标分布？
+
+**提问时间：** 2026-11-06  
+**关联章节：** Section 1 Introduction；Section 2.1 Speculative Decoding（PDF 第 3 页）；Appendix A（PDF 第 32–33 页）。
+
+### 概念与 DSpark 原文
+
+拒绝采样在推测解码里指：从轻量 Draft Model 的条件分布 \(q_k\) 采样候选 Token，然后由 Target Model 的对应条件分布 \(p_k\) 决定是否接受；拒绝时从特定残差分布抽样修正，以使整体输出仍与 Target Model 的采样分布一致。原文 Section 2.1 明确写出每个候选 \(x_k\) 的接受概率：
+
+\[
+a(x_k)=\min\left(1,\frac{p_k(x_k)}{q_k(x_k)}\right).
+\]
+
+这里 \(q_k(x_k)>0\)，因为该候选从 \(q_k\) 实际采出。验证决策遵循从左到右的顺序；第一个拒绝出现后，后续 Draft Token 丢弃。**目标模型可以在一轮 Causal Forward 里并行算出各位置 logits，但验收的随机决策仍依次进行。** 若所有候选通过，Target 还生成一枚 Bonus Token；若某位置被拒绝，此位置从残差分布输出一个修正 Token，并结束本轮。
+
+### 为什么拒绝后不能直接从 p 重新抽样？
+
+拒绝时正确的修正概率分布是：
+
+\[
+r(x)=\frac{[p(x)-q(x)]_+}{\sum_y [p(y)-q(y)]_+},\qquad[z]_+=\max(z,0).
+\]
+
+若 \(p=q\)，拒绝概率为 0，所以分母为 0 的残差分支不会触发。单位置总体接受概率：
+
+\[
+\alpha=\sum_xq(x)\min(1,p(x)/q(x))=\sum_x\min(p(x),q(x))
+=1-\tfrac12\|p-q\|_1.
+\]
+
+对任意 \(y\)，最终输出分布：
+
+\[
+\Pr(Y=y)=\underbrace{\min(q(y),p(y))}_{直接接受y}+
+\underbrace{(1-\alpha)r(y)}_{拒绝后的修正}
+=\min(q(y),p(y))+[p(y)-q(y)]_+=p(y).
+\]
+
+这证明单步输出仍严格服从 Target 的 \(p\)；多步在一致条件前缀上使用对应 \(p_k,q_k\) 且验证调度满足 non-anticipating property（不能利用未验证的未来样本决定当前 Token 是否被验证）时，同样保持目标分布。**这是正确采样规则的理论保证，不是任何自定义验收算法都自动成立。**
+
+### 数值例子
+
+词表 \(\{A,B\}\)，Target \(p(A)=0.7,p(B)=0.3\)，Draft \(q(A)=q(B)=0.5\)：
+- 抽到 A，以 \(\min(1,0.7/0.5)=1\) 接受；其直接接受概率质量为 \(0.5\)。
+- 抽到 B，以 \(\min(1,0.3/0.5)=0.6\) 接受；其直接接受概率质量为 \(0.3\)。
+- 总体接受率 \(0.8\)，拒绝概率 \(0.2\)。残差 \([p-q]_+=[0.2,0]\)，归一化得到 \(r(A)=1,r(B)=0\)。
+- 最终 \(\Pr(Y=A)=0.5+0.2\times1=0.7\)；\(\Pr(Y=B)=0.3\)。恢复了 Target 分布 \((0.7,0.3)\)。
+
+若错误地在拒绝时直接按 \(p\) 重采样，则 \(P(A)=0.5+0.2\times0.7=0.64\)，不等于 \(0.7\)，因此**不能省掉残差修正**。
+
+### 与 DSpark 的进一步联系
+
+DSpark 通过半自回归 Markov/RNN Head 改进 \(q_k\) 使其更接近 \(p_k\)，提高 \(\alpha_k=1-\mathrm{TV}(p_k,q_k)\) 和整段前缀存活率。Confidence Head 对每一位置在先前候选均通过条件下的接受概率作预测，并由 Hardware-Aware Scheduler 决定验证长度。若长度调度使用当前待决定 Token 自身或者后续 Token 的采样结果，可能引入选择偏差；论文 Appendix A 给出针对这一点的反例。正确拒绝采样与正确、非预知的长度调度是两个必须**同时满足**的条件。
+
+注：这里主要讨论 **stochastic speculative sampling（随机采样）**。温度为 0 的贪心式验证可简化为比较 Token 是否与 Target 的贪心选择一致，但不能将它和随机拒绝采样公式混为一谈。
+
+**资料来源：** [DSpark v1 PDF 第 3 页，Section 2.1](https://arxiv.org/pdf/2607.05147v1#page=3)；[Appendix A 第 32–33 页](https://arxiv.org/pdf/2607.05147v1#page=32)。残差修正与逐点输出分布的证明为标准推测采样理论的独立数学展开，而非 Section 2.1 逐字原文。
