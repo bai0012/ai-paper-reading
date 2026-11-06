@@ -7,20 +7,22 @@
   "started_at": "2026-11-06",
   "last_updated_at": "2026-11-06",
   "completed_units": [
-    "Abstract"
+    "Abstract",
+    "1. Introduction"
   ],
-  "next_unit": "1. Introduction",
+  "next_unit": "2. Background (2.1 Speculative Decoding; 2.2 Drafter Architectures)",
   "read_position": {
-    "section": "Abstract",
+    "section": "1. Introduction",
     "status": "completed",
-    "pdf_page": 1,
-    "next_pdf_page": 1,
+    "pdf_page": 3,
+    "next_pdf_page": 3,
     "end_of_paper": false
   },
   "figures_completed": [],
   "tables_completed": [],
   "saved_units": {
-    "Abstract": "00-Abstract.md"
+    "Abstract": "00-Abstract.md",
+    "1. Introduction": "01-Introduction.md"
   },
   "summary_generated": false,
   "full_paper_completed": false
