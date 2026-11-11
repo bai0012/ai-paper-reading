@@ -12,14 +12,18 @@
     "2.1 Speculative Decoding",
     "2.2 Drafter Architectures",
     "3.0 Architecture Overview",
-    "3.1 Semi-Autoregressive Generation"
+    "3.1 Semi-Autoregressive Generation",
+    "3.2 Confidence-Scheduled Verification",
+    "3.2.1 Confidence Head",
+    "3.2.2 Hardware-Aware Prefix Scheduler",
+    "Algorithm 1 Hardware-Aware Prefix Scheduler"
   ],
-  "next_unit": "3.2 Confidence-Scheduled Verification (3.2.1 Confidence Head; 3.2.2 Hardware-Aware Prefix Scheduler), then 3.3 Training",
+  "next_unit": "3.3 Training (Equations 9-11)",
   "read_position": {
-    "section": "3.1 Semi-Autoregressive Generation",
+    "section": "3.2 Confidence-Scheduled Verification",
     "status": "completed",
-    "pdf_page": 6,
-    "next_pdf_page": 6,
+    "pdf_page": 9,
+    "next_pdf_page": 9,
     "end_of_paper": false
   },
   "figures_completed": [
@@ -32,7 +36,11 @@
     "2.1 Speculative Decoding": "02-Background.md",
     "2.2 Drafter Architectures": "02-Background.md",
     "3.0 Architecture Overview": "03-Architecture.md",
-    "3.1 Semi-Autoregressive Generation": "03-Architecture.md"
+    "3.1 Semi-Autoregressive Generation": "03-Architecture.md",
+    "3.2 Confidence-Scheduled Verification": "03-Architecture.md",
+    "3.2.1 Confidence Head": "03-Architecture.md",
+    "3.2.2 Hardware-Aware Prefix Scheduler": "03-Architecture.md",
+    "Algorithm 1 Hardware-Aware Prefix Scheduler": "03-Architecture.md"
   },
   "summary_generated": false,
   "full_paper_completed": false,
@@ -42,6 +50,11 @@
     3,
     4,
     5,
-    6
+    6,
+    7,
+    8
+  ],
+  "algorithms_completed": [
+    "Algorithm 1 (PDF p.8; original crop displayed; PNG not committed)"
   ]
 }
