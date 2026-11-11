@@ -30,8 +30,8 @@
 1. [Abstract：完整翻译与技术讲解](00-Abstract.md) ✅
 2. [1. Introduction：完整译文、推测解码架构取舍与服务调度分析](01-Introduction.md) ✅
 3. [2. Background：2.1–2.2 全文翻译、公式 (1)–(3) 与 KV Injection 分析](02-Background.md) ✅
-4. [3. Architecture：总体架构、Figure 1 与 3.1 Semi-Autoregressive Generation](03-Architecture.md)（3.0–3.1 已完成）
-   - 下一单元：3.2 Confidence-Scheduled Verification（3.2.1 Confidence Head；3.2.2 Hardware-Aware Prefix Scheduler）与 3.3 Training
+4. [3. Architecture：总体架构、Figure 1、3.1 半自回归生成、3.2 置信度调度验证](03-Architecture.md)（3.0–3.2 已完成）
+   - 下一单元：3.3 Training（公式 (9)–(11)）
 5. 4. Experiments：4.1 Experimental Setup；4.2 Results；4.3 Analysis
 6. 5. Real-World Deployment of DSpark：5.1 Scalable Training；5.2 Scheduler in Practice；5.3 Inference；5.4 Live Traffic
 7. 6. Related Work
@@ -71,6 +71,6 @@
 - [EAGLE](../2401.15077-eagle/README.md)：原版 EAGLE 强调特征级自回归和采样不确定性；论文实验比较的 **Eagle3** 是后续的 EAGLE-3，须注意版本差异。
 - [Medusa](../2401.10774-medusa/README.md)：多个 Future Token Head 的并行候选与树状验证；与 DSpark 的半自回归块生成/按负载调度有结构性差别。
 
-**当前阅读位置：Abstract、Sections 1–2、Section 3 总述及 3.1 已完成；下一单元为 Section 3.2 Confidence-Scheduled Verification，PDF 第 6 页起。**
+**当前阅读位置：Abstract、Sections 1–2、Section 3.0–3.2 已完成；下一单元为 Section 3.3 Training，PDF 第 9 页起。**
 
-**图表情况：** Figure 1（PDF 第 5 页）已从原始 PDF 提取并在阅读对话展示；PNG 二进制未提交到 GitHub，来源记录见 figures/README.md。
+**图表情况：** Figure 1（PDF 第 5 页）与 Algorithm 1（PDF 第 8 页）均已从原始 PDF 提取并在阅读对话展示；PNG 二进制未提交到 GitHub，来源记录见 figures/README.md。
