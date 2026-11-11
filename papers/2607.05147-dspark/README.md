@@ -30,7 +30,8 @@
 1. [Abstract：完整翻译与技术讲解](00-Abstract.md) ✅
 2. [1. Introduction：完整译文、推测解码架构取舍与服务调度分析](01-Introduction.md) ✅
 3. [2. Background：2.1–2.2 全文翻译、公式 (1)–(3) 与 KV Injection 分析](02-Background.md) ✅
-4. 3. Architecture（下一单元）：3.1 Semi-Autoregressive Generation；3.2 Confidence-Scheduled Verification；3.3 Training
+4. [3. Architecture：总体架构、Figure 1 与 3.1 Semi-Autoregressive Generation](03-Architecture.md)（3.0–3.1 已完成）
+   - 下一单元：3.2 Confidence-Scheduled Verification（3.2.1 Confidence Head；3.2.2 Hardware-Aware Prefix Scheduler）与 3.3 Training
 5. 4. Experiments：4.1 Experimental Setup；4.2 Results；4.3 Analysis
 6. 5. Real-World Deployment of DSpark：5.1 Scalable Training；5.2 Scheduler in Practice；5.3 Inference；5.4 Live Traffic
 7. 6. Related Work
@@ -52,6 +53,14 @@
 - 严格区分第 (2) 式**特征维拼接**与第 (3) 式**序列维拼接**；$	au$ 通常包含 Bonus Token（参见论文 Section 4 注脚）；本文讨论了拒绝采样的残差修正但明确标注为独立理论扩展。
 - Section 2 **没有 Figure/Table**，无图片待提交；下一节 Section 3 开始 Figure 1 及 Markov/RNN Head。
 
+## Architecture 精读结论（3.0–3.1）
+
+- [Section 3 总体架构、Figure 1 图注、3.1 全文及公式 (4)–(6) 讲解](03-Architecture.md)。
+- DSpark 保留 DFlash 并行 Backbone，一次生成全部 $h_k,U_k$；将 Anchor 本身作为第一个预测位置，改用 Anchor + $\gamma-1$ 个 Mask 得到 $\gamma$ 组 Draft Logits。
+- Sequential Head 通过 $B_k(x_0,x_{<k},v)$ 修正并行 Logits，使 Draft Block 成为自回归条件分布的乘积分解；Markov Head 使用低秩一阶转移，RNN Head 使用门控状态压缩更长前缀。
+- Figure 1：原始 PDF 第 5 页，已从用户 PDF 提取并在阅读会话展示；PNG 未提交到仓库，图号、页码、来源记录在 [figures/README.md](figures/README.md)。
+- Section 3.1 的重点不是重新运行重型 Backbone，而是让轻量顺序头在采样后注入实际前缀信息；设计约束为 $T_{sequential}\ll T_{parallel}$。
+
 ## 阅读问答
 
 - [帕累托前沿：总吞吐量与单用户 TPS 权衡、Figure 7 解读](questions.md)
@@ -62,6 +71,6 @@
 - [EAGLE](../2401.15077-eagle/README.md)：原版 EAGLE 强调特征级自回归和采样不确定性；论文实验比较的 **Eagle3** 是后续的 EAGLE-3，须注意版本差异。
 - [Medusa](../2401.10774-medusa/README.md)：多个 Future Token Head 的并行候选与树状验证；与 DSpark 的半自回归块生成/按负载调度有结构性差别。
 
-**当前阅读位置：Abstract、Section 1、Section 2（2.1–2.2）已完成；下一单元为 Section 3 Architecture，PDF 第 4–5 页起。**
+**当前阅读位置：Abstract、Sections 1–2、Section 3 总述及 3.1 已完成；下一单元为 Section 3.2 Confidence-Scheduled Verification，PDF 第 6 页起。**
 
-**图表情况：** Abstract、Section 1、Section 2 均无 Figure/Table；Figure 1 位于 Section 3 PDF 第 5 页。未上传任何 PNG 二进制，不创建虚假的图片链接。
+**图表情况：** Figure 1（PDF 第 5 页）已从原始 PDF 提取并在阅读对话展示；PNG 二进制未提交到 GitHub，来源记录见 figures/README.md。
